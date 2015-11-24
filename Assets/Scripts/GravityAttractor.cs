@@ -11,6 +11,6 @@ public class GravityAttractor : MonoBehaviour {
 		Vector2 bodyUp = body.up;
 		
 		body.rotation = Quaternion.FromToRotation(bodyUp, targetDir) * body.rotation;
-		body.GetComponent<Rigidbody2D>().AddForce(targetDir * gravity);
+		body.GetComponent<Rigidbody2D>().AddForce(targetDir * gravity * body.GetComponent<Rigidbody2D>().mass);
 	}
 }
