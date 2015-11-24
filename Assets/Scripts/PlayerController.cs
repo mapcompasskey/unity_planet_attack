@@ -5,6 +5,8 @@ public class PlayerController : MonoBehaviour {
 
 	// public references
 	public LayerMask groundLayer;
+	public PhysicsMaterial2D materialDefault;
+	public PhysicsMaterial2D materialNoFriction;
 	
 	// private references
 	private Rigidbody2D rb2d;
@@ -20,6 +22,7 @@ public class PlayerController : MonoBehaviour {
 	private bool canJump = true; // can jump
 	private bool canSlowJump = false; // can reduce jump acceleration
 	private bool jumpButtonState = false; // is jump button up or down
+	private bool noFriction = false;
 
 	// boolean states
 	private bool walking = false; // is walking
@@ -49,8 +52,6 @@ public class PlayerController : MonoBehaviour {
 	// update interval time varies
 	void Update()
 	{
-		//grounded = true;
-
 		// left or right axis of controls
 		horizontalAxis = Input.GetAxisRaw("Horizontal");
 		
@@ -59,6 +60,25 @@ public class PlayerController : MonoBehaviour {
 		jumpButtonState = Input.GetKey(KeyCode.X);
 		
 		checkForGround();
+
+		/*
+		if (grounded && noFriction)
+		{
+			noFriction = false;
+			collider2d.sharedMaterial = materialDefault;
+			collider2d.enabled = false;
+			collider2d.enabled = true;
+			Debug.Log (collider2d.sharedMaterial.friction);
+		}
+		else if ( ! grounded && ! noFriction)
+		{
+			noFriction = true;
+			collider2d.sharedMaterial = materialNoFriction;
+			collider2d.enabled = false;
+			collider2d.enabled = true;
+			Debug.Log (collider2d.sharedMaterial.friction);
+		}
+		*/
 	}
 
 	// called every physics step
