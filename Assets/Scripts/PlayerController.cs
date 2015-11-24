@@ -1,47 +1,40 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
 
 public class PlayerController : MonoBehaviour {
-	
+
 	// public references
 	public LayerMask groundLayer;
 	
 	// private references
 	private Rigidbody2D rb2d;
 	private CircleCollider2D collider2d;
-	
+
+	// vectors
+	private Vector3 horizontalVelocity = Vector3.zero;
+	private Vector3 verticalVelocity = Vector3.zero;
+
 	// booleans
 	private bool facingRight = true;
-	private bool walking = false;
-	
 	private bool grounded = false;
-	private bool groundedOnSlope = false;
-	private bool groundedOnSteepSlope = false;
-	
-	private bool jumping = false; // is jumping
 	private bool canJump = true; // can jump
-	private bool canJump2 = false; // can double jump
-	private bool canJump3 = false; // can triple jump
 	private bool canSlowJump = false; // can reduce jump acceleration
 	private bool jumpButtonState = false; // is jump button up or down
-	
+
+	// boolean states
+	private bool walking = false; // is walking
+	private bool jumping = false; // is jumping
+
 	// floats
-	private float groundedSlopeAngle = 0f;
-	private float groundedSlopeNormalX = 0f;
-	private float maximumSlopeAngle = 70f;
 	private float moveSpeed = 8f;
-	private float jumpSpeed = 16f;//8f;
+	private float jumpSpeed = 16f;
 	private float horizontalAxis = 0;
 	private float maxVelocityX = 1f;
 	private float maxVelocityY = 1f;
-	private float moveSlopeFriction = 0f;
 
-	public float maxGravDist = 20.0f;
-	public float maxGravity = 80.0f;
-	GameObject[] planets;
-	
-	void Start ()
+	//private Vector3 moveDirection;
+
+	void Start()
 	{
 		rb2d = GetComponent<Rigidbody2D>();
 		collider2d = GetComponent<CircleCollider2D>();
@@ -49,18 +42,15 @@ public class PlayerController : MonoBehaviour {
 		// update max velocities
 		maxVelocityX = moveSpeed * 2;
 		maxVelocityY = jumpSpeed * 2;
-		
-		// set the friction applied when moving up slopes
-		moveSlopeFriction = (maximumSlopeAngle / 90) / maximumSlopeAngle;
-
-		planets = GameObject.FindGameObjectsWithTag("Planet");
 	}
-	
+
 	// called every frame
 	// used for regular updates such as: moving non-physics objects, simple timers, recieving inputs
 	// update interval time varies
 	void Update()
 	{
+		//grounded = true;
+
 		// left or right axis of controls
 		horizontalAxis = Input.GetAxisRaw("Horizontal");
 		
@@ -70,7 +60,7 @@ public class PlayerController : MonoBehaviour {
 		
 		checkForGround();
 	}
-	
+
 	// called every physics step
 	// fixed update intervals are consistent
 	// used for regular updates such as: adjusting physics (Rigidbody) objects
@@ -78,32 +68,18 @@ public class PlayerController : MonoBehaviour {
 	{
 		isJumping();
 		isWalking();
-		
-		// keep movement within velocity limits
-		//rb2d.velocity = new Vector2(Mathf.Clamp(rb2d.velocity.x, -maxVelocityX, maxVelocityX), Mathf.Clamp(rb2d.velocity.y, -maxVelocityY, maxVelocityY));
 
-		foreach(GameObject planet in planets)
-		{
-			float dist = Vector3.Distance(planet.transform.position, transform.position);
-
-			Debug.LogFormat("dist: {0}, max grav dist: {1}", dist, maxGravDist);
-
-			if (dist <= maxGravDist)
-			{
-				Vector3 v = planet.transform.position - transform.position;
-				rb2d.AddForce(v.normalized * (1.0f - dist / maxGravDist) * maxGravity);
-			}
-		}
+		// update the current velocity
+		rb2d.velocity = horizontalVelocity + verticalVelocity;
 	}
-	
+
 	void isJumping()
 	{
-		if (groundedOnSteepSlope)
-		{
-			canJump = canJump2 = canJump3 = false;
-			return;
-		}
-		
+		// get the current local y velocity
+		// *transform.up returns this objects local "up" direction as a vector in world space
+		// *transform.InverseTransformDirection converts the vector from world space to local space
+		verticalVelocity = transform.up * transform.InverseTransformDirection(rb2d.velocity).y;
+
 		// if grounded after jumping
 		if (grounded && jumping)
 		{
@@ -115,17 +91,15 @@ public class PlayerController : MonoBehaviour {
 		if (grounded && ! canJump && ! jumping && ! jumpButtonState)
 		{
 			canJump = true;
-			canJump2 = false;
-			canJump3 = false;
 		}
 		
 		// reduce jumping acceleration
 		if (canSlowJump && jumping && ! jumpButtonState)
 		{
 			canSlowJump = false;
-			if (rb2d.velocity.y >= 0)
+			if (verticalVelocity.y > 0)
 			{
-				rb2d.velocity = new Vector2(rb2d.velocity.x, (rb2d.velocity.y / 2));
+				verticalVelocity = verticalVelocity / 2;
 			}
 		}
 		
@@ -133,37 +107,16 @@ public class PlayerController : MonoBehaviour {
 		if (canJump && grounded && ! jumping && jumpButtonState)
 		{
 			canJump = false;
-			canJump2 = true;
 			jumping = true;
 			canSlowJump = true;
-			rb2d.velocity = new Vector2(rb2d.velocity.x, jumpSpeed);
-		}
-		
-		// start double jump (after canSlowJump)
-		if (canJump2 && ! canSlowJump && ! grounded && jumping && jumpButtonState)
-		{
-			canJump2 = false;
-			canJump3 = true;
-			canSlowJump = true;
-			rb2d.velocity = new Vector2(rb2d.velocity.x, jumpSpeed);
-		}
-		
-		// start triple jump (after canSlowJump)
-		if (canJump3 && ! canSlowJump && ! grounded && jumping && jumpButtonState)
-		{
-			canJump3 = false;
-			canSlowJump = true;
-			rb2d.velocity = new Vector2(rb2d.velocity.x, jumpSpeed);
+
+			// apply local vertical velocity
+			verticalVelocity = transform.up * jumpSpeed;
 		}
 	}
-	
+
 	void isWalking()
 	{
-		if (groundedOnSteepSlope)
-		{
-			return;
-		}
-		
 		walking = (horizontalAxis == 0 ? false : true);
 		
 		// if just moved right
@@ -178,64 +131,12 @@ public class PlayerController : MonoBehaviour {
 			facingRight = false;
 			transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
 		}
-		
-		// move left or right
-		rb2d.velocity = new Vector2(horizontalAxis * moveSpeed, rb2d.velocity.y);
 
-		/*
-		vec2 dirToPlant = normalize(planetPos - objectPos);
-		side = vec2(-dirToPlant.y, dirToPlant.x);
-		object.AddForce(side * someForce);
-		*/
-
-		Vector2 dir = planets[0].transform.position - transform.position;
-		Vector2 side = new Vector2(-dir.y, dir.x);
-		rb2d.AddForce(side * moveSpeed);
-
-		//Vector3 v = planet.transform.position - transform.position;
-		//rb2d.AddForce(v.normalized * (1.0f - dist / maxGravDist) * maxGravity);
-
-		/*
-		// apply movement friction on slopes
-		if (groundedOnSlope && rb2d.velocity.x != 0)
-		{
-			bool movingRight = (rb2d.velocity.x > 0 ? true : false);
-			bool slopeRisingRight = (groundedSlopeNormalX < 0 ? true : false);
-			if ((movingRight && slopeRisingRight) || ( ! movingRight && ! slopeRisingRight))
-			{
-				float moveSlopeFrictionRate = 1f - (groundedSlopeAngle * moveSlopeFriction);
-				rb2d.velocity = new Vector2(rb2d.velocity.x * moveSlopeFrictionRate, rb2d.velocity.y);
-			}
-		}
-		*/
-
-		/*
-		// prevent the little hop that happens when moving up a slope and stopping
-		if (groundedOnSlope && ! walking && ! jumping && rb2d.velocity.y > 0)
-		{
-			rb2d.velocity = new Vector2(rb2d.velocity.x, 0);
-		}
-		*/
-
-		/*
-		if (groundedOnSlope)
-		{
-			float slopeFriction = 0.01f;
-			if (Mathf.Abs(groundedSlopeNormalX) > 0.1f)
-			{
-				// Apply the opposite force against the slope force 
-				// You will need to provide your own slopeFriction to stabalize movement
-				rb2d.velocity = new Vector2(rb2d.velocity.x - (groundedSlopeNormalX * slopeFriction), rb2d.velocity.y);
-				
-				//Move Player up or down to compensate for the slope below them
-				Vector3 pos = transform.position;
-				pos.y += -groundedSlopeNormalX * Mathf.Abs(rb2d.velocity.x) * Time.deltaTime * (rb2d.velocity.x - groundedSlopeNormalX > 0 ? 1 : -1);
-				transform.position = pos;
-			}
-		}
-		*/
+		// update local horizontal velocity
+		// *transform.right returns this objects local "right" direction as a vector in world space
+		horizontalVelocity = transform.right * Input.GetAxisRaw("Horizontal") * moveSpeed;
 	}
-	
+
 	void checkForGround()
 	{
 		Quaternion q;
@@ -246,18 +147,17 @@ public class PlayerController : MonoBehaviour {
 		
 		// reset parameters
 		grounded = false;
-		groundedOnSlope = false;
-		groundedOnSteepSlope = false;
-		groundedSlopeAngle = 0;
-		groundedSlopeNormalX = 0;
 		
 		for (int i = 0; i < raycastRotations.Length; i++)
 		{
 			// raycast out from the center of the circle collider
-			q = Quaternion.AngleAxis(raycastRotations[i], Vector3.forward * distance);
-			v = q * -Vector3.up;
-			
+			q = Quaternion.AngleAxis(raycastRotations[i], transform.forward * distance);
+			v = q * -transform.up;
+
+			// draw rays on screen
 			Debug.DrawRay(transform.position, v * distance, Color.red);
+
+			// check for hits against the "ground layer"
 			hit = Physics2D.Raycast(transform.position, v, distance, groundLayer);
 			if (hit.collider)
 			{
@@ -265,48 +165,9 @@ public class PlayerController : MonoBehaviour {
 				if (hit.distance - collider2d.radius > 0)
 				{
 					grounded = true;
-					
-					// if standing on a slope
-					float slopeAngle = Vector2.Angle (hit.normal, Vector2.up);
-					if (Mathf.Abs(slopeAngle) > 0)
-					{
-						groundedOnSlope = true;
-						groundedSlopeAngle = slopeAngle;
-						groundedSlopeNormalX = hit.normal.x;
-						
-						// if slope is to steep to stand on
-						if (slopeAngle > maximumSlopeAngle)
-						{
-							groundedOnSteepSlope = true;
-						}
-					}
-					
 				}
 			}
 		}
 		
 	}
-	
-	/*
-	// when touching another 2D Collider
-	void OnCollisionEnter2D(Collision2D other)
-	{
-		if (other.transform.tag == "MovingPlatform")
-		{
-			// reassign this object as a child of the moving platform
-			transform.parent = other.transform;
-		}
-	}
-	
-	// when no longer touching another 2D Collider
-	void OnCollisionExit2D(Collision2D other)
-	{
-		if (other.transform.tag == "MovingPlatform")
-		{
-			// reassign this object as a child of nothing
-			transform.parent = null;
-		}
-	}
-	*/
-	
 }
