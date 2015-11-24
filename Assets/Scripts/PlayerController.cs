@@ -36,6 +36,10 @@ public class PlayerController : MonoBehaviour {
 	private float maxVelocityX = 1f;
 	private float maxVelocityY = 1f;
 	private float moveSlopeFriction = 0f;
+
+	public float maxGravDist = 20.0f;
+	public float maxGravity = 80.0f;
+	GameObject[] planets;
 	
 	void Start ()
 	{
@@ -48,6 +52,8 @@ public class PlayerController : MonoBehaviour {
 		
 		// set the friction applied when moving up slopes
 		moveSlopeFriction = (maximumSlopeAngle / 90) / maximumSlopeAngle;
+
+		planets = GameObject.FindGameObjectsWithTag("Planet");
 	}
 	
 	// called every frame
@@ -74,7 +80,20 @@ public class PlayerController : MonoBehaviour {
 		isWalking();
 		
 		// keep movement within velocity limits
-		rb2d.velocity = new Vector2(Mathf.Clamp(rb2d.velocity.x, -maxVelocityX, maxVelocityX), Mathf.Clamp(rb2d.velocity.y, -maxVelocityY, maxVelocityY));
+		//rb2d.velocity = new Vector2(Mathf.Clamp(rb2d.velocity.x, -maxVelocityX, maxVelocityX), Mathf.Clamp(rb2d.velocity.y, -maxVelocityY, maxVelocityY));
+
+		foreach(GameObject planet in planets)
+		{
+			float dist = Vector3.Distance(planet.transform.position, transform.position);
+
+			Debug.LogFormat("dist: {0}, max grav dist: {1}", dist, maxGravDist);
+
+			if (dist <= maxGravDist)
+			{
+				Vector3 v = planet.transform.position - transform.position;
+				rb2d.AddForce(v.normalized * (1.0f - dist / maxGravDist) * maxGravity);
+			}
+		}
 	}
 	
 	void isJumping()
@@ -162,7 +181,21 @@ public class PlayerController : MonoBehaviour {
 		
 		// move left or right
 		rb2d.velocity = new Vector2(horizontalAxis * moveSpeed, rb2d.velocity.y);
-		
+
+		/*
+		vec2 dirToPlant = normalize(planetPos - objectPos);
+		side = vec2(-dirToPlant.y, dirToPlant.x);
+		object.AddForce(side * someForce);
+		*/
+
+		Vector2 dir = planets[0].transform.position - transform.position;
+		Vector2 side = new Vector2(-dir.y, dir.x);
+		rb2d.AddForce(side * moveSpeed);
+
+		//Vector3 v = planet.transform.position - transform.position;
+		//rb2d.AddForce(v.normalized * (1.0f - dist / maxGravDist) * maxGravity);
+
+		/*
 		// apply movement friction on slopes
 		if (groundedOnSlope && rb2d.velocity.x != 0)
 		{
@@ -174,13 +207,16 @@ public class PlayerController : MonoBehaviour {
 				rb2d.velocity = new Vector2(rb2d.velocity.x * moveSlopeFrictionRate, rb2d.velocity.y);
 			}
 		}
-		
+		*/
+
+		/*
 		// prevent the little hop that happens when moving up a slope and stopping
 		if (groundedOnSlope && ! walking && ! jumping && rb2d.velocity.y > 0)
 		{
 			rb2d.velocity = new Vector2(rb2d.velocity.x, 0);
 		}
-		
+		*/
+
 		/*
 		if (groundedOnSlope)
 		{
