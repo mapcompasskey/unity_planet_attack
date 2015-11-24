@@ -2,13 +2,13 @@
 using System.Collections;
 
 [RequireComponent (typeof (Rigidbody2D))]
-public class GravityBody2D : MonoBehaviour {
+public class GravityBody : MonoBehaviour {
 
-	GravityAttractor2D planet;
+	GravityAttractor planet;
 	
 	void Awake()
 	{
-		planet = GameObject.FindGameObjectWithTag("Planet").GetComponent<GravityAttractor2D>();
+		planet = GameObject.FindGameObjectWithTag("Planet").GetComponent<GravityAttractor>();
 		GetComponent<Rigidbody2D>().gravityScale = 0;
 		GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
 	}
