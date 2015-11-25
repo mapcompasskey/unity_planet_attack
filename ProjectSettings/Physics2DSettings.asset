@@ -13,7 +13,7 @@ Physics2DSettings:
   m_MaxAngularCorrection: 8
   m_MaxTranslationSpeed: 100
   m_MaxRotationSpeed: 360
-  m_MinPenetrationForPenalty: .00999999978
+  m_MinPenetrationForPenalty: .00100000005
   m_BaumgarteScale: .200000003
   m_BaumgarteTimeOfImpactScale: .75
   m_TimeToSleep: .5
@@ -22,4 +22,4 @@ Physics2DSettings:
   m_QueriesHitTriggers: 1
   m_QueriesStartInColliders: 1
   m_ChangeStopsCallbacks: 0
-  m_LayerCollisionMatrix: ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+  m_LayerCollisionMatrix: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff9fffffff9ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff

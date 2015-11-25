@@ -1,43 +1,37 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerController : MonoBehaviour {
+public class EnemyController : MonoBehaviour {
 
 	// public references
 	public LayerMask groundLayer;
-	public GameObject playerBullet;
-	//public PhysicsMaterial2D materialDefault;
-	//public PhysicsMaterial2D materialNoFriction;
 	
 	// private references
 	private Rigidbody2D rb2d;
 	private CircleCollider2D collider2d;
-
+	
 	// vectors
 	private Vector3 horizontalVelocity = Vector3.zero;
 	private Vector3 verticalVelocity = Vector3.zero;
-
+	
 	// booleans
 	private bool facingRight = true;
 	private bool grounded = false;
-	private bool canJump = true; // can jump
-	private bool canSlowJump = false; // can reduce jump acceleration
-	private bool jumpButtonState = false; // is jump button up or down
-	//private bool noFriction = false;
-
+	private bool jumpButtonState = false;
+	
 	// boolean states
 	private bool walking = false; // is walking
 	private bool jumping = false; // is jumping
-
+	
 	// floats
-	private float moveSpeed = 8f;
+	private float moveSpeed = 4f;
 	private float jumpSpeed = 16f;
 	private float horizontalAxis = 0;
 	private float maxVelocityX = 1f;
 	private float maxVelocityY = 1f;
-
-	//private Vector3 moveDirection;
-
+	private float actionTime = 0f;
+	private float actionTimer = 0f;
+	
 	void Start()
 	{
 		rb2d = GetComponent<Rigidbody2D>();
@@ -47,7 +41,7 @@ public class PlayerController : MonoBehaviour {
 		maxVelocityX = moveSpeed * 2;
 		maxVelocityY = jumpSpeed * 2;
 	}
-
+	
 	// called every frame
 	// used for regular updates such as: moving non-physics objects, simple timers, recieving inputs
 	// update interval time varies
@@ -55,25 +49,6 @@ public class PlayerController : MonoBehaviour {
 	{
 		CheckInputs();
 		CheckForGround();
-
-		/*
-		if (grounded && noFriction)
-		{
-			noFriction = false;
-			collider2d.sharedMaterial = materialDefault;
-			collider2d.enabled = false;
-			collider2d.enabled = true;
-			Debug.Log (collider2d.sharedMaterial.friction);
-		}
-		else if ( ! grounded && ! noFriction)
-		{
-			noFriction = true;
-			collider2d.sharedMaterial = materialNoFriction;
-			collider2d.enabled = false;
-			collider2d.enabled = true;
-			Debug.Log (collider2d.sharedMaterial.friction);
-		}
-		*/
 	}
 
 	// called every physics step
@@ -90,19 +65,22 @@ public class PlayerController : MonoBehaviour {
 
 	void CheckInputs()
 	{
-		// left or right axis of controls
-		horizontalAxis = Input.GetAxisRaw("Horizontal");
+		actionTimer += Time.deltaTime;
+		if (actionTimer >= actionTime)
+		{
+			// reset timer
+			actionTimer = 0;
+
+			// choose random alert
+			actionTime = Random.Range(2f, 5f);
+
+			// random horizontal input
+			//horizontalAxis = Random.Range(-1, 1);
+			horizontalAxis = (Random.value < 0.5 ? -1 : 1);
+		}
 		
 		// is jump button down
-		//jumpButtonState = Input.GetButton("Jump");
-		jumpButtonState = Input.GetKey(KeyCode.X);
-
-		// fire a bullet
-		if (Input.GetKeyDown(KeyCode.Z))
-		{
-			GameObject bullet = GameObject.Instantiate(playerBullet, transform.position, transform.rotation) as GameObject;
-			bullet.GetComponent<PlayerBulletController>().setFacingRight(facingRight);
-		}
+		jumpButtonState = false;
 	}
 
 	void IsJumping()
@@ -111,40 +89,6 @@ public class PlayerController : MonoBehaviour {
 		// *transform.up returns this objects local "up" direction as a vector in world space
 		// *transform.InverseTransformDirection converts the vector from world space to local space
 		verticalVelocity = transform.up * transform.InverseTransformDirection(rb2d.velocity).y;
-
-		// if grounded after jumping
-		if (grounded && jumping)
-		{
-			jumping = false;
-			canSlowJump = false;
-		}
-		
-		// prevents player hoping continuously if jump button is held down
-		if (grounded && ! canJump && ! jumping && ! jumpButtonState)
-		{
-			canJump = true;
-		}
-		
-		// reduce jumping acceleration
-		if (canSlowJump && jumping && ! jumpButtonState)
-		{
-			canSlowJump = false;
-			if (verticalVelocity.y > 0)
-			{
-				verticalVelocity = verticalVelocity / 2;
-			}
-		}
-		
-		// start jumping
-		if (canJump && grounded && ! jumping && jumpButtonState)
-		{
-			canJump = false;
-			jumping = true;
-			canSlowJump = true;
-
-			// apply local vertical velocity
-			verticalVelocity = transform.up * jumpSpeed;
-		}
 	}
 
 	void IsWalking()
@@ -163,7 +107,7 @@ public class PlayerController : MonoBehaviour {
 			facingRight = false;
 			transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
 		}
-
+		
 		// update local horizontal velocity
 		// *transform.right returns this objects local "right" direction as a vector in world space
 		horizontalVelocity = transform.right * horizontalAxis * moveSpeed;
@@ -185,10 +129,10 @@ public class PlayerController : MonoBehaviour {
 			// raycast out from the center of the circle collider
 			q = Quaternion.AngleAxis(raycastRotations[i], transform.forward * distance);
 			v = q * -transform.up;
-
+			
 			// draw rays on screen
 			Debug.DrawRay(transform.position, v * distance, Color.red);
-
+			
 			// check for hits against the "ground layer"
 			hit = Physics2D.Raycast(transform.position, v, distance, groundLayer);
 			if (hit.collider)
@@ -200,30 +144,6 @@ public class PlayerController : MonoBehaviour {
 				}
 			}
 		}
-	}
-
-	// when touching another 2D Collider
-	/*void OnCollisionEnter2D(Collision2D other)
-	{
-		if (other.transform.tag == "Enemy")
-		{
-
-		}
-	}*/
-
-	// when colliding with a 2D Collider set as a Trigger
-	void OnTriggerEnter2D(Collider2D other)
-	{
-		Debug.Log("name: " + other.name + ", tag: " + other.transform.tag);
-		/*if (other.transform.tag == "Enemy")
-		{
-			Debug.Log("Hit an Enemy: " + other.name);
-		}*/
-	}
-
-	void OnTriggerExit2D(Collider2D other)
-	{
-
 	}
 
 }
