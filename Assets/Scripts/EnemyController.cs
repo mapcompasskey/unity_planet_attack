@@ -76,7 +76,7 @@ public class EnemyController : MonoBehaviour {
 
 			// random horizontal input
 			//horizontalAxis = Random.Range(-1, 1);
-			horizontalAxis = (Random.value < 0.5 ? -1 : 1);
+			horizontalAxis = 0;//(Random.value < 0.5 ? -1 : 1);
 		}
 		
 		// is jump button down
@@ -143,6 +143,14 @@ public class EnemyController : MonoBehaviour {
 					grounded = true;
 				}
 			}
+		}
+	}
+
+	void OnTriggerEnter2D(Collider2D other)
+	{
+		if (other.tag == "Player")
+		{
+			//Debug.LogFormat("gameObject: {0}, other name: {1}, other tag: {2}", gameObject.name, other.name, other.tag);
 		}
 	}
 

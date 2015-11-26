@@ -202,28 +202,12 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
-	// when touching another 2D Collider
-	/*void OnCollisionEnter2D(Collision2D other)
-	{
-		if (other.transform.tag == "Enemy")
-		{
-
-		}
-	}*/
-
-	// when colliding with a 2D Collider set as a Trigger
 	void OnTriggerEnter2D(Collider2D other)
 	{
-		Debug.Log("name: " + other.name + ", tag: " + other.transform.tag);
-		/*if (other.transform.tag == "Enemy")
+		if (other.tag == "Enemy")
 		{
-			Debug.Log("Hit an Enemy: " + other.name);
-		}*/
-	}
-
-	void OnTriggerExit2D(Collider2D other)
-	{
-
+			//Debug.LogFormat("gameObject: {0}, other name: {1}, other tag: {2}", gameObject.name, other.name, other.tag);
+		}
 	}
 
 }

@@ -7,6 +7,8 @@ TagManager:
   - Planet
   - Enemy
   - PlayerBullet
+  - PlayerTrigger
+  - EnemyTrigger
   layers:
   - Default
   - TransparentFX
