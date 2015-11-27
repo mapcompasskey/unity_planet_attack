@@ -169,6 +169,7 @@ public class EnemyController : MonoBehaviour {
 		health -= damage;
 		if (health <= 0)
 		{
+			EntitySpawner.enemySpawnCounter--;
 			Destroy(gameObject);
 		}
 	}
