@@ -22,7 +22,10 @@ public class EnemyController : MonoBehaviour {
 	// boolean states
 	private bool walking = false; // is walking
 	private bool jumping = false; // is jumping
-	
+
+	// integers
+	private int health = 10;
+
 	// floats
 	private float moveSpeed = 4f;
 	private float jumpSpeed = 16f;
@@ -76,7 +79,7 @@ public class EnemyController : MonoBehaviour {
 
 			// random horizontal input
 			//horizontalAxis = Random.Range(-1, 1);
-			horizontalAxis = 0;//(Random.value < 0.5 ? -1 : 1);
+			horizontalAxis = (Random.value < 0.5 ? -1 : 1);
 		}
 		
 		// is jump button down
@@ -148,9 +151,25 @@ public class EnemyController : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other)
 	{
-		if (other.tag == "Player")
+		switch (other.tag)
 		{
-			//Debug.LogFormat("gameObject: {0}, other name: {1}, other tag: {2}", gameObject.name, other.name, other.tag);
+			case "Player":
+				//Debug.LogFormat("gameObject: {0}, other name: {1}, other tag: {2}", gameObject.name, other.name, other.tag);
+				break;
+
+			case "PlayerBullet":
+				Destroy(other.gameObject);
+				TakeDamage(10);
+				break;
+		}
+	}
+
+	void TakeDamage(int damage)
+	{
+		health -= damage;
+		if (health <= 0)
+		{
+			Destroy(gameObject);
 		}
 	}
 

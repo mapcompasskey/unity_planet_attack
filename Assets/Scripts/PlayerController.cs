@@ -100,7 +100,8 @@ public class PlayerController : MonoBehaviour {
 		// fire a bullet
 		if (Input.GetKeyDown(KeyCode.Z))
 		{
-			GameObject bullet = GameObject.Instantiate(playerBullet, transform.position, transform.rotation) as GameObject;
+			Vector3 bulletPos = transform.position + (transform.right * (facingRight ? 1 : -1));
+			GameObject bullet = GameObject.Instantiate(playerBullet, bulletPos, transform.rotation) as GameObject;
 			bullet.GetComponent<PlayerBulletController>().setFacingRight(facingRight);
 		}
 	}
@@ -187,7 +188,7 @@ public class PlayerController : MonoBehaviour {
 			v = q * -transform.up;
 
 			// draw rays on screen
-			Debug.DrawRay(transform.position, v * distance, Color.red);
+			//Debug.DrawRay(transform.position, v * distance, Color.red);
 
 			// check for hits against the "ground layer"
 			hit = Physics2D.Raycast(transform.position, v, distance, groundLayer);

@@ -72,13 +72,13 @@ public class PlayerBulletController : MonoBehaviour {
 		Destroy(gameObject);
 	}
 
-	void OnTriggerEnter2D(Collider2D other)
+	/*void OnTriggerEnter2D(Collider2D other)
 	{
 		if (other.tag == "Enemy")
 		{
 			Destroy(gameObject);
 		}
-	}
+	}*/
 
 	public void setFacingRight(bool val)
 	{
