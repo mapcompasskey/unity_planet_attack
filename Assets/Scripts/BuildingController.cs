@@ -68,7 +68,7 @@ public class BuildingController : MonoBehaviour {
 		{
 			case "PlayerBullet":
 				Destroy(other.gameObject);
-				TakeDamage(10);
+				TakeDamage(4);
 				break;
 		}
 	}
@@ -78,7 +78,7 @@ public class BuildingController : MonoBehaviour {
 		health -= damage;
 		if (health <= 0)
 		{
-			EntitySpawner.enemySpawnCounter--;
+			EntitySpawner.buildingSpawnCounter--;
 			Destroy(gameObject);
 		}
 	}

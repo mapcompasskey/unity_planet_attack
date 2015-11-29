@@ -7,8 +7,7 @@ TagManager:
   - Planet
   - Enemy
   - PlayerBullet
-  - PlayerTrigger
-  - EnemyTrigger
+  - Building
   layers:
   - Default
   - TransparentFX
@@ -19,9 +18,9 @@ TagManager:
   - 
   - 
   - Ground
-  - Entity
-  - 
-  - 
+  - Player
+  - Enemy
+  - Building
   - 
   - 
   - 

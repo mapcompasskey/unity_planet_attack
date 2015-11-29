@@ -19,7 +19,7 @@ public class PlayerBulletController : MonoBehaviour {
 	private float horizontalAxis = 0;
 	private float maxVelocityX = 1f;
 	private float maxVelocityY = 1f;
-	private float killTime = 3f;
+	private float killTime = 0.5f;
 
 	void Start()
 	{

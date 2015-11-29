@@ -148,7 +148,7 @@ public class EnemyController : MonoBehaviour {
 			}
 		}
 	}
-
+	
 	void OnTriggerEnter2D(Collider2D other)
 	{
 		switch (other.tag)
