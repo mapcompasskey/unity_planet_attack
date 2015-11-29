@@ -23,8 +23,10 @@ public class EntitySpawner : MonoBehaviour {
 
 	// integers
 	private int enemySpawns = 10;
-	private int buildingSpawns = 10;
+	public static int enemyKillCounter = 0;
 	public static int enemySpawnCounter = 0;
+	private int buildingSpawns = 10;
+	public static int buildingKillCounter = 0;
 	public static int buildingSpawnCounter = 0;
 
 	// floats
@@ -55,6 +57,8 @@ public class EntitySpawner : MonoBehaviour {
 		Debug.DrawRay(planetPos, playerPos2, Color.yellow);
 
 		strSpawnerText = "";
+		strSpawnerText += " Enemies Destroyed: " + enemyKillCounter.ToString("n0");
+		strSpawnerText += "\n Buildings Destroyed: " + buildingKillCounter.ToString("n0");
 		
 		// spawn entities
 		EnemySpawner();
@@ -70,11 +74,11 @@ public class EntitySpawner : MonoBehaviour {
 		// test if there is anything from the layer mask inside the area opposite the player
 		if (Physics2D.OverlapCircle(playerPos2, dist, enemyTriggerLayerMask))
 		{
-			strSpawnerText += "\n Enemies: Overlapping";
+			//strSpawnerText += "\n Enemies: Overlapping";
 		}
 		else
 		{
-			strSpawnerText += "\n Enemies: No Overlap";
+			//strSpawnerText += "\n Enemies: No Overlap";
 			
 			if (enemySpawnCounter < enemySpawns)
 			{
@@ -120,11 +124,11 @@ public class EntitySpawner : MonoBehaviour {
 		// test if there is anything from the layer mask inside the area opposite the player
 		if (Physics2D.OverlapCircle(playerPos2, dist, buildingTriggerLayerMask))
 		{
-			strSpawnerText += "\n Buildings: Overlapping";
+			//strSpawnerText += "\n Buildings: Overlapping";
 		}
 		else
 		{
-			strSpawnerText += "\n Buildings: No Overlap";
+			//strSpawnerText += "\n Buildings: No Overlap";
 			
 			if (buildingSpawnCounter < buildingSpawns)
 			{
