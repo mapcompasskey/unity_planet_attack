@@ -22,12 +22,15 @@ public class EntitySpawner : MonoBehaviour {
 	private Vector3 playerPos2 = Vector3.zero;
 
 	// integers
-	private int enemySpawns = 10;
+	private int enemySpawns = 0;
 	public static int enemyKillCounter = 0;
 	public static int enemySpawnCounter = 0;
-	private int buildingSpawns = 10;
+	private int buildingSpawns = 0;
 	public static int buildingKillCounter = 0;
 	public static int buildingSpawnCounter = 0;
+
+	public int enemySpawnsPublic = 0;
+	public int buildingSpawnsPublic = 0;
 
 	// floats
 	private float planetRadius = 0f;
@@ -40,6 +43,8 @@ public class EntitySpawner : MonoBehaviour {
 	{
 		player = GameObject.FindGameObjectWithTag("Player");
 		planet = GameObject.FindGameObjectWithTag("Planet");
+		enemySpawns = enemySpawnsPublic;
+		buildingSpawns = buildingSpawnsPublic;
 	}
 
 	void Update()
