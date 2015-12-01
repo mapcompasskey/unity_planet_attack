@@ -20,7 +20,7 @@ public class MinimapController : MonoBehaviour {
 
 	void AlignTopRight()
 	{
-		Vector3 pos = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width - 50, Screen.height - 50, 0));
+		Vector3 pos = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width - 75, Screen.height - 75, 0));
 		transform.position = new Vector2(pos.x, pos.y);
 		//transform.rotation = Camera.main.transform.rotation;
 	}
