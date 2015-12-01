@@ -6,12 +6,15 @@ public class PlayerController : MonoBehaviour {
 	// public references
 	public LayerMask groundLayer;
 	public GameObject playerBullet;
+	public GameObject playerBlip;
 	//public PhysicsMaterial2D materialDefault;
 	//public PhysicsMaterial2D materialNoFriction;
 	
 	// private references
 	private Rigidbody2D rb2d;
 	private CircleCollider2D collider2d;
+	private GameObject minimap;
+	private GameObject blip;
 
 	// vectors
 	private Vector3 horizontalVelocity = Vector3.zero;
@@ -46,6 +49,15 @@ public class PlayerController : MonoBehaviour {
 		// update max velocities
 		maxVelocityX = moveSpeed * 2;
 		maxVelocityY = jumpSpeed * 2;
+
+		// add a blip to the minimap
+		minimap = GameObject.Find("Minimap").gameObject;
+		if (minimap)
+		{
+			blip = Instantiate(playerBlip, Vector3.zero, Quaternion.identity) as GameObject;
+			//blip.transform.parent = minimap.transform;
+			blip.transform.SetParent(minimap.transform, false);
+		}
 	}
 
 	// called every frame
@@ -86,6 +98,14 @@ public class PlayerController : MonoBehaviour {
 		
 		// update the current velocity
 		rb2d.velocity = horizontalVelocity + verticalVelocity;
+
+		// update blip in minimap
+		if (blip)
+		{
+			Vector3 v3 = new Vector3(transform.position.x, transform.position.y, -10);
+			blip.transform.localPosition = v3;// - (transform.up * 14.25f);
+			blip.transform.rotation = transform.rotation;
+		}
 	}
 
 	void CheckInputs()

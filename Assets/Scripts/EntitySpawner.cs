@@ -87,7 +87,7 @@ public class EntitySpawner : MonoBehaviour {
 			
 			if (enemySpawnCounter < enemySpawns)
 			{
-				Vector3 newPos = playerPos2 + (-player.transform.up);
+				Vector3 newPos = playerPos2 - (player.transform.up * 0.5f);
 				Instantiate(enemyObject, newPos, Quaternion.identity);
 				enemySpawnCounter++;
 			}
