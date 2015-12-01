@@ -55,7 +55,6 @@ public class PlayerController : MonoBehaviour {
 		if (minimap)
 		{
 			blip = Instantiate(playerBlip, Vector3.zero, Quaternion.identity) as GameObject;
-			//blip.transform.parent = minimap.transform;
 			blip.transform.SetParent(minimap.transform, false);
 		}
 	}
@@ -102,8 +101,7 @@ public class PlayerController : MonoBehaviour {
 		// update blip in minimap
 		if (blip)
 		{
-			Vector3 v3 = new Vector3(transform.position.x, transform.position.y, -10);
-			blip.transform.localPosition = v3;// - (transform.up * 14.25f);
+			blip.transform.localPosition = transform.position;
 			blip.transform.rotation = transform.rotation;
 		}
 	}

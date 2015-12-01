@@ -52,23 +52,16 @@ public class EnemyController : MonoBehaviour {
 		if (minimap)
 		{
 			blip = Instantiate(enemyBlip, Vector3.zero, Quaternion.identity) as GameObject;
-			//blip.transform.parent = minimap.transform;
 			blip.transform.SetParent(minimap.transform, false);
 		}
 	}
-	
-	// called every frame
-	// used for regular updates such as: moving non-physics objects, simple timers, recieving inputs
-	// update interval time varies
+
 	void Update()
 	{
 		CheckInputs();
 		CheckForGround();
 	}
-
-	// called every physics step
-	// fixed update intervals are consistent
-	// used for regular updates such as: adjusting physics (Rigidbody) objects
+	
 	void FixedUpdate ()
 	{
 		IsJumping();
@@ -80,8 +73,7 @@ public class EnemyController : MonoBehaviour {
 		// update blip in minimap
 		if (blip)
 		{
-			Vector3 v3 = new Vector3(transform.position.x, transform.position.y, -10);
-			blip.transform.localPosition = v3;// - (transform.up * 14.25f);
+			blip.transform.localPosition = transform.position;
 			blip.transform.rotation = transform.rotation;
 		}
 	}
