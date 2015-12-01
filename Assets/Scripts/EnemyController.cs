@@ -5,11 +5,14 @@ public class EnemyController : MonoBehaviour {
 
 	// public references
 	public LayerMask groundLayer;
+	public GameObject enemyBlip;
 	
 	// private references
 	private Rigidbody2D rb2d;
 	private CircleCollider2D collider2d;
-	
+	private GameObject minimap;
+	private GameObject blip;
+
 	// vectors
 	private Vector3 horizontalVelocity = Vector3.zero;
 	private Vector3 verticalVelocity = Vector3.zero;
@@ -43,6 +46,11 @@ public class EnemyController : MonoBehaviour {
 		// update max velocities
 		maxVelocityX = moveSpeed * 2;
 		maxVelocityY = jumpSpeed * 2;
+
+		// add a blip to the minimap
+		minimap = GameObject.Find("Minimap").gameObject;
+		blip = Instantiate(enemyBlip, Vector3.zero, Quaternion.identity) as GameObject;
+		blip.transform.parent = minimap.transform;
 	}
 	
 	// called every frame
@@ -64,6 +72,26 @@ public class EnemyController : MonoBehaviour {
 		
 		// update the current velocity
 		rb2d.velocity = horizontalVelocity + verticalVelocity;
+
+		// update blip in minimap
+		//Vector2 v2 = minimap.transform.InverseTransformVector(transform.position);
+		//Vector2 v2 = transform.InverseTransformPoint(minimap.transform.position);
+		//blip.transform.position = v2;//new Vector2(transform.position.x, transform.position.y);
+
+		//blip.transform.position = transform.position;
+		//blip.transform.position = minimap.transform.InverseTransformPoint(transform.position);
+		//blip.transform.position = minimap.transform.InverseTransformVector(transform.position);
+
+		Vector3 v3 = new Vector3(transform.position.x, transform.position.y, -10);
+		blip.transform.localPosition = v3;
+		blip.transform.rotation = transform.rotation;
+
+		//float angle = Vector3.Angle(blip.transform.position, minimap.transform.position);
+		//Quaternion q = Quaternion.AngleAxis(angle, transform.forward * 5f);
+		//Vector3 v3b = q * -transform.up;
+
+		//blip.transform.localPosition = q * -transform.up;
+		//blip.transform.localPosition -= q;
 	}
 
 	void CheckInputs()
@@ -134,7 +162,7 @@ public class EnemyController : MonoBehaviour {
 			v = q * -transform.up;
 			
 			// draw rays on screen
-			Debug.DrawRay(transform.position, v * distance, Color.red);
+			//Debug.DrawRay(transform.position, v * distance, Color.red);
 			
 			// check for hits against the "ground layer"
 			hit = Physics2D.Raycast(transform.position, v, distance, groundLayer);
