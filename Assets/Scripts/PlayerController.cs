@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour {
 	// private references
 	private Rigidbody2D rb2d;
 	private CircleCollider2D collider2d;
+	private Animator anim;
 	private GameObject minimap;
 	private GameObject blip;
 
@@ -38,6 +39,7 @@ public class PlayerController : MonoBehaviour {
 	private float horizontalAxis = 0;
 	private float maxVelocityX = 1f;
 	private float maxVelocityY = 1f;
+	private float velocityY = 0f;
 
 	//private Vector3 moveDirection;
 
@@ -45,6 +47,7 @@ public class PlayerController : MonoBehaviour {
 	{
 		rb2d = GetComponent<Rigidbody2D>();
 		collider2d = GetComponent<CircleCollider2D>();
+		anim = GetComponent<Animator>();
 		
 		// update max velocities
 		maxVelocityX = moveSpeed * 2;
@@ -67,24 +70,11 @@ public class PlayerController : MonoBehaviour {
 		CheckInputs();
 		CheckForGround();
 
-		/*
-		if (grounded && noFriction)
-		{
-			noFriction = false;
-			collider2d.sharedMaterial = materialDefault;
-			collider2d.enabled = false;
-			collider2d.enabled = true;
-			Debug.Log (collider2d.sharedMaterial.friction);
-		}
-		else if ( ! grounded && ! noFriction)
-		{
-			noFriction = true;
-			collider2d.sharedMaterial = materialNoFriction;
-			collider2d.enabled = false;
-			collider2d.enabled = true;
-			Debug.Log (collider2d.sharedMaterial.friction);
-		}
-		*/
+		// update animator parameters
+		anim.SetBool("Grounded", grounded);
+		anim.SetBool("Walking", walking);
+		anim.SetBool("Jumping", jumping);
+		anim.SetFloat("Y Velocity", velocityY);
 	}
 
 	// called every physics step
@@ -129,7 +119,8 @@ public class PlayerController : MonoBehaviour {
 		// get the current local y velocity
 		// *transform.up returns this objects local "up" direction as a vector in world space
 		// *transform.InverseTransformDirection converts the vector from world space to local space
-		verticalVelocity = transform.up * transform.InverseTransformDirection(rb2d.velocity).y;
+		velocityY = transform.InverseTransformDirection(rb2d.velocity).y;
+		verticalVelocity = transform.up * velocityY;
 
 		// if grounded after jumping
 		if (grounded && jumping)
@@ -195,7 +186,9 @@ public class PlayerController : MonoBehaviour {
 		RaycastHit2D hit;
 		float distance = collider2d.radius + 0.15f;
 		float[] raycastRotations = new float[] {40f, 20f, 0f, -20f, -40f};
-		
+
+		//Debug.LogFormat("position: {0} - collider: {1} - offset {2} - center: {3}", transform.position, collider2d.transform.position, collider2d.offset, collider2d.bounds.center);
+
 		// reset parameters
 		grounded = false;
 		
@@ -221,16 +214,15 @@ public class PlayerController : MonoBehaviour {
 			}
 			*/
 
-			// raycast out from the center of the circle collider (taking into account collider offset)
-			q = Quaternion.AngleAxis(raycastRotations[i], collider2d.transform.forward * distance);
-			v = q * -collider2d.transform.up;
-			Vector3 offset = new Vector3(collider2d.offset.x, collider2d.offset.y, 0);
+			// raycast out from the center of the circle collider - taking into account the collider's position
+			q = Quaternion.AngleAxis(raycastRotations[i], transform.forward * distance);
+			v = q * -transform.up;
 
 			// draw rays on screen
-			//Debug.DrawRay(transform.position + offset, v * distance, Color.red);
-
+			Debug.DrawRay(collider2d.bounds.center, v * distance, Color.red);
+			
 			// check for hits against the "ground layer"
-			hit = Physics2D.Raycast(transform.position + offset, v, distance, groundLayer);
+			hit = Physics2D.Raycast(collider2d.bounds.center, v, distance, groundLayer);
 			if (hit.collider)
 			{
 				// prevents collision happening while inside a collider
@@ -239,6 +231,7 @@ public class PlayerController : MonoBehaviour {
 					grounded = true;
 				}
 			}
+
 		}
 	}
 
