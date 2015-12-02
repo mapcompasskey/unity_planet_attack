@@ -53,6 +53,7 @@ public class EnemyController : MonoBehaviour {
 		{
 			blip = Instantiate(enemyBlip, Vector3.zero, Quaternion.identity) as GameObject;
 			blip.transform.SetParent(minimap.transform, false);
+			blip.SetActive(false);
 		}
 	}
 
@@ -74,7 +75,7 @@ public class EnemyController : MonoBehaviour {
 		if (blip)
 		{
 			blip.transform.localPosition = transform.position;
-			blip.transform.rotation = transform.rotation;
+			blip.SetActive(true);
 		}
 	}
 

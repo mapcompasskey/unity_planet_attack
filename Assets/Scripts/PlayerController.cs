@@ -92,7 +92,6 @@ public class PlayerController : MonoBehaviour {
 		if (blip)
 		{
 			blip.transform.localPosition = transform.position;
-			blip.transform.rotation = transform.rotation;
 		}
 	}
 

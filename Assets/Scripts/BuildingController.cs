@@ -30,6 +30,7 @@ public class BuildingController : MonoBehaviour {
 		{
 			blip = Instantiate(buildingBlip, Vector3.zero, Quaternion.identity) as GameObject;
 			blip.transform.SetParent(minimap.transform, false);
+			blip.SetActive(false);
 		}
 	}
 
@@ -39,7 +40,7 @@ public class BuildingController : MonoBehaviour {
 		if (blip)
 		{
 			blip.transform.localPosition = transform.position;
-			blip.transform.rotation = transform.rotation;
+			blip.SetActive(true);
 		}
 	}
 

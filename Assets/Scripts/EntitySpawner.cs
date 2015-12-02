@@ -59,7 +59,8 @@ public class EntitySpawner : MonoBehaviour {
 
 		// draw a line to the opposite side of the player from the center of planet
 		playerPos2 = player.transform.up * -planetRadius;
-		Debug.DrawRay(planetPos, playerPos2, Color.yellow);
+		playerPos2 = new Vector3(playerPos2.x, playerPos2.y, -10);
+		Debug.DrawLine(planetPos, playerPos2, Color.yellow, 0, false);
 
 		strSpawnerText = "";
 		strSpawnerText += " Enemies Destroyed: " + enemyKillCounter.ToString("n0");
@@ -77,17 +78,13 @@ public class EntitySpawner : MonoBehaviour {
 		float dist = 2;
 
 		// test if there is anything from the layer mask inside the area opposite the player
-		if (Physics2D.OverlapCircle(playerPos2, dist, enemyTriggerLayerMask))
+		if ( ! Physics2D.OverlapCircle(playerPos2, dist, enemyTriggerLayerMask))
 		{
-			//strSpawnerText += "\n Enemies: Overlapping";
-		}
-		else
-		{
-			//strSpawnerText += "\n Enemies: No Overlap";
-			
 			if (enemySpawnCounter < enemySpawns)
 			{
 				Vector3 newPos = playerPos2 - (player.transform.up * 0.5f);
+				newPos = new Vector3(newPos.x, newPos.y, enemyObject.transform.position.z);
+
 				Instantiate(enemyObject, newPos, Quaternion.identity);
 				enemySpawnCounter++;
 			}
@@ -138,6 +135,8 @@ public class EntitySpawner : MonoBehaviour {
 			if (buildingSpawnCounter < buildingSpawns)
 			{
 				Vector3 newPos = new Vector3(playerPos2.x, playerPos2.y, 5) + (-player.transform.up);
+				newPos = new Vector3(newPos.x, newPos.y, buildingObject.transform.position.z);
+
 				Instantiate(buildingObject, newPos, Quaternion.identity);
 				buildingSpawnCounter++;
 			}
