@@ -218,7 +218,7 @@ public class PlayerController : MonoBehaviour {
 			v = q * -transform.up;
 
 			// draw rays on screen
-			Debug.DrawRay(collider2d.bounds.center, v * distance, Color.red);
+			//Debug.DrawRay(collider2d.bounds.center, v * distance, Color.red);
 			
 			// check for hits against the "ground layer"
 			hit = Physics2D.Raycast(collider2d.bounds.center, v, distance, groundLayer);
