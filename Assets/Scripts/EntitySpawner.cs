@@ -34,6 +34,8 @@ public class EntitySpawner : MonoBehaviour {
 
 	// floats
 	private float planetRadius = 0f;
+	private float enemySpawnRadius = 2f;
+	private float buildingSpawnRadius = 4f;
 
 	// strings
 	private string strSpawnerText;
@@ -75,10 +77,8 @@ public class EntitySpawner : MonoBehaviour {
 
 	void EnemySpawner()
 	{
-		float dist = 2;
-
 		// test if there is anything from the layer mask inside the area opposite the player
-		if ( ! Physics2D.OverlapCircle(playerPos2, dist, enemyTriggerLayerMask))
+		if ( ! Physics2D.OverlapCircle(playerPos2, enemySpawnRadius, enemyTriggerLayerMask))
 		{
 			if (enemySpawnCounter < enemySpawns)
 			{
@@ -95,11 +95,11 @@ public class EntitySpawner : MonoBehaviour {
 		Vector3 v1, v2;
 		for (int i = 0; i < 360; i += 30)
 		{
-			q1 = Quaternion.AngleAxis(i, transform.forward * dist);
-			v1 = q1 * transform.up * dist;
+			q1 = Quaternion.AngleAxis(i, transform.forward * enemySpawnRadius);
+			v1 = q1 * transform.up * enemySpawnRadius;
 			
-			q2 = Quaternion.AngleAxis(i + 30, transform.forward * dist);
-			v2 = q2 * transform.up * dist;
+			q2 = Quaternion.AngleAxis(i + 30, transform.forward * enemySpawnRadius);
+			v2 = q2 * transform.up * enemySpawnRadius;
 
 			Debug.DrawLine(playerPos2 + v1, playerPos2 + v2, Color.yellow, 0, false);
 		}
@@ -111,9 +111,9 @@ public class EntitySpawner : MonoBehaviour {
 		for (int i = 0; i < 360; i += 30)
 		{
 			// raycast out from the center of the circle collider
-			qX = Quaternion.AngleAxis(i, transform.forward * dist);
+			qX = Quaternion.AngleAxis(i, transform.forward * enemySpawnRadius);
 			vX = qX * player.transform.up;
-			Debug.DrawRay(playerPos2, vX * dist, Color.cyan);
+			Debug.DrawRay(playerPos2, vX * enemySpawnRadius, Color.cyan);
 		}
 		*/
 
@@ -121,17 +121,9 @@ public class EntitySpawner : MonoBehaviour {
 
 	void BuildingSpawner()
 	{
-		float dist = 4;
-		
 		// test if there is anything from the layer mask inside the area opposite the player
-		if (Physics2D.OverlapCircle(playerPos2, dist, buildingTriggerLayerMask))
+		if ( ! Physics2D.OverlapCircle(playerPos2, buildingSpawnRadius, buildingTriggerLayerMask))
 		{
-			//strSpawnerText += "\n Buildings: Overlapping";
-		}
-		else
-		{
-			//strSpawnerText += "\n Buildings: No Overlap";
-			
 			if (buildingSpawnCounter < buildingSpawns)
 			{
 				Vector3 newPos = new Vector3(playerPos2.x, playerPos2.y, 5) + (-player.transform.up);
@@ -139,6 +131,9 @@ public class EntitySpawner : MonoBehaviour {
 
 				Instantiate(buildingObject, newPos, Quaternion.identity);
 				buildingSpawnCounter++;
+
+				// change spawn radius
+				buildingSpawnRadius = Random.Range(4F, 8F);
 			}
 		}
 		
@@ -147,11 +142,11 @@ public class EntitySpawner : MonoBehaviour {
 		Vector3 v1, v2;
 		for (int i = 0; i < 360; i += 30)
 		{
-			q1 = Quaternion.AngleAxis(i, transform.forward * dist);
-			v1 = q1 * transform.up * dist;
+			q1 = Quaternion.AngleAxis(i, transform.forward * buildingSpawnRadius);
+			v1 = q1 * transform.up * buildingSpawnRadius;
 			
-			q2 = Quaternion.AngleAxis(i + 30, transform.forward * dist);
-			v2 = q2 * transform.up * dist;
+			q2 = Quaternion.AngleAxis(i + 30, transform.forward * buildingSpawnRadius);
+			v2 = q2 * transform.up * buildingSpawnRadius;
 			
 			Debug.DrawLine(playerPos2 + v1, playerPos2 + v2, Color.yellow, 0, false);
 		}
