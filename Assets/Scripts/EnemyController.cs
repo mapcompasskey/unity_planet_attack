@@ -5,14 +5,11 @@ public class EnemyController : MonoBehaviour {
 
 	// public references
 	public LayerMask groundLayer;
-	public GameObject enemyBlip;
 	
 	// private references
 	private Rigidbody2D rb2d;
 	private CircleCollider2D collider2d;
 	private Animator anim;
-	private GameObject minimap;
-	private GameObject blip;
 
 	// vectors
 	private Vector3 horizontalVelocity = Vector3.zero;
@@ -48,15 +45,6 @@ public class EnemyController : MonoBehaviour {
 		// update max velocities
 		maxVelocityX = moveSpeed * 2;
 		maxVelocityY = jumpSpeed * 2;
-
-		// add a blip to the minimap
-		minimap = GameObject.Find("Minimap").gameObject;
-		if (minimap)
-		{
-			blip = Instantiate(enemyBlip, Vector3.zero, Quaternion.identity) as GameObject;
-			blip.transform.SetParent(minimap.transform, false);
-			blip.SetActive(false);
-		}
 	}
 
 	void Update()
@@ -76,13 +64,6 @@ public class EnemyController : MonoBehaviour {
 		
 		// update the current velocity
 		rb2d.velocity = horizontalVelocity + verticalVelocity;
-
-		// update blip in minimap
-		if (blip)
-		{
-			blip.transform.localPosition = transform.position;
-			blip.SetActive(true);
-		}
 	}
 
 	void CheckInputs()
@@ -190,7 +171,6 @@ public class EnemyController : MonoBehaviour {
 		{
 			EntitySpawner.enemyKillCounter++;
 			EntitySpawner.enemySpawnCounter--;
-			Destroy(blip);
 			Destroy(gameObject);
 		}
 	}
