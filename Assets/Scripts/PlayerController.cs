@@ -91,8 +91,17 @@ public class PlayerController : MonoBehaviour {
 		if (Input.GetKeyDown(KeyCode.Z))
 		{
 			Vector3 bulletPos = transform.position + (transform.right * (facingRight ? 1 : -1));
+			string direction = "forward";
+
+			if (Input.GetKey(KeyCode.UpArrow))
+			{
+				bulletPos = transform.position + transform.up;
+				direction = "up";
+			}
+
 			GameObject bullet = GameObject.Instantiate(playerBullet, bulletPos, transform.rotation) as GameObject;
-			bullet.GetComponent<PlayerBulletController>().setFacingRight(facingRight);
+			bullet.GetComponent<PlayerBulletController>().SetFacingRight(facingRight);
+			bullet.GetComponent<PlayerBulletController>().SetDirection(direction);
 		}
 	}
 

@@ -21,6 +21,8 @@ public class PlayerBulletController : MonoBehaviour {
 	private float maxVelocityY = 1f;
 	private float killTime = 0.5f;
 
+	private string direction = "forward";
+
 	void Start()
 	{
 		rb2d = GetComponent<Rigidbody2D>();
@@ -49,6 +51,21 @@ public class PlayerBulletController : MonoBehaviour {
 
 	void IsMoving()
 	{
+		if (direction == "forward")
+		{
+			horizontalVelocity = transform.right * horizontalAxis * moveSpeed;
+			verticalVelocity = Vector3.zero;
+		}
+		else if (direction == "up")
+		{
+			horizontalVelocity = Vector3.zero;
+			verticalVelocity = transform.up * moveSpeed;
+		}
+	}
+
+	/*
+	void IsMoving()
+	{
 		// if just moved right
 		if (horizontalAxis > 0 && ! facingRight)
 		{
@@ -66,6 +83,7 @@ public class PlayerBulletController : MonoBehaviour {
 		// *transform.right returns this objects local "right" direction as a vector in world space
 		horizontalVelocity = transform.right * horizontalAxis * moveSpeed;
 	}
+	*/
 	
 	void OnCollisionEnter2D(Collision2D other)
 	{
@@ -80,9 +98,14 @@ public class PlayerBulletController : MonoBehaviour {
 		}
 	}*/
 
-	public void setFacingRight(bool val)
+	public void SetFacingRight(bool val)
 	{
 		facingRight = val;
+	}
+
+	public void SetDirection(string val)
+	{
+		direction = val;
 	}
 
 }
