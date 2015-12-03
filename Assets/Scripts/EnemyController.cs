@@ -10,6 +10,7 @@ public class EnemyController : MonoBehaviour {
 	// private references
 	private Rigidbody2D rb2d;
 	private CircleCollider2D collider2d;
+	private Animator anim;
 	private GameObject minimap;
 	private GameObject blip;
 
@@ -42,6 +43,7 @@ public class EnemyController : MonoBehaviour {
 	{
 		rb2d = GetComponent<Rigidbody2D>();
 		collider2d = GetComponent<CircleCollider2D>();
+		anim = GetComponent<Animator>();
 		
 		// update max velocities
 		maxVelocityX = moveSpeed * 2;
@@ -61,6 +63,10 @@ public class EnemyController : MonoBehaviour {
 	{
 		CheckInputs();
 		CheckForGround();
+
+		// update animator parameters
+		anim.SetBool("Grounded", grounded);
+		anim.SetBool("Walking", walking);
 	}
 	
 	void FixedUpdate ()
@@ -142,6 +148,7 @@ public class EnemyController : MonoBehaviour {
 		
 		for (int i = 0; i < raycastRotations.Length; i++)
 		{
+			/*
 			// raycast out from the center of the circle collider
 			q = Quaternion.AngleAxis(raycastRotations[i], transform.forward * distance);
 			v = q * -transform.up;
@@ -151,6 +158,25 @@ public class EnemyController : MonoBehaviour {
 			
 			// check for hits against the "ground layer"
 			hit = Physics2D.Raycast(transform.position, v, distance, groundLayer);
+			if (hit.collider)
+			{
+				// prevents collision happening while inside a collider
+				if (hit.distance - collider2d.radius > 0)
+				{
+					grounded = true;
+				}
+			}
+			*/
+
+			// raycast out from the center of the circle collider - taking into account the collider's position
+			q = Quaternion.AngleAxis(raycastRotations[i], transform.forward * distance);
+			v = q * -transform.up;
+			
+			// draw rays on screen
+			//Debug.DrawRay(collider2d.bounds.center, v * distance, Color.red);
+			
+			// check for hits against the "ground layer"
+			hit = Physics2D.Raycast(collider2d.bounds.center, v, distance, groundLayer);
 			if (hit.collider)
 			{
 				// prevents collision happening while inside a collider

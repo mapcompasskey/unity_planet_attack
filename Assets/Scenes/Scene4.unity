@@ -537,7 +537,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnerText: {fileID: 1721397352}
-  enemyObject: {fileID: 197016, guid: 64078884ed2559c4795c5a10a15c1650, type: 2}
+  enemyObject: {fileID: 104606, guid: 09754ab23066e48418d6e93fecde03b1, type: 2}
   enemyTriggerLayerMask:
     serializedVersion: 2
     m_Bits: 1024
