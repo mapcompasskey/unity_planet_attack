@@ -25,10 +25,10 @@ public class EntitySpawner : MonoBehaviour {
 	private CircleCollider2D planetCollider2d;
 
 	// vectors
-	private Vector3 playerPos = Vector3.zero;
-	private Vector3 planetPos = Vector3.zero;
-	private Vector3 playerPos2 = Vector3.zero;
-	private Vector3 playerPos3 = Vector3.zero;
+	private Vector3 playerPosition = Vector3.zero;
+	private Vector3 planetPosition = Vector3.zero;
+	private Vector3 groundPosition = Vector3.zero;
+	private Vector3 airPosition = Vector3.zero;
 
 	// integers
 	private int enemySpawns = 0;
@@ -66,24 +66,25 @@ public class EntitySpawner : MonoBehaviour {
 	void Update()
 	{
 		// player and planet positions
-		playerPos = new Vector3(player.transform.position.x, player.transform.position.y, -10);
-		planetPos = new Vector3(planet.transform.position.x, planet.transform.position.y, -10);
+		playerPosition = new Vector3(player.transform.position.x, player.transform.position.y, -10);
+		planetPosition = new Vector3(planet.transform.position.x, planet.transform.position.y, -10);
 
 		// the planet's radius
 		planetCollider2d = planet.GetComponent<CircleCollider2D>();
 		planetRadius = planetCollider2d.radius * planet.transform.localScale.x;
 
 		// draw a line to the opposite side of the player from the center of planet
-		playerPos2 = player.transform.up * -planetRadius;
-		playerPos2 = new Vector3(playerPos2.x, playerPos2.y, -10);
-		Debug.DrawLine(planetPos, playerPos2, Color.yellow, 0, false);
+		groundPosition = player.transform.up * -planetRadius;
+		groundPosition = new Vector3(groundPosition.x, groundPosition.y, -10);
+		Debug.DrawLine(planetPosition, groundPosition, Color.yellow, 0, false);
 
-		playerPos3 = player.transform.up * -planetRadius * 1.5f;
-		playerPos3 = new Vector3(playerPos3.x, playerPos3.y, -10);
+		airPosition = player.transform.up * -planetRadius * 1.5f;
+		airPosition = new Vector3(airPosition.x, airPosition.y, -10);
+		//Debug.DrawLine(planetPosition, groundPosition, Color.magenta, 0, false);
 
 		strSpawnerText = "";
 		strSpawnerText += " Enemies Destroyed: " + enemyKillCounter.ToString("n0");
-		strSpawnerText += " Enemy Ships Destroyed: " + enemyShipKillCounter.ToString("n0");
+		strSpawnerText += "\n Enemy Ships Destroyed: " + enemyShipKillCounter.ToString("n0");
 		strSpawnerText += "\n Buildings Destroyed: " + buildingKillCounter.ToString("n0");
 		
 		// spawn entities
@@ -97,11 +98,11 @@ public class EntitySpawner : MonoBehaviour {
 	void EnemySpawner()
 	{
 		// test if there is anything from the layer mask inside the area opposite the player
-		if ( ! Physics2D.OverlapCircle(playerPos2, enemySpawnRadius, enemyTriggerLayerMask))
+		if ( ! Physics2D.OverlapCircle(groundPosition, enemySpawnRadius, enemyTriggerLayerMask))
 		{
 			if (enemySpawnCounter < enemySpawns)
 			{
-				Vector3 newPos = playerPos2 - (player.transform.up * 0.5f);
+				Vector3 newPos = groundPosition - (player.transform.up * 0.5f);
 				newPos = new Vector3(newPos.x, newPos.y, enemyObject.transform.position.z);
 
 				Instantiate(enemyObject, newPos, Quaternion.identity);
@@ -120,7 +121,7 @@ public class EntitySpawner : MonoBehaviour {
 			q2 = Quaternion.AngleAxis(i + 30, transform.forward * enemySpawnRadius);
 			v2 = q2 * transform.up * enemySpawnRadius;
 
-			Debug.DrawLine(playerPos2 + v1, playerPos2 + v2, Color.yellow, 0, false);
+			Debug.DrawLine(groundPosition + v1, groundPosition + v2, Color.yellow, 0, false);
 		}
 
 		/*
@@ -132,7 +133,7 @@ public class EntitySpawner : MonoBehaviour {
 			// raycast out from the center of the circle collider
 			qX = Quaternion.AngleAxis(i, transform.forward * enemySpawnRadius);
 			vX = qX * player.transform.up;
-			Debug.DrawRay(playerPos2, vX * enemySpawnRadius, Color.cyan);
+			Debug.DrawRay(groundPosition, vX * enemySpawnRadius, Color.cyan);
 		}
 		*/
 
@@ -141,11 +142,11 @@ public class EntitySpawner : MonoBehaviour {
 	void EnemyShipSpawner()
 	{
 		// test if there is anything from the layer mask inside the area opposite the player
-		if ( ! Physics2D.OverlapCircle(playerPos3, enemyShipSpawnRadius, enemyShipTriggerLayerMask))
+		if ( ! Physics2D.OverlapCircle(airPosition, enemyShipSpawnRadius, enemyShipTriggerLayerMask))
 		{
 			if (enemyShipSpawnCounter < enemyShipSpawns)
 			{
-				Vector3 newPos = playerPos3 - (player.transform.up * 0.5f);
+				Vector3 newPos = airPosition - player.transform.up * Random.Range(-2, 2);
 				newPos = new Vector3(newPos.x, newPos.y, enemyShipObject.transform.position.z);
 				
 				Instantiate(enemyShipObject, newPos, Quaternion.identity);
@@ -164,7 +165,7 @@ public class EntitySpawner : MonoBehaviour {
 			q2 = Quaternion.AngleAxis(i + 30, transform.forward * enemyShipSpawnRadius);
 			v2 = q2 * transform.up * enemyShipSpawnRadius;
 			
-			Debug.DrawLine(playerPos3 + v1, playerPos3 + v2, Color.magenta, 0, false);
+			Debug.DrawLine(airPosition + v1, airPosition + v2, Color.magenta, 0, false);
 		}
 		
 	}
@@ -172,11 +173,11 @@ public class EntitySpawner : MonoBehaviour {
 	void BuildingSpawner()
 	{
 		// test if there is anything from the layer mask inside the area opposite the player
-		if ( ! Physics2D.OverlapCircle(playerPos2, buildingSpawnRadius, buildingTriggerLayerMask))
+		if ( ! Physics2D.OverlapCircle(groundPosition, buildingSpawnRadius, buildingTriggerLayerMask))
 		{
 			if (buildingSpawnCounter < buildingSpawns)
 			{
-				Vector3 newPos = new Vector3(playerPos2.x, playerPos2.y, 5) + (-player.transform.up);
+				Vector3 newPos = new Vector3(groundPosition.x, groundPosition.y, 5) - player.transform.up * 2f;
 				newPos = new Vector3(newPos.x, newPos.y, buildingObject.transform.position.z);
 
 				Instantiate(buildingObject, newPos, Quaternion.identity);
@@ -198,7 +199,7 @@ public class EntitySpawner : MonoBehaviour {
 			q2 = Quaternion.AngleAxis(i + 30, transform.forward * buildingSpawnRadius);
 			v2 = q2 * transform.up * buildingSpawnRadius;
 			
-			Debug.DrawLine(playerPos2 + v1, playerPos2 + v2, Color.cyan, 0, false);
+			Debug.DrawLine(groundPosition + v1, groundPosition + v2, Color.cyan, 0, false);
 		}
 	}
 

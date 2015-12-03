@@ -133,8 +133,8 @@ public class EnemyShipController : MonoBehaviour {
 		health -= damage;
 		if (health <= 0)
 		{
-			//EntitySpawner.enemyKillCounter++;
-			//EntitySpawner.enemySpawnCounter--;
+			EntitySpawner.enemyShipKillCounter++;
+			EntitySpawner.enemyShipSpawnCounter--;
 			Destroy(gameObject);
 		}
 	}
