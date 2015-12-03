@@ -148,26 +148,6 @@ public class EnemyController : MonoBehaviour {
 		
 		for (int i = 0; i < raycastRotations.Length; i++)
 		{
-			/*
-			// raycast out from the center of the circle collider
-			q = Quaternion.AngleAxis(raycastRotations[i], transform.forward * distance);
-			v = q * -transform.up;
-			
-			// draw rays on screen
-			//Debug.DrawRay(transform.position, v * distance, Color.red);
-			
-			// check for hits against the "ground layer"
-			hit = Physics2D.Raycast(transform.position, v, distance, groundLayer);
-			if (hit.collider)
-			{
-				// prevents collision happening while inside a collider
-				if (hit.distance - collider2d.radius > 0)
-				{
-					grounded = true;
-				}
-			}
-			*/
-
 			// raycast out from the center of the circle collider - taking into account the collider's position
 			q = Quaternion.AngleAxis(raycastRotations[i], transform.forward * distance);
 			v = q * -transform.up;

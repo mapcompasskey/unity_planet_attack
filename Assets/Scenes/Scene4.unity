@@ -541,7 +541,7 @@ MonoBehaviour:
   enemyTriggerLayerMask:
     serializedVersion: 2
     m_Bits: 1024
-  buildingObject: {fileID: 157414, guid: 4a6d2c329d4134d488c9fc20aeeda33d, type: 2}
+  buildingObject: {fileID: 194554, guid: 0695820ade8acc04dbb66839fe872db3, type: 2}
   buildingTriggerLayerMask:
     serializedVersion: 2
     m_Bits: 2048
