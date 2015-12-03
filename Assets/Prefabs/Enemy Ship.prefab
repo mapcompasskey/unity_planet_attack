@@ -14,7 +14,7 @@ GameObject:
   - 95: {fileID: 9510918}
   - 114: {fileID: 11432404}
   - 114: {fileID: 11440148}
-  m_Layer: 10
+  m_Layer: 13
   m_Name: Enemy Ship
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -60,7 +60,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 107080}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.94000006, y: 14.6400003, z: -.400000006}
+  m_LocalPosition: {x: -1.98300171, y: 19.4676418, z: -.400000006}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 457166}
