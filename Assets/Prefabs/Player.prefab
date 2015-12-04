@@ -11,9 +11,9 @@ GameObject:
   - 212: {fileID: 21210412}
   - 58: {fileID: 5833366}
   - 50: {fileID: 5006014}
+  - 95: {fileID: 9562914}
   - 114: {fileID: 11433718}
   - 114: {fileID: 11425292}
-  - 95: {fileID: 9562914}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player

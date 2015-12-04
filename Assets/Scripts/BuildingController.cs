@@ -10,9 +10,6 @@ public class BuildingController : MonoBehaviour {
 	//private Rigidbody2D rb2d;
 	//private BoxCollider2D collider2d;
 	
-	// booleans
-	private bool grounded = false;
-	
 	// integers
 	private int health = 10;
 	

@@ -18,21 +18,16 @@ public class EnemyController : MonoBehaviour {
 	// booleans
 	private bool facingRight = true;
 	private bool grounded = false;
-	private bool jumpButtonState = false;
 	
 	// boolean states
-	private bool walking = false; // is walking
-	private bool jumping = false; // is jumping
+	private bool walking = false;
 
 	// integers
 	private int health = 10;
 
 	// floats
 	private float moveSpeed = 4f;
-	private float jumpSpeed = 16f;
 	private float horizontalAxis = 0;
-	private float maxVelocityX = 1f;
-	private float maxVelocityY = 1f;
 	private float actionTime = 0f;
 	private float actionTimer = 0f;
 	
@@ -41,10 +36,6 @@ public class EnemyController : MonoBehaviour {
 		rb2d = GetComponent<Rigidbody2D>();
 		collider2d = GetComponent<CircleCollider2D>();
 		anim = GetComponent<Animator>();
-		
-		// update max velocities
-		maxVelocityX = moveSpeed * 2;
-		maxVelocityY = jumpSpeed * 2;
 	}
 
 	void Update()
@@ -81,9 +72,6 @@ public class EnemyController : MonoBehaviour {
 			//horizontalAxis = Random.Range(-1, 1);
 			horizontalAxis = (Random.value < 0.5 ? -1 : 1);
 		}
-		
-		// is jump button down
-		jumpButtonState = false;
 	}
 
 	void IsJumping()

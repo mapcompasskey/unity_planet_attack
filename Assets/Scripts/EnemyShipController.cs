@@ -9,8 +9,8 @@ public class EnemyShipController : MonoBehaviour {
 	
 	// private references
 	private Rigidbody2D rb2d;
-	private CircleCollider2D collider2d;
-	private Animator anim;
+	//private CircleCollider2D collider2d;
+	//private Animator anim;
 	private GameObject player;
 	
 	// vectors
@@ -19,22 +19,20 @@ public class EnemyShipController : MonoBehaviour {
 	
 	// booleans
 	private bool facingRight = true;
-	private bool jumpButtonState = false;
+	//private bool jumpButtonState = false;
 	private bool canAttack = true;
 	
 	// boolean states
-	private bool walking = false; // is walking
-	private bool jumping = false; // is jumping
+	//private bool walking = false;
+	//private bool jumping = false;
 	
 	// integers
 	private int health = 10;
 	
 	// floats
 	private float moveSpeed = 4f;
-	private float jumpSpeed = 16f;
+	//private float jumpSpeed = 16f;
 	private float horizontalAxis = 0;
-	private float maxVelocityX = 1f;
-	private float maxVelocityY = 1f;
 	private float actionTime = 0f;
 	private float actionTimer = 0f;
 	private float attackTime = 0.75f;
@@ -44,13 +42,9 @@ public class EnemyShipController : MonoBehaviour {
 	void Start()
 	{
 		rb2d = GetComponent<Rigidbody2D>();
-		collider2d = GetComponent<CircleCollider2D>();
-		anim = GetComponent<Animator>();
+		//collider2d = GetComponent<CircleCollider2D>();
+		//anim = GetComponent<Animator>();
 		player = GameObject.FindGameObjectWithTag("Player");
-		
-		// update max velocities
-		maxVelocityX = moveSpeed * 2;
-		maxVelocityY = jumpSpeed * 2;
 	}
 	
 	void Update()
@@ -88,7 +82,7 @@ public class EnemyShipController : MonoBehaviour {
 		}
 		
 		// is jump button down
-		jumpButtonState = false;
+		//jumpButtonState = false;
 	}
 
 	void IsAttacking()
@@ -100,7 +94,7 @@ public class EnemyShipController : MonoBehaviour {
 			
 			// fire a bullet
 			Vector3 bulletPos = transform.position - transform.up;
-			GameObject bullet = GameObject.Instantiate(enemyBullet, bulletPos, Quaternion.identity) as GameObject;
+			GameObject.Instantiate(enemyBullet, bulletPos, Quaternion.identity);
 		}
 
 		if ( ! canAttack)
@@ -126,7 +120,7 @@ public class EnemyShipController : MonoBehaviour {
 	
 	void IsWalking()
 	{
-		walking = (horizontalAxis == 0 ? false : true);
+		//walking = (horizontalAxis == 0 ? false : true);
 		
 		// if just moved right
 		if (horizontalAxis > 0 && ! facingRight)

@@ -25,7 +25,6 @@ public class EntitySpawner : MonoBehaviour {
 	private CircleCollider2D planetCollider2d;
 
 	// vectors
-	private Vector3 playerPosition = Vector3.zero;
 	private Vector3 planetPosition = Vector3.zero;
 	private Vector3 groundPosition = Vector3.zero;
 	private Vector3 airPosition = Vector3.zero;
@@ -65,8 +64,7 @@ public class EntitySpawner : MonoBehaviour {
 
 	void Update()
 	{
-		// player and planet positions
-		playerPosition = new Vector3(player.transform.position.x, player.transform.position.y, -10);
+		// planet positions
 		planetPosition = new Vector3(planet.transform.position.x, planet.transform.position.y, -10);
 
 		// the planet's radius

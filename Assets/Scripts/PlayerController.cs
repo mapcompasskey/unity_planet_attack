@@ -6,8 +6,6 @@ public class PlayerController : MonoBehaviour {
 	// public references
 	public LayerMask groundLayer;
 	public GameObject playerBullet;
-	//public PhysicsMaterial2D materialDefault;
-	//public PhysicsMaterial2D materialNoFriction;
 	
 	// private references
 	private Rigidbody2D rb2d;
@@ -21,34 +19,24 @@ public class PlayerController : MonoBehaviour {
 	// booleans
 	private bool facingRight = true;
 	private bool grounded = false;
-	private bool canJump = true; // can jump
-	private bool canSlowJump = false; // can reduce jump acceleration
-	private bool jumpButtonState = false; // is jump button up or down
-	//private bool noFriction = false;
+	private bool canJump = true;
+	private bool jumpButtonState = false;
 
 	// boolean states
-	private bool walking = false; // is walking
-	private bool jumping = false; // is jumping
+	private bool walking = false;
+	private bool jumping = false;
 
 	// floats
 	private float moveSpeed = 8f;
 	private float jumpSpeed = 16f;
 	private float horizontalAxis = 0;
-	private float maxVelocityX = 1f;
-	private float maxVelocityY = 1f;
 	private float velocityY = 0f;
-
-	//private Vector3 moveDirection;
 
 	void Start()
 	{
 		rb2d = GetComponent<Rigidbody2D>();
 		collider2d = GetComponent<CircleCollider2D>();
 		anim = GetComponent<Animator>();
-		
-		// update max velocities
-		maxVelocityX = moveSpeed * 2;
-		maxVelocityY = jumpSpeed * 2;
 	}
 
 	// called every frame
@@ -117,7 +105,6 @@ public class PlayerController : MonoBehaviour {
 		if (grounded && jumping)
 		{
 			jumping = false;
-			canSlowJump = false;
 		}
 		
 		// prevents player hoping continuously if jump button is held down
@@ -127,13 +114,9 @@ public class PlayerController : MonoBehaviour {
 		}
 		
 		// reduce jumping acceleration
-		if (canSlowJump && jumping && ! jumpButtonState)
+		if (jumping && verticalVelocity.y > 0 && ! jumpButtonState)
 		{
-			canSlowJump = false;
-			if (verticalVelocity.y > 0)
-			{
-				verticalVelocity = verticalVelocity / 2;
-			}
+			verticalVelocity = verticalVelocity / 2;
 		}
 		
 		// start jumping
@@ -141,7 +124,6 @@ public class PlayerController : MonoBehaviour {
 		{
 			canJump = false;
 			jumping = true;
-			canSlowJump = true;
 
 			// apply local vertical velocity
 			verticalVelocity = transform.up * jumpSpeed;
@@ -177,8 +159,6 @@ public class PlayerController : MonoBehaviour {
 		RaycastHit2D hit;
 		float distance = collider2d.radius + 0.15f;
 		float[] raycastRotations = new float[] {40f, 20f, 0f, -20f, -40f};
-
-		//Debug.LogFormat("position: {0} - collider: {1} - offset {2} - center: {3}", transform.position, collider2d.transform.position, collider2d.offset, collider2d.bounds.center);
 
 		// reset parameters
 		grounded = false;
@@ -226,12 +206,14 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
+	/*
 	void OnTriggerEnter2D(Collider2D other)
 	{
 		if (other.tag == "Enemy")
 		{
-			//Debug.LogFormat("gameObject: {0}, other name: {1}, other tag: {2}", gameObject.name, other.name, other.tag);
+		
 		}
 	}
+	*/
 
 }
