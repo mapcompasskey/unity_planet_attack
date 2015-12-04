@@ -31,7 +31,7 @@ GameObject:
   - 4: {fileID: 426956}
   - 61: {fileID: 6150806}
   m_Layer: 0
-  m_Name: Player Trigger
+  m_Name: Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,7 +46,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 443534}
   - 212: {fileID: 21242730}
-  m_Layer: 12
+  m_Layer: 10
   m_Name: Minimap Blip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -246,11 +246,23 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Name
-      value: Minimap Blip
+      value: Trigger
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_LocalPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

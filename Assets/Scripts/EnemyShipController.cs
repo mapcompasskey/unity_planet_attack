@@ -148,16 +148,10 @@ public class EnemyShipController : MonoBehaviour {
 	
 	void OnTriggerEnter2D(Collider2D other)
 	{
-		switch (other.tag)
+		if (other.tag == "PlayerBullet")
 		{
-		case "Player":
-			//Debug.LogFormat("gameObject: {0}, other name: {1}, other tag: {2}", gameObject.name, other.name, other.tag);
-			break;
-			
-		case "PlayerBullet":
 			Destroy(other.gameObject);
-			TakeDamage(10);
-			break;
+			TakeDamage(5);
 		}
 	}
 	

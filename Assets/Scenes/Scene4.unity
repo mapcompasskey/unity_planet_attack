@@ -125,7 +125,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4096
+    m_Bits: 1024
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -378,7 +378,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 855176542}
   - 212: {fileID: 855176541}
-  m_Layer: 12
+  m_Layer: 10
   m_Name: moon-radar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -552,7 +552,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1346285504}
   - 212: {fileID: 1346285503}
-  m_Layer: 12
+  m_Layer: 10
   m_Name: minimap-grid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -631,8 +631,8 @@ MonoBehaviour:
   enemyObject: {fileID: 104606, guid: 09754ab23066e48418d6e93fecde03b1, type: 2}
   enemyTriggerLayerMask:
     serializedVersion: 2
-    m_Bits: 1024
-  enemyShipSpawnsPublic: 1
+    m_Bits: 2048
+  enemyShipSpawnsPublic: 10
   enemyShipObject: {fileID: 107080, guid: f12acf5e895834b4ab126a80d5ad8283, type: 2}
   enemyShipTriggerLayerMask:
     serializedVersion: 2
@@ -641,7 +641,7 @@ MonoBehaviour:
   buildingObject: {fileID: 194554, guid: 0695820ade8acc04dbb66839fe872db3, type: 2}
   buildingTriggerLayerMask:
     serializedVersion: 2
-    m_Bits: 2048
+    m_Bits: 4096
 --- !u!4 &1414791392
 Transform:
   m_ObjectHideFlags: 0
@@ -791,7 +791,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294963199
+    m_Bits: 4294966271
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0

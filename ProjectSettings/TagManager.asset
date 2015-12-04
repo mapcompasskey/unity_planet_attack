@@ -19,13 +19,13 @@ TagManager:
   - 
   - 
   - Ground
-  - Player
-  - Enemy
-  - Building
+  - Entities
   - Minimap
-  - Enemy Ship
-  - Player Bullet
-  - Enemy Bullet
+  - Enemy Trigger
+  - Building Trigger
+  - Enemy Ship Trigger
+  - 
+  - 
   - 
   - 
   - 

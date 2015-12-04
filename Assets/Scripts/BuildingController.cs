@@ -24,12 +24,10 @@ public class BuildingController : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other)
 	{
-		switch (other.tag)
+		if (other.tag == "PlayerBullet")
 		{
-			case "PlayerBullet":
-				Destroy(other.gameObject);
-				TakeDamage(4);
-				break;
+			Destroy(other.gameObject);
+			TakeDamage(4);
 		}
 	}
 	
