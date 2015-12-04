@@ -632,7 +632,7 @@ MonoBehaviour:
   enemyTriggerLayerMask:
     serializedVersion: 2
     m_Bits: 1024
-  enemyShipSpawnsPublic: 10
+  enemyShipSpawnsPublic: 1
   enemyShipObject: {fileID: 107080, guid: f12acf5e895834b4ab126a80d5ad8283, type: 2}
   enemyShipTriggerLayerMask:
     serializedVersion: 2

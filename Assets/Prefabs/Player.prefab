@@ -72,7 +72,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 118248}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 14, z: -.5}
+  m_LocalPosition: {x: 0, y: 0, z: -.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 426956}
@@ -165,7 +165,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   playerBullet: {fileID: 159022, guid: f2d08a01cfa717b409a81c535d0b9b74, type: 2}
-  playerBlip: {fileID: 171778, guid: 9c4568f3b9de49a41ab41d63453d2af2, type: 2}
 --- !u!114 &11433718
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -248,6 +247,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_Name
       value: Minimap Blip
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_LocalPosition.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

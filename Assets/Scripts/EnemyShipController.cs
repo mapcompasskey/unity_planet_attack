@@ -5,11 +5,13 @@ public class EnemyShipController : MonoBehaviour {
 
 	// public references
 	public LayerMask groundLayer;
+	public GameObject enemyBullet;
 	
 	// private references
 	private Rigidbody2D rb2d;
 	private CircleCollider2D collider2d;
 	private Animator anim;
+	private GameObject player;
 	
 	// vectors
 	private Vector3 horizontalVelocity = Vector3.zero;
@@ -18,6 +20,7 @@ public class EnemyShipController : MonoBehaviour {
 	// booleans
 	private bool facingRight = true;
 	private bool jumpButtonState = false;
+	private bool canAttack = true;
 	
 	// boolean states
 	private bool walking = false; // is walking
@@ -34,12 +37,16 @@ public class EnemyShipController : MonoBehaviour {
 	private float maxVelocityY = 1f;
 	private float actionTime = 0f;
 	private float actionTimer = 0f;
+	private float attackTime = 0.75f;
+	private float attackTimer = 0f;
+	private float attackDistance = 7f;
 	
 	void Start()
 	{
 		rb2d = GetComponent<Rigidbody2D>();
 		collider2d = GetComponent<CircleCollider2D>();
 		anim = GetComponent<Animator>();
+		player = GameObject.FindGameObjectWithTag("Player");
 		
 		// update max velocities
 		maxVelocityX = moveSpeed * 2;
@@ -56,6 +63,7 @@ public class EnemyShipController : MonoBehaviour {
 	
 	void FixedUpdate ()
 	{
+		IsAttacking();
 		IsJumping();
 		IsWalking();
 		
@@ -82,7 +90,32 @@ public class EnemyShipController : MonoBehaviour {
 		// is jump button down
 		jumpButtonState = false;
 	}
-	
+
+	void IsAttacking()
+	{
+		float distance = Vector3.Distance(transform.position, player.transform.position);
+		if (canAttack && distance < attackDistance)
+		{
+			canAttack = false;
+			
+			// fire a bullet
+			Vector3 bulletPos = transform.position - transform.up;
+			GameObject bullet = GameObject.Instantiate(enemyBullet, bulletPos, Quaternion.identity) as GameObject;
+		}
+
+		if ( ! canAttack)
+		{
+			attackTimer += Time.deltaTime;
+			if (attackTimer >= attackTime)
+			{
+				canAttack = true;
+				
+				// reset timer
+				attackTimer = 0;
+			}
+		}
+	}
+
 	void IsJumping()
 	{
 		// get the current local y velocity

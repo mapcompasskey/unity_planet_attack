@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - PlayerBullet
   - Building
+  - EnemyBullet
   layers:
   - Default
   - TransparentFX
@@ -23,8 +24,8 @@ TagManager:
   - Building
   - Minimap
   - Enemy Ship
-  - 
-  - 
+  - Player Bullet
+  - Enemy Bullet
   - 
   - 
   - 
