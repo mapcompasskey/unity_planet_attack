@@ -11,6 +11,7 @@ public class EnemyShipController : MonoBehaviour {
 	private Rigidbody2D rb2d;
 	//private CircleCollider2D collider2d;
 	//private Animator anim;
+	private EnemyHealthManager healthManager;
 	private GameObject player;
 	
 	// vectors
@@ -44,6 +45,7 @@ public class EnemyShipController : MonoBehaviour {
 		rb2d = GetComponent<Rigidbody2D>();
 		//collider2d = GetComponent<CircleCollider2D>();
 		//anim = GetComponent<Animator>();
+		healthManager = GetComponent<EnemyHealthManager>();
 		player = GameObject.FindGameObjectWithTag("Player");
 	}
 	
@@ -53,6 +55,14 @@ public class EnemyShipController : MonoBehaviour {
 		
 		// update animator parameters
 		//anim.SetBool("Walking", walking);
+
+		// if the object has been killed
+		if (healthManager.health <= 0)
+		{
+			EntitySpawner.enemyShipKillCounter++;
+			EntitySpawner.enemyShipSpawnCounter--;
+			Destroy(gameObject);
+		}
 	}
 	
 	void FixedUpdate ()
@@ -140,11 +150,11 @@ public class EnemyShipController : MonoBehaviour {
 		horizontalVelocity = transform.right * horizontalAxis * moveSpeed;
 	}
 	
-	void OnTriggerEnter2D(Collider2D other)
+	/*void OnTriggerEnter2D(Collider2D other)
 	{
 		if (other.tag == "PlayerBullet")
 		{
-			Destroy(other.gameObject);
+			other.gameObject.GetComponent<PlayerBulletController>().OnImpact();
 			TakeDamage(5);
 		}
 	}
@@ -158,6 +168,6 @@ public class EnemyShipController : MonoBehaviour {
 			EntitySpawner.enemyShipSpawnCounter--;
 			Destroy(gameObject);
 		}
-	}
+	}*/
 
 }

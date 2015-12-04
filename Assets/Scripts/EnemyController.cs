@@ -5,11 +5,13 @@ public class EnemyController : MonoBehaviour {
 
 	// public references
 	public LayerMask groundLayer;
+	public GameObject impactEffect;
 	
 	// private references
 	private Rigidbody2D rb2d;
 	private CircleCollider2D collider2d;
 	private Animator anim;
+	private EnemyHealthManager healthManager;
 
 	// vectors
 	private Vector3 horizontalVelocity = Vector3.zero;
@@ -36,6 +38,7 @@ public class EnemyController : MonoBehaviour {
 		rb2d = GetComponent<Rigidbody2D>();
 		collider2d = GetComponent<CircleCollider2D>();
 		anim = GetComponent<Animator>();
+		healthManager = GetComponent<EnemyHealthManager>();
 	}
 
 	void Update()
@@ -46,6 +49,14 @@ public class EnemyController : MonoBehaviour {
 		// update animator parameters
 		anim.SetBool("Grounded", grounded);
 		anim.SetBool("Walking", walking);
+
+		// if the object has been killed
+		if (healthManager.health <= 0)
+		{
+			EntitySpawner.enemyKillCounter++;
+			EntitySpawner.enemySpawnCounter--;
+			Destroy(gameObject);
+		}
 	}
 	
 	void FixedUpdate ()
@@ -137,16 +148,16 @@ public class EnemyController : MonoBehaviour {
 		}
 	}
 	
-	void OnTriggerEnter2D(Collider2D other)
+	/*void OnTriggerEnter2D(Collider2D other)
 	{
 		if (other.tag == "PlayerBullet")
 		{
-			Destroy(other.gameObject);
+			other.gameObject.GetComponent<PlayerBulletController>().OnImpact();
 			TakeDamage(10);
 		}
-	}
+	}*/
 
-	void TakeDamage(int damage)
+	/*void TakeDamage(int damage)
 	{
 		health -= damage;
 		if (health <= 0)
@@ -155,6 +166,6 @@ public class EnemyController : MonoBehaviour {
 			EntitySpawner.enemySpawnCounter--;
 			Destroy(gameObject);
 		}
-	}
+	}*/
 
 }

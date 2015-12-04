@@ -31,7 +31,7 @@ GameObject:
   - 4: {fileID: 426956}
   - 61: {fileID: 6150806}
   m_Layer: 0
-  m_Name: Trigger
+  m_Name: Player Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -164,7 +164,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 256
-  playerBullet: {fileID: 159022, guid: f2d08a01cfa717b409a81c535d0b9b74, type: 2}
+  playerBullet: {fileID: 151628, guid: f2d08a01cfa717b409a81c535d0b9b74, type: 2}
 --- !u!114 &11433718
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -246,7 +246,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Name
-      value: Trigger
+      value: Player Trigger
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_LocalPosition.y
@@ -264,6 +264,10 @@ Prefab:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: playerBullet
+      value: 
+      objectReference: {fileID: 151628, guid: f2d08a01cfa717b409a81c535d0b9b74, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 118248}

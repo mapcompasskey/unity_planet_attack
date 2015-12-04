@@ -9,6 +9,7 @@ public class BuildingController : MonoBehaviour {
 	// private references
 	//private Rigidbody2D rb2d;
 	//private BoxCollider2D collider2d;
+	private EnemyHealthManager healthManager;
 	
 	// integers
 	private int health = 10;
@@ -17,13 +18,25 @@ public class BuildingController : MonoBehaviour {
 	{
 		//rb2d = GetComponent<Rigidbody2D>();
 		//collider2d = GetComponent<BoxCollider2D>();
+		healthManager = GetComponent<EnemyHealthManager>();
 	}
 
-	void OnTriggerEnter2D(Collider2D other)
+	void Update()
+	{
+		// if the object has been killed
+		if (healthManager.health <= 0)
+		{
+			EntitySpawner.buildingKillCounter++;
+			EntitySpawner.buildingSpawnCounter--;
+			Destroy(gameObject);
+		}
+	}
+
+	/*void OnTriggerEnter2D(Collider2D other)
 	{
 		if (other.tag == "PlayerBullet")
 		{
-			Destroy(other.gameObject);
+			other.gameObject.GetComponent<PlayerBulletController>().OnImpact();
 			TakeDamage(4);
 		}
 	}
@@ -37,6 +50,6 @@ public class BuildingController : MonoBehaviour {
 			EntitySpawner.buildingSpawnCounter--;
 			Destroy(gameObject);
 		}
-	}
+	}*/
 
 }

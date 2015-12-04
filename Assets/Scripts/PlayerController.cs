@@ -205,15 +205,13 @@ public class PlayerController : MonoBehaviour {
 
 		}
 	}
-
-	/*
-	void OnTriggerEnter2D(Collider2D other)
+	
+	/*void OnTriggerEnter2D(Collider2D other)
 	{
-		if (other.tag == "Enemy")
+		if (other.tag != "Planet")
 		{
-		
+			Debug.LogFormat("player: {0}, {1}", other, other.tag);
 		}
-	}
-	*/
+	}*/
 
 }
