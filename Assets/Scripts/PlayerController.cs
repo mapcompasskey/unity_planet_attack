@@ -116,7 +116,7 @@ public class PlayerController : MonoBehaviour {
 		}
 		
 		// reduce jumping acceleration
-		if (jumping && verticalVelocity.y > 0 && ! jumpButtonState)
+		if (jumping && velocityY > 0 && ! jumpButtonState)
 		{
 			verticalVelocity = verticalVelocity / 2;
 		}
