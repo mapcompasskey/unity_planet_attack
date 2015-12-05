@@ -178,6 +178,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   enemyBullet: {fileID: 145984, guid: 54a6a1057844df740b63913008418086, type: 2}
+  deathEffect: {fileID: 136776, guid: ce22a5678f6467b4ba83a61390b664ee, type: 2}
 --- !u!114 &11454132
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -282,6 +283,10 @@ Prefab:
       propertyPath: m_Name
       value: Enemy Ship Trigger
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: deathEffect
+      value: 
+      objectReference: {fileID: 136776, guid: ce22a5678f6467b4ba83a61390b664ee, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 107080}

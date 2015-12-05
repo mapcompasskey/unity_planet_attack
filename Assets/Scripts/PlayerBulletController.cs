@@ -24,9 +24,6 @@ public class PlayerBulletController : MonoBehaviour {
 	void Start()
 	{
 		rb2d = GetComponent<Rigidbody2D>();
-
-		// destroy this object after some time has passed
-		//Destroy(gameObject, killTime);
 	}
 
 	void Update()
@@ -59,29 +56,6 @@ public class PlayerBulletController : MonoBehaviour {
 		// update the current velocity
 		rb2d.velocity = horizontalVelocity + verticalVelocity;
 	}
-
-	/*void OnCollisionEnter2D(Collision2D other)
-	{
-		//Instantiate(impactEffect, transform.position, Quaternion.identity);
-		//Destroy(gameObject);
-		OnImpact();
-	}*/
-
-	/*void OnTriggerEnter2D(Collider2D other)
-	{
-		Debug.LogFormat("bullet: {0}, {1}", other, other.tag);
-	}*/
-
-	/*void OnDestroy()
-	{
-		if (enabled)
-		{
-			if (impactEffect && killTimer < killTime)
-			{
-				Instantiate(impactEffect, transform.position, Quaternion.identity);
-			}
-		}
-	}*/
 
 	void OnTriggerEnter2D(Collider2D other)
 	{

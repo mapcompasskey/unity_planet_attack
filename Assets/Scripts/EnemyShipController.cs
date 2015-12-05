@@ -6,6 +6,7 @@ public class EnemyShipController : MonoBehaviour {
 	// public references
 	public LayerMask groundLayer;
 	public GameObject enemyBullet;
+	public GameObject deathEffect;
 	
 	// private references
 	private Rigidbody2D rb2d;
@@ -61,6 +62,7 @@ public class EnemyShipController : MonoBehaviour {
 		{
 			EntitySpawner.enemyShipKillCounter++;
 			EntitySpawner.enemyShipSpawnCounter--;
+			Instantiate(deathEffect, transform.position, Quaternion.identity);
 			Destroy(gameObject);
 		}
 	}
@@ -149,25 +151,5 @@ public class EnemyShipController : MonoBehaviour {
 		// *transform.right returns this objects local "right" direction as a vector in world space
 		horizontalVelocity = transform.right * horizontalAxis * moveSpeed;
 	}
-	
-	/*void OnTriggerEnter2D(Collider2D other)
-	{
-		if (other.tag == "PlayerBullet")
-		{
-			other.gameObject.GetComponent<PlayerBulletController>().OnImpact();
-			TakeDamage(5);
-		}
-	}
-	
-	void TakeDamage(int damage)
-	{
-		health -= damage;
-		if (health <= 0)
-		{
-			EntitySpawner.enemyShipKillCounter++;
-			EntitySpawner.enemyShipSpawnCounter--;
-			Destroy(gameObject);
-		}
-	}*/
 
 }

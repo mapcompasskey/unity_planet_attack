@@ -5,7 +5,7 @@ public class EnemyController : MonoBehaviour {
 
 	// public references
 	public LayerMask groundLayer;
-	public GameObject impactEffect;
+	public GameObject deathEffect;
 	
 	// private references
 	private Rigidbody2D rb2d;
@@ -57,6 +57,7 @@ public class EnemyController : MonoBehaviour {
 		{
 			EntitySpawner.enemyKillCounter++;
 			EntitySpawner.enemySpawnCounter--;
+			Instantiate(deathEffect, transform.position, Quaternion.identity);
 			Destroy(gameObject);
 		}
 	}
@@ -185,25 +186,5 @@ public class EnemyController : MonoBehaviour {
 			}
 		}
 	}
-	
-	/*void OnTriggerEnter2D(Collider2D other)
-	{
-		if (other.tag == "PlayerBullet")
-		{
-			other.gameObject.GetComponent<PlayerBulletController>().OnImpact();
-			TakeDamage(10);
-		}
-	}*/
-
-	/*void TakeDamage(int damage)
-	{
-		health -= damage;
-		if (health <= 0)
-		{
-			EntitySpawner.enemyKillCounter++;
-			EntitySpawner.enemySpawnCounter--;
-			Destroy(gameObject);
-		}
-	}*/
 
 }

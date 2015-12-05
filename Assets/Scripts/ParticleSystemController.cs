@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ImpactEffectController : MonoBehaviour {
+public class ParticleSystemController : MonoBehaviour {
 	
 	void Start()
 	{

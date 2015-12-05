@@ -190,7 +190,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 256
-  impactEffect: {fileID: 0}
+  deathEffect: {fileID: 136776, guid: ce22a5678f6467b4ba83a61390b664ee, type: 2}
 --- !u!212 &21244176
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -294,6 +294,10 @@ Prefab:
       propertyPath: maxHealth
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: deathEffect
+      value: 
+      objectReference: {fileID: 136776, guid: ce22a5678f6467b4ba83a61390b664ee, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 104606}

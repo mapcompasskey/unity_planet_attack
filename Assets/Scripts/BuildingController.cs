@@ -5,6 +5,7 @@ public class BuildingController : MonoBehaviour {
 
 	// public references
 	public LayerMask groundLayer;
+	public GameObject deathEffect;
 	
 	// private references
 	//private Rigidbody2D rb2d;
@@ -28,28 +29,9 @@ public class BuildingController : MonoBehaviour {
 		{
 			EntitySpawner.buildingKillCounter++;
 			EntitySpawner.buildingSpawnCounter--;
+			Instantiate(deathEffect, transform.position - transform.up, Quaternion.identity);
 			Destroy(gameObject);
 		}
 	}
-
-	/*void OnTriggerEnter2D(Collider2D other)
-	{
-		if (other.tag == "PlayerBullet")
-		{
-			other.gameObject.GetComponent<PlayerBulletController>().OnImpact();
-			TakeDamage(4);
-		}
-	}
-	
-	void TakeDamage(int damage)
-	{
-		health -= damage;
-		if (health <= 0)
-		{
-			EntitySpawner.buildingKillCounter++;
-			EntitySpawner.buildingSpawnCounter--;
-			Destroy(gameObject);
-		}
-	}*/
 
 }

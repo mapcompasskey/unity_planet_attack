@@ -179,7 +179,7 @@ RectTransform:
   - {fileID: 993487570}
   - {fileID: 1721397354}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 1
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -585,17 +585,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnerText: {fileID: 1721397352}
-  enemySpawnsPublic: 0
+  enemySpawnsPublic: 10
   enemyObject: {fileID: 104606, guid: 09754ab23066e48418d6e93fecde03b1, type: 2}
   enemyTriggerLayerMask:
     serializedVersion: 2
     m_Bits: 2048
-  enemyShipSpawnsPublic: 0
+  enemyShipSpawnsPublic: 10
   enemyShipObject: {fileID: 107080, guid: f12acf5e895834b4ab126a80d5ad8283, type: 2}
   enemyShipTriggerLayerMask:
     serializedVersion: 2
     m_Bits: 8192
-  buildingSpawnsPublic: 0
+  buildingSpawnsPublic: 5
   buildingObject: {fileID: 194554, guid: 0695820ade8acc04dbb66839fe872db3, type: 2}
   buildingTriggerLayerMask:
     serializedVersion: 2
@@ -611,7 +611,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
 --- !u!1001 &1676724300
 Prefab:
   m_ObjectHideFlags: 0
@@ -813,7 +813,7 @@ Transform:
   m_Children:
   - {fileID: 516692851}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
 --- !u!114 &1777533354
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -909,4 +909,4 @@ Transform:
   m_Children:
   - {fileID: 855176542}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4

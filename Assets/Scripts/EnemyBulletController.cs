@@ -18,9 +18,6 @@ public class EnemyBulletController : MonoBehaviour {
 	{
 		rb2d = GetComponent<Rigidbody2D>();
 
-		// destroy this object after some time has passed
-		//Destroy(gameObject, killTime);
-
 		// change the color of the particles
 		impactEffect.GetComponent<ParticleSystem>().startColor = new Color(0, 1f, 0, 1f);
 	}
@@ -43,13 +40,6 @@ public class EnemyBulletController : MonoBehaviour {
 		// update the current velocity
 		rb2d.velocity = horizontalVelocity + verticalVelocity;
 	}
-	
-	/*void OnCollisionEnter2D(Collision2D other)
-	{
-		//Instantiate(impactEffect, transform.position, Quaternion.identity);
-		//Destroy(gameObject);
-		OnImpact();
-	}*/
 
 	void OnTriggerEnter2D(Collider2D other)
 	{
@@ -57,18 +47,11 @@ public class EnemyBulletController : MonoBehaviour {
 		{
 			OnImpact();
 		}
-	}
-
-	/*void OnDestroy()
-	{
-		if (enabled)
+		else if (other.tag == "Player")
 		{
-			if (impactEffect && killTimer < killTime)
-			{
-				Instantiate(impactEffect, transform.position, Quaternion.identity);
-			}
+			OnImpact();
 		}
-	}*/
+	}
 
 	public void OnImpact()
 	{
