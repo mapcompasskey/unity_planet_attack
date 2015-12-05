@@ -9,7 +9,8 @@ public class PlayerController : MonoBehaviour {
 	
 	// private references
 	private Rigidbody2D rb2d;
-	private CircleCollider2D collider2d;
+	//private CircleCollider2D collider2d;
+	private BoxCollider2D collider2d;
 	private Animator anim;
 
 	// vectors
@@ -35,7 +36,8 @@ public class PlayerController : MonoBehaviour {
 	void Start()
 	{
 		rb2d = GetComponent<Rigidbody2D>();
-		collider2d = GetComponent<CircleCollider2D>();
+		//collider2d = GetComponent<CircleCollider2D>();
+		collider2d = GetComponent<BoxCollider2D>();
 		anim = GetComponent<Animator>();
 	}
 
@@ -152,6 +154,7 @@ public class PlayerController : MonoBehaviour {
 		horizontalVelocity = transform.right * horizontalAxis * moveSpeed;
 	}
 
+	/*
 	void CheckForGround()
 	{
 		Quaternion q;
@@ -165,26 +168,6 @@ public class PlayerController : MonoBehaviour {
 		
 		for (int i = 0; i < raycastRotations.Length; i++)
 		{
-			/*
-			// raycast out from the center of the circle collider
-			q = Quaternion.AngleAxis(raycastRotations[i], transform.forward * distance);
-			v = q * -transform.up;
-			
-			// draw rays on screen
-			Debug.DrawRay(transform.position, v * distance, Color.red);
-			
-			// check for hits against the "ground layer"
-			hit = Physics2D.Raycast(transform.position, v, distance, groundLayer);
-			if (hit.collider)
-			{
-				// prevents collision happening while inside a collider
-				if (hit.distance - collider2d.radius > 0)
-				{
-					grounded = true;
-				}
-			}
-			*/
-
 			// raycast out from the center of the circle collider - taking into account the collider's position
 			q = Quaternion.AngleAxis(raycastRotations[i], transform.forward * distance);
 			v = q * -transform.up;
@@ -203,6 +186,41 @@ public class PlayerController : MonoBehaviour {
 				}
 			}
 
+		}
+	}
+	*/
+
+	void CheckForGround()
+	{
+		// raycasting variables
+		RaycastHit2D hit;
+		int rays = 5;
+		float skinWidth = 0.05f;
+		float distance = 0.15f;
+		float spacing = (collider2d.size.x - skinWidth * 2) / (rays - 1);
+		Vector3 offsetX = Vector3.zero;
+		Vector3 offsetY = Vector3.zero;
+		Vector3 start = Vector3.zero;
+
+		// reset parameters
+		grounded = false;
+
+		for (int i = 0; i < rays; i++)
+		{
+			// rayout out across the bottom of the collider
+			offsetX = collider2d.transform.right * ((collider2d.size.x / 2) - collider2d.offset.x - skinWidth - (spacing * i));
+			offsetY = collider2d.transform.up    * ((collider2d.size.y / 2) - collider2d.offset.y - skinWidth);
+			start = collider2d.transform.position - (offsetX + offsetY);
+
+			// draw rays on screen
+			Debug.DrawRay(start, -collider2d.transform.up * distance, Color.red);
+
+			// check for hits against the "ground layer"
+			hit = Physics2D.Raycast(start, -collider2d.transform.up, distance, groundLayer);
+			if (hit.collider)
+			{
+				grounded = true;
+			}
 		}
 	}
 	
