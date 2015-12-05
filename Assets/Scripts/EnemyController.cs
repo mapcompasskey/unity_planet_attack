@@ -25,9 +25,6 @@ public class EnemyController : MonoBehaviour {
 	// boolean states
 	private bool walking = false;
 
-	// integers
-	private int health = 10;
-
 	// floats
 	private float moveSpeed = 4f;
 	private float horizontalAxis = 0;

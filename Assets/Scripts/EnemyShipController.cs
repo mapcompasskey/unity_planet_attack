@@ -28,9 +28,6 @@ public class EnemyShipController : MonoBehaviour {
 	//private bool walking = false;
 	//private bool jumping = false;
 	
-	// integers
-	private int health = 10;
-	
 	// floats
 	private float moveSpeed = 4f;
 	//private float jumpSpeed = 16f;

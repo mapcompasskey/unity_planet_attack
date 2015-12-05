@@ -12,9 +12,6 @@ public class BuildingController : MonoBehaviour {
 	//private BoxCollider2D collider2d;
 	private EnemyHealthManager healthManager;
 	
-	// integers
-	private int health = 10;
-	
 	void Start()
 	{
 		//rb2d = GetComponent<Rigidbody2D>();

@@ -147,7 +147,7 @@ Transform:
   m_Children:
   - {fileID: 1346285504}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 7
 --- !u!1 &176705174
 GameObject:
   m_ObjectHideFlags: 0
@@ -826,6 +826,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   verticalOffset: 3
   backgroundPlanet: {fileID: 516692849}
+  backgroundStars: {fileID: 140280, guid: a763ad7b7e914d946b64cb09bcc2b0f3, type: 2}
 --- !u!1 &2030310657
 GameObject:
   m_ObjectHideFlags: 0
