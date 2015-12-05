@@ -3,15 +3,17 @@ using System.Collections;
 
 public class CameraController : MonoBehaviour {
 
+	// public variables
+	public float verticalOffset = 0f;
+	public GameObject backgroundPlanet;
+
 	// private references
 	private GameObject player;
-	private GameObject backgroundPlanet;
 
 	// vectors
 	private Vector3 planetOffset;
 
 	// floats
-	public float verticalOffset = 0f;
 	private float smoothTime = 20f;
 	private float cameraPositionZ = 0f;
 
@@ -22,18 +24,24 @@ public class CameraController : MonoBehaviour {
 		player = GameObject.FindGameObjectWithTag("Player");
 
 		// get the referrences to background planet
-		backgroundPlanet = transform.Find("Background Planet").gameObject;
-		Bounds planetBounds = backgroundPlanet.GetComponent<SpriteRenderer>().sprite.bounds;
-		Vector2 planetSize = new Vector2(planetBounds.size.x * backgroundPlanet.transform.localScale.x, planetBounds.size.y * backgroundPlanet.transform.localScale.y);
-		planetOffset = new Vector3(planetSize.x / 2, -planetSize.y / 2, 0);
-		planetOffset += new Vector3(-1, -1, 0);
+		if (backgroundPlanet)
+		{
+			Bounds planetBounds = backgroundPlanet.GetComponent<SpriteRenderer>().sprite.bounds;
+			Vector2 planetSize = new Vector2(planetBounds.size.x * backgroundPlanet.transform.localScale.x, planetBounds.size.y * backgroundPlanet.transform.localScale.y);
+			planetOffset = new Vector3(planetSize.x / 2, -planetSize.y / 2, 0);
+			planetOffset += new Vector3(-1, -4, 30);
+		}
 	}
 
 	void Update()
 	{
 		// position the planet in the top left of the screen
-		Vector3 screenTopLeft = Camera.main.ScreenToWorldPoint(new Vector3(0, Screen.height, 1));
-		backgroundPlanet.transform.position = screenTopLeft + (transform.rotation * planetOffset);
+		if (backgroundPlanet)
+		{
+			Vector3 screenTopLeft = Camera.main.ScreenToWorldPoint(new Vector3(0, Screen.height, 1));
+			backgroundPlanet.transform.position = screenTopLeft + (transform.rotation * planetOffset);
+			backgroundPlanet.transform.rotation = transform.rotation;
+		}
 	}
 	
 	void FixedUpdate()
