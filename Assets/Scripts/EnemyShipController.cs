@@ -34,8 +34,8 @@ public class EnemyShipController : MonoBehaviour {
 	private float horizontalAxis = 0;
 	private float actionTime = 0f;
 	private float actionTimer = 0f;
-	private float attackTime = 0.75f;
-	private float attackTimer = 0f;
+	private float attackDelayTime = 0.75f;
+	private float attackDelayTimer = 0f;
 	private float attackDistance = 7f;
 	
 	void Start()
@@ -108,13 +108,13 @@ public class EnemyShipController : MonoBehaviour {
 
 		if ( ! canAttack)
 		{
-			attackTimer += Time.deltaTime;
-			if (attackTimer >= attackTime)
+			attackDelayTimer += Time.deltaTime;
+			if (attackDelayTimer >= attackDelayTime)
 			{
 				canAttack = true;
 				
 				// reset timer
-				attackTimer = 0;
+				attackDelayTimer = 0;
 			}
 		}
 	}

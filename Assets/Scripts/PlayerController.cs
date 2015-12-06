@@ -22,6 +22,8 @@ public class PlayerController : MonoBehaviour {
 	private bool grounded = false;
 	private bool canJump = true;
 	private bool jumpButtonState = false;
+	private bool canAttack = true;
+	private bool attackButtonState = false;
 
 	// boolean states
 	private bool walking = false;
@@ -32,6 +34,8 @@ public class PlayerController : MonoBehaviour {
 	private float jumpSpeed = 16f;
 	private float horizontalAxis = 0;
 	private float velocityY = 0f;
+	private float attackDelayTime = 0.3f;
+	private float attackDelayTimer = 0f;
 
 	void Start()
 	{
@@ -62,6 +66,7 @@ public class PlayerController : MonoBehaviour {
 	void FixedUpdate ()
 	{
 		IsJumping();
+		IsAttacking();
 		IsWalking();
 		
 		// update the current velocity
@@ -77,22 +82,8 @@ public class PlayerController : MonoBehaviour {
 		//jumpButtonState = Input.GetButton("Jump");
 		jumpButtonState = Input.GetKey(KeyCode.X);
 
-		// fire a bullet
-		if (Input.GetKeyDown(KeyCode.Z))
-		{
-			Vector3 bulletPos = transform.position + (transform.right * (facingRight ? 1 : -1));
-			string direction = "forward";
-
-			if (Input.GetKey(KeyCode.UpArrow))
-			{
-				bulletPos = transform.position + transform.up;
-				direction = "up";
-			}
-
-			GameObject bullet = GameObject.Instantiate(playerBullet, bulletPos, transform.rotation) as GameObject;
-			bullet.GetComponent<PlayerBulletController>().SetFacingRight(facingRight);
-			bullet.GetComponent<PlayerBulletController>().SetDirection(direction);
-		}
+		// is attack button down
+		attackButtonState = Input.GetKey(KeyCode.Z);
 	}
 
 	void IsJumping()
@@ -129,6 +120,40 @@ public class PlayerController : MonoBehaviour {
 
 			// apply local vertical velocity
 			verticalVelocity = transform.up * jumpSpeed;
+		}
+	}
+
+	void IsAttacking()
+	{
+		if (canAttack)
+		{
+			// fire a bullet
+			if (attackButtonState)
+			{
+				canAttack = false;
+
+				Vector3 bulletPos = transform.position + (transform.right * (facingRight ? 1 : -1));
+				string direction = "forward";
+				
+				if (Input.GetKey(KeyCode.UpArrow))
+				{
+					bulletPos = transform.position + transform.up;
+					direction = "up";
+				}
+				
+				GameObject bullet = GameObject.Instantiate(playerBullet, bulletPos, transform.rotation) as GameObject;
+				bullet.GetComponent<PlayerBulletController>().SetFacingRight(facingRight);
+				bullet.GetComponent<PlayerBulletController>().SetDirection(direction);
+			}
+		}
+		else
+		{
+			attackDelayTimer += Time.deltaTime;
+			if (attackDelayTimer >= attackDelayTime)
+			{
+				canAttack = true;
+				attackDelayTimer = 0;
+			}
 		}
 	}
 
