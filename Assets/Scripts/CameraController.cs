@@ -10,7 +10,7 @@ public class CameraController : MonoBehaviour {
 
 	// private references
 	private GameObject player;
-	private GameObject bgStars;
+	private GameObject stars;
 
 	// vectors
 	private Vector3 planetOffset;
@@ -35,43 +35,67 @@ public class CameraController : MonoBehaviour {
 			planetOffset += new Vector3(-1, -6, 0);
 		}
 
-		// get the referrences to the stars
+		// add the stars
+		AddBackgroundStars();
+	}
+
+	void AddBackgroundStars()
+	{
+		// get the referrences to the stars sprite
 		if (backgroundStars)
 		{
+			// create an empty game object
+			stars = new GameObject("Background Stars");
+			
+			// get the size of the background image
+			Bounds bounds = backgroundStars.GetComponent<SpriteRenderer>().sprite.bounds;
+			
+			// get the size of screen
+			float screenHeight = Camera.main.orthographicSize * 2f;
+			float screenWidth = screenHeight / Screen.height * Screen.width;
+			//Debug.LogFormat("bounds: {0}, size: {1}, wd: {2}, hg: {3}", starsBound, starsBound.size, screenWidth, screenHeight);
+			
+			// get the number of images needed to fill the screen
+			float horizontalTiles = Mathf.Ceil(screenWidth / bounds.size.x);
+			float verticalTiles = Mathf.Ceil(screenHeight / bounds.size.y);
+			//Debug.LogFormat("horz: {0}, vert: {1}", horizontalTiles, verticalTiles);
+			
+			// fill the empty game object with images
+			// *its important the "Pivot" of the sprite is set to "Top Left"
+			GameObject obj;
+			for (int vert = 0; vert < verticalTiles; vert++)
+			{
+				for (int horz = 0; horz < horizontalTiles; horz++)
+				{
+					obj = GameObject.Instantiate(backgroundStars, Vector3.zero, Quaternion.identity) as GameObject;
+					obj.transform.parent = stars.transform;
+					obj.transform.position = new Vector3(bounds.size.x * horz, bounds.size.y * -vert, 0);
+				}
+			}
+			
 			/*
-			bgStars = GameObject.Instantiate(backgroundStars, Vector3.zero, Quaternion.identity) as GameObject;
-			Bounds starsBound = backgroundStars.GetComponent<SpriteRenderer>().sprite.bounds;
-			Vector2 planetSize = new Vector2(starsBound.size.x, starsBound.size.y);
-			starsOffset = new Vector3(planetSize.x / 2, -planetSize.y / 2, 0);
-
-			float wd = backgroundStars.GetComponent<SpriteRenderer>().sprite.rect.width;
-			float ppu = backgroundStars.GetComponent<SpriteRenderer>().sprite.pixelsPerUnit;
-
-			Debug.LogFormat("{0}, {1}, {2}, {3}, {4}, {5}", wd, ppu, wd / ppu, Camera.main.pixelWidth, Camera.main.orthographicSize, wd / Camera.main.orthographicSize);
-			*/
-
 			// add and stretch the image of stars across the camera
 			// http://answers.unity3d.com/questions/620699/scaling-my-background-sprite-to-fill-screen-2d-1.html
-			bgStars = GameObject.Instantiate(backgroundStars, Vector3.zero, Quaternion.identity) as GameObject;
-			bgStars.transform.localScale = new Vector3(1, 1, 1);
+			stars = GameObject.Instantiate(backgroundStars, Vector3.zero, Quaternion.identity) as GameObject;
+			stars.transform.localScale = new Vector3(1, 1, 1);
 
-			Sprite spr = bgStars.GetComponent<SpriteRenderer>().sprite;
+			Sprite spr = stars.GetComponent<SpriteRenderer>().sprite;
 			float width = spr.bounds.size.x;
 			float height = spr.bounds.size.y;
 
 			float worldScreenHeight = Camera.main.orthographicSize * 2f;
 			float worldScreenWidth = worldScreenHeight / Screen.height * Screen.width;
 			
-			Vector3 xWidth = bgStars.transform.localScale;
+			Vector3 xWidth = stars.transform.localScale;
 			xWidth.x = worldScreenWidth / width;
-			bgStars.transform.localScale = xWidth;
+			stars.transform.localScale = xWidth;
 			//transform.localScale.x = worldScreenWidth / width;
 
-			Vector3 yHeight = bgStars.transform.localScale;
+			Vector3 yHeight = stars.transform.localScale;
 			yHeight.y = worldScreenHeight / height;
-			bgStars.transform.localScale = yHeight;
+			stars.transform.localScale = yHeight;
 			//transform.localScale.y = worldScreenHeight / height;
-			
+			*/
 		}
 	}
 	
@@ -85,12 +109,12 @@ public class CameraController : MonoBehaviour {
 			backgroundPlanet.transform.rotation = transform.rotation;
 		}
 
-		// position the stars in the center of the screen
-		if (bgStars)
+		// position the stars in the top right of the screen
+		if (stars)
 		{
-			Vector3 screenCenter = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width/2, Screen.height/2, 30));
-			bgStars.transform.position = screenCenter;
-			bgStars.transform.rotation = transform.rotation;
+			Vector3 screenTopLeft = Camera.main.ScreenToWorldPoint(new Vector3(0, Screen.height, 30));
+			stars.transform.position = screenTopLeft;
+			stars.transform.rotation = transform.rotation;
 		}
 	}
 	
