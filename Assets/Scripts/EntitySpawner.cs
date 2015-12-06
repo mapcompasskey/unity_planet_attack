@@ -6,6 +6,7 @@ public class EntitySpawner : MonoBehaviour {
 
 	// public variables
 	public Text spawnerText;
+	public GameObject attackPowerup;
 
 	public int enemySpawnsPublic = 0;
 	public GameObject enemyObject;
@@ -42,11 +43,16 @@ public class EntitySpawner : MonoBehaviour {
 	public static int buildingKillCounter = 0;
 	public static int buildingSpawnCounter = 0;
 
+	private int attackPowerupSpawns = 3;
+	private static int attackPowerupSpawnCounter = 0;
+
 	// floats
 	private float planetRadius = 0f;
 	private float enemySpawnRadius = 2f;
 	private float enemyShipSpawnRadius = 4f;
 	private float buildingSpawnRadius = 4f;
+	private float attackPowerupTime = 5f;
+	private float attackPowerupTimer = 6f;
 
 	// strings
 	private string strSpawnerText;
@@ -56,6 +62,10 @@ public class EntitySpawner : MonoBehaviour {
 	{
 		player = GameObject.FindGameObjectWithTag("Player");
 		planet = GameObject.FindGameObjectWithTag("Planet");
+
+		// the planet's radius
+		planetCollider2d = planet.GetComponent<CircleCollider2D>();
+		planetRadius = planetCollider2d.radius * planet.transform.localScale.x;
 
 		enemySpawns = enemySpawnsPublic;
 		enemyShipSpawns = enemyShipSpawnsPublic;
@@ -68,8 +78,8 @@ public class EntitySpawner : MonoBehaviour {
 		planetPosition = new Vector3(planet.transform.position.x, planet.transform.position.y, -10);
 
 		// the planet's radius
-		planetCollider2d = planet.GetComponent<CircleCollider2D>();
-		planetRadius = planetCollider2d.radius * planet.transform.localScale.x;
+		//planetCollider2d = planet.GetComponent<CircleCollider2D>();
+		//planetRadius = planetCollider2d.radius * planet.transform.localScale.x;
 
 		// draw a line to the opposite side of the player from the center of planet
 		groundPosition = player.transform.up * -planetRadius;
@@ -91,6 +101,12 @@ public class EntitySpawner : MonoBehaviour {
 		BuildingSpawner();
 
 		spawnerText.text = strSpawnerText;
+	}
+
+	void FixedUpdate()
+	{
+		// spawn an attack powerup
+		AttackPowerupSpawner();
 	}
 
 	void EnemySpawner()
@@ -198,6 +214,25 @@ public class EntitySpawner : MonoBehaviour {
 			v2 = q2 * transform.up * buildingSpawnRadius;
 			
 			Debug.DrawLine(groundPosition + v1, groundPosition + v2, Color.cyan, 0, false);
+		}
+	}
+
+	void AttackPowerupSpawner()
+	{
+		// spawn an attack powerup
+		if (attackPowerupSpawnCounter < attackPowerupSpawns)
+		{
+			attackPowerupTimer += Time.deltaTime;
+			if (attackPowerupTimer >= attackPowerupTime)
+			{
+				// randomly drop from anywhere above the planet
+				float distance = (planetRadius * 3f);
+				Vector3 v = Quaternion.AngleAxis(Random.Range(0f, 360f), Vector3.forward) * Vector3.up * distance;
+				GameObject.Instantiate(attackPowerup, v, Quaternion.identity);
+				
+				attackPowerupTimer = 0f;
+				attackPowerupSpawnCounter++;
+			}
 		}
 	}
 

@@ -368,7 +368,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 5
 --- !u!1 &855176540
 GameObject:
   m_ObjectHideFlags: 0
@@ -585,6 +585,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnerText: {fileID: 1721397352}
+  attackPowerup: {fileID: 126420, guid: 7702e1f7b4547e54ab01d1b559ce1280, type: 2}
   enemySpawnsPublic: 10
   enemyObject: {fileID: 104606, guid: 09754ab23066e48418d6e93fecde03b1, type: 2}
   enemyTriggerLayerMask:
@@ -812,7 +813,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
 --- !u!114 &1777533354
 MonoBehaviour:
   m_ObjectHideFlags: 0
