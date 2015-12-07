@@ -3,13 +3,33 @@ using System.Collections;
 
 public class AttackPowerupController : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-	
+	// public variables
+	public GameObject deathEffect;
+
+	// floats
+	private float killTime = 20f;
+	private float killTimer = 0f;
+
+	void FixedUpdate()
+	{
+		killTimer += Time.deltaTime;
+		if (killTimer >= killTime)
+		{
+			EntitySpawner.attackPowerupSpawnCounter--;
+			Destroy(gameObject);
+		}
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+
+	void OnTriggerEnter2D(Collider2D other)
+	{
+		if (other.tag == "Player")
+		{
+			other.GetComponent<PlayerController>().AttackPowerupTrigger();
+
+			Instantiate(deathEffect, transform.position, Quaternion.identity);
+			EntitySpawner.attackPowerupSpawnCounter--;
+			Destroy(gameObject);
+		}
 	}
+
 }

@@ -12,7 +12,7 @@ GameObject:
   - 199: {fileID: 19982458}
   - 114: {fileID: 11499298}
   m_Layer: 0
-  m_Name: Impact Effect
+  m_Name: Impact Effect Green
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

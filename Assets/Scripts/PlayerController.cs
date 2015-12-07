@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour {
 	private bool jumpButtonState = false;
 	private bool canAttack = true;
 	private bool attackButtonState = false;
+	private bool hasAttackPowerup = false;
 
 	// boolean states
 	private bool walking = false;
@@ -36,6 +37,8 @@ public class PlayerController : MonoBehaviour {
 	private float velocityY = 0f;
 	private float attackDelayTime = 0.3f;
 	private float attackDelayTimer = 0f;
+	private float attackPowerupTime = 5f;
+	private float attackPowerupTimer = 0f;
 
 	void Start()
 	{
@@ -148,11 +151,25 @@ public class PlayerController : MonoBehaviour {
 		}
 		else
 		{
+			// can attack faster with the attack powerup
+			float delayTime = attackDelayTime * (hasAttackPowerup ? 0.5f : 1f);
+			
 			attackDelayTimer += Time.deltaTime;
-			if (attackDelayTimer >= attackDelayTime)
+			if (attackDelayTimer >= delayTime)
 			{
 				canAttack = true;
 				attackDelayTimer = 0;
+			}
+		}
+
+		// if picked up an attack powerup
+		if (hasAttackPowerup)
+		{
+			attackPowerupTimer += Time.deltaTime;
+			if (attackPowerupTimer >= attackPowerupTime)
+			{
+				attackPowerupTimer = 0f;
+				hasAttackPowerup = false;
 			}
 		}
 	}
@@ -248,13 +265,10 @@ public class PlayerController : MonoBehaviour {
 			}
 		}
 	}
-	
-	/*void OnTriggerEnter2D(Collider2D other)
+
+	public void AttackPowerupTrigger()
 	{
-		if (other.tag != "Planet")
-		{
-			Debug.LogFormat("player: {0}, {1}", other, other.tag);
-		}
-	}*/
+		hasAttackPowerup = true;
+	}
 
 }

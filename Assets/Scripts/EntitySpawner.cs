@@ -44,7 +44,7 @@ public class EntitySpawner : MonoBehaviour {
 	public static int buildingSpawnCounter = 0;
 
 	private int attackPowerupSpawns = 3;
-	private static int attackPowerupSpawnCounter = 0;
+	public static int attackPowerupSpawnCounter = 0;
 
 	// floats
 	private float planetRadius = 0f;
@@ -226,7 +226,7 @@ public class EntitySpawner : MonoBehaviour {
 			if (attackPowerupTimer >= attackPowerupTime)
 			{
 				// randomly drop from anywhere above the planet
-				float distance = (planetRadius * 3f);
+				float distance = (planetRadius * 2f);
 				Vector3 v = Quaternion.AngleAxis(Random.Range(0f, 360f), Vector3.forward) * Vector3.up * distance;
 				GameObject.Instantiate(attackPowerup, v, Quaternion.identity);
 				

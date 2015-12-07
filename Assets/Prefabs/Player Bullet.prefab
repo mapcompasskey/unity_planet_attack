@@ -113,7 +113,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26a05fd2de9ae8a4faea84bcaa45b57e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  impactEffect: {fileID: 121684, guid: 25b20eba4ba160a4fb67e9408efc26f8, type: 2}
+  impactEffect: {fileID: 121684, guid: c3aa0633682773d499755e5f4fc4ae4d, type: 2}
   damage: 5
 --- !u!212 &21237800
 SpriteRenderer:
@@ -198,6 +198,10 @@ Prefab:
       propertyPath: m_Radius
       value: 1.5
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: impactEffect
+      value: 
+      objectReference: {fileID: 121684, guid: c3aa0633682773d499755e5f4fc4ae4d, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 151628}

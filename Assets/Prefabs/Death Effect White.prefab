@@ -12,7 +12,7 @@ GameObject:
   - 199: {fileID: 19917890}
   - 114: {fileID: 11416202}
   m_Layer: 0
-  m_Name: Death Effect
+  m_Name: Death Effect White
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -215,7 +215,7 @@ ParticleSystem:
         rgba: 4294967295
       maxColor:
         serializedVersion: 2
-        rgba: 4278255360
+        rgba: 4294967295
       minMaxState: 0
     startSize:
       scalar: .200000003
@@ -1146,6 +1146,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].time
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: InitialModule.startColor.maxColor.rgba
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
