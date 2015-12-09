@@ -91,7 +91,36 @@ public class PlayerController : MonoBehaviour {
 		attackButtonState = Input.GetKey(KeyCode.Z);
 
 		// is up button pressed
-		anglePointing = Input.GetAxisRaw("Vertical");
+		//anglePointing = Input.GetAxisRaw("Vertical");
+
+		// 0    = right
+		// 90   = up
+		// 180  = left
+		// -180 = left
+		// -90  = down
+		Vector3 mouse = Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position);
+		float deg = Mathf.Atan2(mouse.y, mouse.x) * Mathf.Rad2Deg;
+		//Debug.LogFormat("{0}, {1}, {2}", Input.mousePosition, transform.position, Mathf.Round(deg));
+		//Debug.LogFormat("{0}, {1}", Mathf.Round(deg), Mathf.Atan2(mouse.y, mouse.x));
+
+		// if facing right
+		if ( ! facingRight && (deg > -90 && deg < 90))
+		{
+			facingRight = true;
+			transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
+		}
+		// else, if facing left
+		else if (facingRight && (deg > 90 || deg < -90))
+		{
+			facingRight = false;
+			transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
+		}
+
+		if ( ! facingRight && deg > 0)
+		{
+			deg = Mathf.Abs(deg - 180f);
+		}
+		anglePointing = Mathf.Clamp(deg, 0f, 90f);
 	}
 
 	void IsJumping()
@@ -182,7 +211,8 @@ public class PlayerController : MonoBehaviour {
 	void IsWalking()
 	{
 		walking = (horizontalAxis == 0 ? false : true);
-		
+
+		/*
 		// if just moved right
 		if (horizontalAxis > 0 && ! facingRight)
 		{
@@ -195,6 +225,7 @@ public class PlayerController : MonoBehaviour {
 			facingRight = false;
 			transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
 		}
+		*/
 
 		// update local horizontal velocity
 		// *transform.right returns this objects local "right" direction as a vector in world space
