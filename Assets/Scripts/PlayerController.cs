@@ -5,7 +5,7 @@ public class PlayerController : MonoBehaviour {
 
 	// public references
 	public LayerMask groundLayer;
-	public GameObject playerBullet;
+	public PlayerBulletController playerBullet;
 	
 	// private references
 	private Rigidbody2D rb2d;
@@ -88,20 +88,12 @@ public class PlayerController : MonoBehaviour {
 		jumpButtonState = Input.GetKey(KeyCode.X);
 
 		// is attack button pressed
-		attackButtonState = Input.GetKey(KeyCode.Z);
+		//attackButtonState = Input.GetKey(KeyCode.Z);
+		attackButtonState = Input.GetMouseButton(0);
 
-		// is up button pressed
-		//anglePointing = Input.GetAxisRaw("Vertical");
-
-		// 0    = right
-		// 90   = up
-		// 180  = left
-		// -180 = left
-		// -90  = down
+		// get the angle from the player to the mouse
 		Vector3 mouse = Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position);
 		float deg = Mathf.Atan2(mouse.y, mouse.x) * Mathf.Rad2Deg;
-		//Debug.LogFormat("{0}, {1}, {2}", Input.mousePosition, transform.position, Mathf.Round(deg));
-		//Debug.LogFormat("{0}, {1}", Mathf.Round(deg), Mathf.Atan2(mouse.y, mouse.x));
 
 		// if facing right
 		if ( ! facingRight && (deg > -90 && deg < 90))
@@ -169,6 +161,7 @@ public class PlayerController : MonoBehaviour {
 			{
 				canAttack = false;
 
+				/*
 				Vector3 bulletPos = transform.position + (transform.right * (facingRight ? 1 : -1));
 				string direction = "forward";
 				
@@ -181,6 +174,16 @@ public class PlayerController : MonoBehaviour {
 				GameObject bullet = GameObject.Instantiate(playerBullet, bulletPos, transform.rotation) as GameObject;
 				bullet.GetComponent<PlayerBulletController>().SetFacingRight(facingRight);
 				bullet.GetComponent<PlayerBulletController>().SetDirection(direction);
+				*/
+				/*
+				Vector3 bulletPos = transform.position;
+				GameObject bullet = GameObject.Instantiate(playerBullet, bulletPos, transform.rotation) as GameObject;
+				bullet.GetComponent<PlayerBulletController>().SetFacingRight(facingRight);
+				bullet.GetComponent<PlayerBulletController>().SetAngle(anglePointing);
+				*/
+
+				PlayerBulletController bullet = (PlayerBulletController)Instantiate(playerBullet, transform.position, transform.rotation);
+				bullet.OnInit(facingRight, anglePointing);
 			}
 		}
 		else

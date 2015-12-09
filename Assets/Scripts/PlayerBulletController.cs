@@ -9,17 +9,19 @@ public class PlayerBulletController : MonoBehaviour {
 
 	// private references
 	private Rigidbody2D rb2d;
-	
+
+	// vectors
+	private Vector3 horizontalVelocity = Vector3.zero;
+	private Vector3 verticalVelocity = Vector3.zero;
+
 	// booleans
 	private bool facingRight = true;
-	
-	// floats
+
+	// float
+	private float angle = 0f;
 	private float moveSpeed = 20f;
-	private float horizontalAxis = 0;
 	private float killTime = 0.5f;
 	private float killTimer = 0f;
-
-	private string direction = "forward";
 
 	void Start()
 	{
@@ -28,9 +30,6 @@ public class PlayerBulletController : MonoBehaviour {
 
 	void Update()
 	{
-		// set horizontal input
-		horizontalAxis = (facingRight ? 1 : -1);
-
 		// increment the kill timer
 		killTimer += Time.deltaTime;
 		if (killTimer >= killTime)
@@ -41,19 +40,9 @@ public class PlayerBulletController : MonoBehaviour {
 	
 	void FixedUpdate()
 	{
-		Vector3 horizontalVelocity = Vector3.zero;
-		Vector3 verticalVelocity = Vector3.zero;
-		
-		if (direction == "forward")
-		{
-			horizontalVelocity = transform.right * horizontalAxis * moveSpeed;
-		}
-		else if (direction == "up")
-		{
-			verticalVelocity = transform.up * moveSpeed;
-		}
-		
-		// update the current velocity
+		// update the directional velocity as the object moves around the planet
+		horizontalVelocity = transform.right * Mathf.Cos(angle * Mathf.Deg2Rad) * (facingRight ? 1 : -1) * moveSpeed;
+		verticalVelocity = transform.up * Mathf.Sin(angle * Mathf.Deg2Rad) * moveSpeed;
 		rb2d.velocity = horizontalVelocity + verticalVelocity;
 	}
 
@@ -76,14 +65,17 @@ public class PlayerBulletController : MonoBehaviour {
 		Destroy(gameObject);
 	}
 
-	public void SetFacingRight(bool val)
+	// called by the player when bullet is created
+	public void OnInit(bool facingRight, float angle)
 	{
-		facingRight = val;
-	}
+		// update direction and angle
+		this.facingRight = facingRight;
+		this.angle = angle;
 
-	public void SetDirection(string val)
-	{
-		direction = val;
+		// reposition away from the player by 1 unit
+		Vector3 horizontalPosition = transform.right * Mathf.Cos(angle * Mathf.Deg2Rad) * (facingRight ? 1 : -1);
+		Vector3 verticalPosition = transform.up * Mathf.Sin(angle * Mathf.Deg2Rad);
+		transform.position += horizontalPosition + verticalPosition;
 	}
 
 }

@@ -164,7 +164,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 256
-  playerBullet: {fileID: 151628, guid: f2d08a01cfa717b409a81c535d0b9b74, type: 2}
+  playerBullet: {fileID: 11445150, guid: f2d08a01cfa717b409a81c535d0b9b74, type: 2}
 --- !u!114 &11433718
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -203,7 +203,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: d10ee74252104204094698a77d6d602e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7d737b5927b50f648b9aa11e2e79710c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!212 &21242730
 SpriteRenderer:
