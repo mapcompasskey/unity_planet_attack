@@ -1,21 +1,39 @@
 fileFormatVersion: 2
-guid: d10ee74252104204094698a77d6d602e
-timeCreated: 1448993772
+guid: 7d737b5927b50f648b9aa11e2e79710c
+timeCreated: 1449679700
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: player_idle
-    21300002: player_walk_1
-    21300004: player_walk_2
-    21300006: player_walk_4
-    21300008: player_jump_1
-    21300010: player_fall_1
-    21300012: player_idle
-    21300014: player_walk_1
-    21300016: player_walk_2
-    21300018: player_walk_3
-    21300020: player_jump_1
-    21300022: player_fall_1
+    21300000: player_idle_0
+    21300002: player_walk_0_1
+    21300004: player_walk_0_2
+    21300006: player_walk_0_3
+    21300008: player_jump_0
+    21300010: player_fall_0
+    21300012: player_idle_22
+    21300014: player_walk_22_1
+    21300016: player_walk_22_2
+    21300018: player_walk_22_3
+    21300020: player_jump_22
+    21300022: player_fall_22
+    21300024: player_idle_45
+    21300026: player_walk_45_1
+    21300028: player_walk_45_2
+    21300030: player_walk_45_3
+    21300032: player_jump_45
+    21300034: player_fall_45
+    21300036: player_idle_67
+    21300038: player_walk_67_1
+    21300040: player_walk_67_2
+    21300042: player_walk_67_3
+    21300044: player_jump_67
+    21300046: player_fall_67
+    21300048: player_idle_90
+    21300050: player_walk_90_1
+    21300052: player_walk_90_2
+    21300054: player_walk_90_3
+    21300056: player_jump_90
+    21300058: player_fall_90
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -62,61 +80,301 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: player_idle
+    - name: player_idle_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
+        y: 467
         width: 45
         height: 45
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: player_walk_1
+    - name: player_walk_0_1
       rect:
         serializedVersion: 2
         x: 45
-        y: 0
+        y: 467
         width: 45
         height: 45
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: player_walk_2
+    - name: player_walk_0_2
       rect:
         serializedVersion: 2
         x: 90
-        y: 0
+        y: 467
         width: 45
         height: 45
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: player_walk_3
+    - name: player_walk_0_3
       rect:
         serializedVersion: 2
         x: 135
-        y: 0
+        y: 467
         width: 45
         height: 45
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: player_jump_1
+    - name: player_jump_0
       rect:
         serializedVersion: 2
         x: 180
-        y: 0
+        y: 467
         width: 45
         height: 45
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: player_fall_1
+    - name: player_fall_0
       rect:
         serializedVersion: 2
         x: 225
-        y: 0
+        y: 467
+        width: 45
+        height: 45
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: player_idle_22
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 422
+        width: 45
+        height: 45
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: player_walk_22_1
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 422
+        width: 45
+        height: 45
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: player_walk_22_2
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 422
+        width: 45
+        height: 45
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: player_walk_22_3
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 422
+        width: 45
+        height: 45
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: player_jump_22
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 422
+        width: 45
+        height: 45
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: player_fall_22
+      rect:
+        serializedVersion: 2
+        x: 225
+        y: 422
+        width: 45
+        height: 45
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: player_idle_45
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 377
+        width: 45
+        height: 45
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: player_walk_45_1
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 377
+        width: 45
+        height: 45
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: player_walk_45_2
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 377
+        width: 45
+        height: 45
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: player_walk_45_3
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 377
+        width: 45
+        height: 45
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: player_jump_45
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 377
+        width: 45
+        height: 45
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: player_fall_45
+      rect:
+        serializedVersion: 2
+        x: 225
+        y: 377
+        width: 45
+        height: 45
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: player_idle_67
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 332
+        width: 45
+        height: 45
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: player_walk_67_1
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 332
+        width: 45
+        height: 45
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: player_walk_67_2
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 332
+        width: 45
+        height: 45
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: player_walk_67_3
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 332
+        width: 45
+        height: 45
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: player_jump_67
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 332
+        width: 45
+        height: 45
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: player_fall_67
+      rect:
+        serializedVersion: 2
+        x: 225
+        y: 332
+        width: 45
+        height: 45
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: player_idle_90
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 287
+        width: 45
+        height: 45
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: player_walk_90_1
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 287
+        width: 45
+        height: 45
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: player_walk_90_2
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 287
+        width: 45
+        height: 45
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: player_walk_90_3
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 287
+        width: 45
+        height: 45
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: player_jump_90
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 287
+        width: 45
+        height: 45
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: player_fall_90
+      rect:
+        serializedVersion: 2
+        x: 225
+        y: 287
         width: 45
         height: 45
       alignment: 0

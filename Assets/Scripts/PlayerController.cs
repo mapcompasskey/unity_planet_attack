@@ -35,6 +35,7 @@ public class PlayerController : MonoBehaviour {
 	private float jumpSpeed = 16f;
 	private float horizontalAxis = 0;
 	private float velocityY = 0f;
+	private float anglePointing = 0f;
 	private float attackDelayTime = 0.3f;
 	private float attackDelayTimer = 0f;
 	private float attackPowerupTime = 5f;
@@ -61,6 +62,7 @@ public class PlayerController : MonoBehaviour {
 		anim.SetBool("Walking", walking);
 		anim.SetBool("Jumping", jumping);
 		anim.SetFloat("Y Velocity", velocityY);
+		anim.SetFloat("Angle Pointing", anglePointing);
 	}
 
 	// called every physics step
@@ -81,12 +83,15 @@ public class PlayerController : MonoBehaviour {
 		// left or right axis of controls
 		horizontalAxis = Input.GetAxisRaw("Horizontal");
 		
-		// is jump button down
+		// is jump button pressed
 		//jumpButtonState = Input.GetButton("Jump");
 		jumpButtonState = Input.GetKey(KeyCode.X);
 
-		// is attack button down
+		// is attack button pressed
 		attackButtonState = Input.GetKey(KeyCode.Z);
+
+		// is up button pressed
+		anglePointing = Input.GetAxisRaw("Vertical");
 	}
 
 	void IsJumping()
