@@ -19,8 +19,8 @@ public class PlayerBulletController : MonoBehaviour {
 
 	// float
 	private float angle = 0f;
-	private float moveSpeed = 20f;
-	private float killTime = 0.5f;
+	private float moveSpeed = 30f;
+	private float killTime = 0.4f;
 	private float killTimer = 0f;
 
 	void Start()

@@ -85,7 +85,7 @@ public class PlayerController : MonoBehaviour {
 		
 		// is jump button pressed
 		//jumpButtonState = Input.GetButton("Jump");
-		jumpButtonState = Input.GetKey(KeyCode.X);
+		jumpButtonState = (Input.GetAxisRaw("Vertical") == 1 ? true : false);
 
 		// is attack button pressed
 		//attackButtonState = Input.GetKey(KeyCode.Z);
@@ -161,27 +161,7 @@ public class PlayerController : MonoBehaviour {
 			{
 				canAttack = false;
 
-				/*
-				Vector3 bulletPos = transform.position + (transform.right * (facingRight ? 1 : -1));
-				string direction = "forward";
-				
-				if (Input.GetKey(KeyCode.UpArrow))
-				{
-					bulletPos = transform.position + transform.up;
-					direction = "up";
-				}
-				
-				GameObject bullet = GameObject.Instantiate(playerBullet, bulletPos, transform.rotation) as GameObject;
-				bullet.GetComponent<PlayerBulletController>().SetFacingRight(facingRight);
-				bullet.GetComponent<PlayerBulletController>().SetDirection(direction);
-				*/
-				/*
-				Vector3 bulletPos = transform.position;
-				GameObject bullet = GameObject.Instantiate(playerBullet, bulletPos, transform.rotation) as GameObject;
-				bullet.GetComponent<PlayerBulletController>().SetFacingRight(facingRight);
-				bullet.GetComponent<PlayerBulletController>().SetAngle(anglePointing);
-				*/
-
+				// create a bullet
 				PlayerBulletController bullet = (PlayerBulletController)Instantiate(playerBullet, transform.position, transform.rotation);
 				bullet.OnInit(facingRight, anglePointing);
 			}
@@ -214,21 +194,6 @@ public class PlayerController : MonoBehaviour {
 	void IsWalking()
 	{
 		walking = (horizontalAxis == 0 ? false : true);
-
-		/*
-		// if just moved right
-		if (horizontalAxis > 0 && ! facingRight)
-		{
-			facingRight = true;
-			transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
-		}
-		// else, if just moved left
-		else if (horizontalAxis < 0 && facingRight)
-		{
-			facingRight = false;
-			transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
-		}
-		*/
 
 		// update local horizontal velocity
 		// *transform.right returns this objects local "right" direction as a vector in world space
