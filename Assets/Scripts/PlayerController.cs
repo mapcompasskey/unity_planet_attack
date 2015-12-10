@@ -24,7 +24,9 @@ public class PlayerController : MonoBehaviour {
 	private bool canJump = true;
 	private bool jumpButtonState = false;
 	private bool canAttack = true;
+	private bool canAttack2 = true;
 	private bool attackButtonState = false;
+	private bool attack2ButtonState = false;
 	private bool hasAttackPowerup = false;
 
 	// boolean states
@@ -39,6 +41,8 @@ public class PlayerController : MonoBehaviour {
 	private float facingAngle = 0f;
 	private float attackDelayTime = 0.3f;
 	private float attackDelayTimer = 0f;
+	private float attack2DelayTime = 1f;
+	private float attack2DelayTimer = 0f;
 	private float attackPowerupTime = 5f;
 	private float attackPowerupTimer = 0f;
 
@@ -74,6 +78,7 @@ public class PlayerController : MonoBehaviour {
 	{
 		IsJumping();
 		IsAttacking();
+		IsAttacking2();
 		IsWalking();
 		
 		// update the current velocity
@@ -90,6 +95,9 @@ public class PlayerController : MonoBehaviour {
 
 		// is attack button pressed
 		attackButtonState = Input.GetMouseButton(0);
+
+		// is attack 2 button pressed
+		attack2ButtonState = Input.GetMouseButton(1);
 	}
 
 	void UpdateFacingAngle()
@@ -166,12 +174,8 @@ public class PlayerController : MonoBehaviour {
 				canAttack = false;
 
 				// create a bullet
-				//PlayerBulletController bullet = (PlayerBulletController)Instantiate(playerBullet, transform.position, transform.rotation);
-				//bullet.OnInit(facingRight, facingAngle);
-
-				// create a bomb
-				PlayerBombController bomb = (PlayerBombController)Instantiate(playerBomb, transform.position, transform.rotation);
-				bomb.OnInit(facingRight, facingAngle);
+				PlayerBulletController bullet = (PlayerBulletController)Instantiate(playerBullet, transform.position, transform.rotation);
+				bullet.OnInit(facingRight, facingAngle);
 			}
 		}
 		else
@@ -195,6 +199,31 @@ public class PlayerController : MonoBehaviour {
 			{
 				attackPowerupTimer = 0f;
 				hasAttackPowerup = false;
+			}
+		}
+	}
+
+	void IsAttacking2()
+	{
+		if (canAttack2)
+		{
+			// throw a bomb
+			if (attack2ButtonState)
+			{
+				canAttack2 = false;
+
+				// create a bomb
+				PlayerBombController bomb = (PlayerBombController)Instantiate(playerBomb, transform.position, transform.rotation);
+				bomb.OnInit(facingRight, facingAngle);
+			}
+		}
+		else
+		{
+			attack2DelayTimer += Time.deltaTime;
+			if (attack2DelayTimer >= attack2DelayTime)
+			{
+				canAttack2 = true;
+				attack2DelayTimer = 0;
 			}
 		}
 	}

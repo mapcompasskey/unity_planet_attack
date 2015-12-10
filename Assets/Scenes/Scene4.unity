@@ -475,7 +475,9 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: 'WASD to Move and Jump
 
-    LEFT MOUSE to Shoot'
+    LEFT MOUSE to Shoot
+
+    RIGHT MOUSE to throw Bomb'
 --- !u!222 &993487569
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -584,17 +586,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnerText: {fileID: 1721397352}
   attackPowerup: {fileID: 126420, guid: 7702e1f7b4547e54ab01d1b559ce1280, type: 2}
-  enemySpawnsPublic: 0
+  enemySpawnsPublic: 10
   enemyObject: {fileID: 104606, guid: 09754ab23066e48418d6e93fecde03b1, type: 2}
   enemyTriggerLayerMask:
     serializedVersion: 2
     m_Bits: 2048
-  enemyShipSpawnsPublic: 0
+  enemyShipSpawnsPublic: 10
   enemyShipObject: {fileID: 107080, guid: f12acf5e895834b4ab126a80d5ad8283, type: 2}
   enemyShipTriggerLayerMask:
     serializedVersion: 2
     m_Bits: 8192
-  buildingSpawnsPublic: 0
+  buildingSpawnsPublic: 5
   buildingObject: {fileID: 194554, guid: 0695820ade8acc04dbb66839fe872db3, type: 2}
   buildingTriggerLayerMask:
     serializedVersion: 2

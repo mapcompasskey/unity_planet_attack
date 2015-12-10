@@ -15,7 +15,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &181950
 GameObject:
   m_ObjectHideFlags: 0
@@ -155,7 +155,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9fc86b3c0c310a43806ce31b1570978, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
+  bombExplosion: {fileID: 169984, guid: 8b1e5f0ae7fe0b644be795f90f11fe0d, type: 2}
 --- !u!212 &21248282
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -234,6 +234,18 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_Layer
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: explosionEffect
+      value: 
+      objectReference: {fileID: 120932, guid: 2d81b0315851be742beb528d540d6992, type: 2}
+    - target: {fileID: 0}
+      propertyPath: bombExplosion
+      value: 
+      objectReference: {fileID: 169984, guid: 8b1e5f0ae7fe0b644be795f90f11fe0d, type: 2}
+    - target: {fileID: 0}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

@@ -4,8 +4,7 @@ using System.Collections;
 public class PlayerBombController : MonoBehaviour {
 
 	// public variables
-	//public GameObject impactEffect;
-	public float damage = 1f;
+	public GameObject bombExplosion;
 	
 	// private references
 	private Rigidbody2D rb2d;
@@ -37,7 +36,7 @@ public class PlayerBombController : MonoBehaviour {
 		killTimer += Time.deltaTime;
 		if (killTimer >= killTime)
 		{
-			Destroy(gameObject);
+			OnImpact();
 		}
 	}
 	
@@ -72,18 +71,16 @@ public class PlayerBombController : MonoBehaviour {
 				jumpButtonState = true;
 				jumpSpeed = jumpSpeed * 0.5f;
 			}
-			//OnImpact();
 		}
 		else if (other.tag == "Enemy" || other.tag == "Building")
 		{
-			other.gameObject.GetComponent<EnemyHealthManager>().UpdateHealth(-damage);
 			OnImpact();
 		}
 	}
 	
 	public void OnImpact()
 	{
-		//Instantiate(impactEffect, transform.position, Quaternion.identity);
+		Instantiate(bombExplosion, transform.position, Quaternion.identity);
 		Destroy(gameObject);
 	}
 	
