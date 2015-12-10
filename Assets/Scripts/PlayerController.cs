@@ -6,15 +6,12 @@ public class PlayerController : MonoBehaviour {
 	// public references
 	public LayerMask groundLayer;
 	public PlayerBulletController playerBullet;
-	public PlayerBulletTrajectory playerBulletTrajectory;
-	public GameObject bulletTrajectory;
 	
 	// private references
 	private Rigidbody2D rb2d;
 	//private CircleCollider2D collider2d;
 	private BoxCollider2D collider2d;
 	private Animator anim;
-	private GameObject[] trajectory;
 
 	// vectors
 	private Vector3 horizontalVelocity = Vector3.zero;
@@ -43,8 +40,6 @@ public class PlayerController : MonoBehaviour {
 	private float attackDelayTimer = 0f;
 	private float attackPowerupTime = 5f;
 	private float attackPowerupTimer = 0f;
-	private float bulletTrajectoryDelayTime = 0.1f;
-	private float bulletTrajectoryDelayTimer = 0f;
 
 	void Start()
 	{
@@ -52,16 +47,6 @@ public class PlayerController : MonoBehaviour {
 		//collider2d = GetComponent<CircleCollider2D>();
 		collider2d = GetComponent<BoxCollider2D>();
 		anim = GetComponent<Animator>();
-
-		/**/
-		// create 20 instances of the bullet trajectory object
-		trajectory = new GameObject[20];
-		for (int i = 0; i < 20; i++)
-		{
-			GameObject obj = Instantiate(bulletTrajectory) as GameObject;
-			trajectory[i] = obj.gameObject;
-		}
-		/**/
 	}
 
 	// called every frame
@@ -172,105 +157,6 @@ public class PlayerController : MonoBehaviour {
 
 	void IsAttacking()
 	{
-		/**/
-		// draw the trajectory the bullet will take
-		bulletTrajectoryDelayTimer += Time.deltaTime;
-		if (bulletTrajectoryDelayTimer >= bulletTrajectoryDelayTime)
-		{
-			PlayerBulletTrajectory bulletTrajectory = (PlayerBulletTrajectory)Instantiate(playerBulletTrajectory, transform.position, transform.rotation);
-			bulletTrajectory.OnInit(facingRight, facingAngle);
-			bulletTrajectoryDelayTimer = 0;
-		}
-		/**/
-
-		/** /
-		Vector3 hPos = Vector3.zero;
-		Vector3 vPos = Vector3.zero;
-		for (int i = 0; i < trajectory.Length; i++)
-		{
-			hPos = transform.right * Mathf.Cos(facingAngle * Mathf.Deg2Rad) * (i * 0.5f) * (facingRight ? 1f : -1f);
-			vPos = transform.up * Mathf.Sin(facingAngle * Mathf.Deg2Rad) * (i * 0.5f);
-			trajectory[i].transform.position = transform.position + hPos + vPos;
-
-			//Vector2 targetDir = (body.position - transform.position).normalized;
-			//float angle = Mathf.Atan2(targetDir.y, targetDir.x) * Mathf.Rad2Deg - 90;
-			
-			//body.rotation = Quaternion.AngleAxis(angle, body.forward);
-			//rb2d.AddForce(targetDir * gravity * rb2d.mass * gravityScale); <- dont need for bullets since they have no gravity
-
-			//transform.position Vector3.zero
-			//gravity -50
-			
-			Vector3 targetDir = (trajectory[i].transform.position - Vector3.zero).normalized;
-			float theta = Mathf.Atan2(targetDir.y, targetDir.x) * Mathf.Rad2Deg - 90;
-
-			trajectory[i].transform.rotation = Quaternion.AngleAxis(theta, trajectory[i].transform.forward);
-			//Debug.Log(targetDir * -50 * Time.fixedDeltaTime);
-			//trajectory[i].transform.position += targetDir * -50 * Time.fixedDeltaTime;
-
-			hPos = trajectory[i].transform.right * Mathf.Cos(theta * Mathf.Deg2Rad) * (facingRight ? 1f : -1f);
-			vPos = trajectory[i].transform.up * Mathf.Sin(theta * Mathf.Deg2Rad);
-			trajectory[i].transform.position += hPos + vPos;
-		}
-		/**/
-
-		/*
-		var theta = -this.gun.rotation;
-		var x = 0, y = 0;
-		for(var t = 0 + this.timeOffset/(1000*MARCH_SPEED/60); t < 3; t += 0.03) {
-			x = this.BULLET_SPEED * t * Math.cos(theta) * correctionFactor;
-			y = this.BULLET_SPEED * t * Math.sin(theta) * correctionFactor - 0.5 * this.GRAVITY * t * t;
-			this.bitmap.context.fillRect(x + this.gun.x, this.gun.y - y, 3, 3);
-			if (y < -15) break;
-		}
-		*/
-
-		/**/
-		// this draws the trajectory but doesn't account for the planet's curvature
-		float xPos = 0;
-		float yPos = 0;
-		float time = Time.deltaTime;
-		float theta = facingAngle * Mathf.Deg2Rad;
-		for (int i = 0; i < trajectory.Length; i++)
-		{
-			float t = i * time;
-			xPos = 30f * t * Mathf.Cos(theta) * (facingRight ? 1f : -1f);
-			yPos = 30f * t * Mathf.Sin(theta) - 0.5f * 50f * t * t;
-			trajectory[i].transform.position = transform.position + new Vector3(xPos, yPos, 0);
-		}
-		/**/
-
-		/*
-		Vector2 targetDir = (body.position - transform.position).normalized;
-		float angle = Mathf.Atan2(targetDir.y, targetDir.x) * Mathf.Rad2Deg - 90;
-		Rigidbody2D rb2d = body.GetComponent<Rigidbody2D>();
-		float gravityScale = body.GetComponent<GravityBody>().gravityScale;
-
-		body.rotation = Quaternion.AngleAxis(angle, body.forward);
-		rb2d.AddForce(targetDir * gravity * rb2d.mass * gravityScale);
-		*/
-
-		/*
-		float angle;
-		Vector3 targetDir;
-		Vector3 targetRight = transform.right;
-		Vector3 targetForward = transform.forward;
-		Vector3 targetPos = transform.position;
-		for (int i = 0; i < trajectory.Length; i++)
-		{
-			targetDir = (targetPos - Vector3.zero).normalized;
-			angle = Mathf.Atan2(targetDir.y, targetDir.x) * Mathf.Rad2Deg - 90;
-
-			trajectory[i].transform.rotation = Quaternion.AngleAxis(angle, targetForward);
-			trajectory[i].transform.position = targetPos + targetRight + targetDir;
-
-			targetRight = trajectory[i].transform.right;
-			targetForward = trajectory[i].transform.forward;
-			targetPos = trajectory[i].transform.position;
-		}
-		*/
-
-
 		if (canAttack)
 		{
 			// fire a bullet

@@ -584,17 +584,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnerText: {fileID: 1721397352}
   attackPowerup: {fileID: 126420, guid: 7702e1f7b4547e54ab01d1b559ce1280, type: 2}
-  enemySpawnsPublic: 10
+  enemySpawnsPublic: 0
   enemyObject: {fileID: 104606, guid: 09754ab23066e48418d6e93fecde03b1, type: 2}
   enemyTriggerLayerMask:
     serializedVersion: 2
     m_Bits: 2048
-  enemyShipSpawnsPublic: 10
+  enemyShipSpawnsPublic: 0
   enemyShipObject: {fileID: 107080, guid: f12acf5e895834b4ab126a80d5ad8283, type: 2}
   enemyShipTriggerLayerMask:
     serializedVersion: 2
     m_Bits: 8192
-  buildingSpawnsPublic: 5
+  buildingSpawnsPublic: 0
   buildingObject: {fileID: 194554, guid: 0695820ade8acc04dbb66839fe872db3, type: 2}
   buildingTriggerLayerMask:
     serializedVersion: 2
@@ -650,6 +650,15 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 11425292, guid: ed5a9cccdc0ec4847a878de8649cc9e3, type: 2}
+      propertyPath: playerBulletTrajectory
+      value: 
+      objectReference: {fileID: 11468466, guid: 194c186df6adf3142a9fb8909b17486f,
+        type: 2}
+    - target: {fileID: 11425292, guid: ed5a9cccdc0ec4847a878de8649cc9e3, type: 2}
+      propertyPath: bulletTrajectory
+      value: 
+      objectReference: {fileID: 195982, guid: 749925f9c27ec6b42b4eab930a4f4bc6, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ed5a9cccdc0ec4847a878de8649cc9e3, type: 2}
   m_IsPrefabParent: 0
