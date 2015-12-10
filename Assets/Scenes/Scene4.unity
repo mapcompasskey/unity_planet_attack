@@ -650,15 +650,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 11425292, guid: ed5a9cccdc0ec4847a878de8649cc9e3, type: 2}
-      propertyPath: playerBulletTrajectory
-      value: 
-      objectReference: {fileID: 11468466, guid: 194c186df6adf3142a9fb8909b17486f,
-        type: 2}
-    - target: {fileID: 11425292, guid: ed5a9cccdc0ec4847a878de8649cc9e3, type: 2}
-      propertyPath: bulletTrajectory
-      value: 
-      objectReference: {fileID: 195982, guid: 749925f9c27ec6b42b4eab930a4f4bc6, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ed5a9cccdc0ec4847a878de8649cc9e3, type: 2}
   m_IsPrefabParent: 0

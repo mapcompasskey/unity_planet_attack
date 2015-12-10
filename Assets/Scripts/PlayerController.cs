@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour {
 	// public references
 	public LayerMask groundLayer;
 	public PlayerBulletController playerBullet;
+	public PlayerBombController playerBomb;
 	
 	// private references
 	private Rigidbody2D rb2d;
@@ -165,8 +166,12 @@ public class PlayerController : MonoBehaviour {
 				canAttack = false;
 
 				// create a bullet
-				PlayerBulletController bullet = (PlayerBulletController)Instantiate(playerBullet, transform.position, transform.rotation);
-				bullet.OnInit(facingRight, facingAngle);
+				//PlayerBulletController bullet = (PlayerBulletController)Instantiate(playerBullet, transform.position, transform.rotation);
+				//bullet.OnInit(facingRight, facingAngle);
+
+				// create a bomb
+				PlayerBombController bomb = (PlayerBombController)Instantiate(playerBomb, transform.position, transform.rotation);
+				bomb.OnInit(facingRight, facingAngle);
 			}
 		}
 		else

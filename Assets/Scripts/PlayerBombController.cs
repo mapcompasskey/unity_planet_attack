@@ -1,33 +1,36 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerBulletController : MonoBehaviour {
+public class PlayerBombController : MonoBehaviour {
 
 	// public variables
-	public GameObject impactEffect;
+	//public GameObject impactEffect;
 	public float damage = 1f;
-
+	
 	// private references
 	private Rigidbody2D rb2d;
-
+	
 	// vectors
 	private Vector3 horizontalVelocity = Vector3.zero;
 	private Vector3 verticalVelocity = Vector3.zero;
-
+	
 	// booleans
 	private bool facingRight = true;
-
+	private bool jumpButtonState = true;
+	
 	// float
 	private float angle = 0f;
-	private float moveSpeed = 30f;
-	private float killTime = 0.4f;
+	private float moveSpeed = 20f;
+	private float jumpSpeed = 30f;
+	private float velocityY = 0f;
+	private float killTime = 2f;
 	private float killTimer = 0f;
-
+	
 	void Start()
 	{
 		rb2d = GetComponent<Rigidbody2D>();
 	}
-
+	
 	void Update()
 	{
 		// increment the kill timer
@@ -40,17 +43,36 @@ public class PlayerBulletController : MonoBehaviour {
 	
 	void FixedUpdate()
 	{
-		// update the directional velocity as the object moves around the planet
 		horizontalVelocity = transform.right * Mathf.Cos(angle * Mathf.Deg2Rad) * (facingRight ? 1 : -1) * moveSpeed;
-		verticalVelocity = transform.up * Mathf.Sin(angle * Mathf.Deg2Rad) * moveSpeed;
+
+		velocityY = transform.InverseTransformDirection(rb2d.velocity).y;
+		verticalVelocity = transform.up * velocityY;
+		
+		// apply vertical velocity
+		if (jumpButtonState)
+		{
+			jumpButtonState = false;
+			verticalVelocity = transform.up * Mathf.Sin(angle * Mathf.Deg2Rad) * jumpSpeed;
+		}
+
+		// update the directional velocity as the object moves around the planet
 		rb2d.velocity = horizontalVelocity + verticalVelocity;
 	}
-
+	
 	void OnTriggerEnter2D(Collider2D other)
 	{
 		if (other.tag == "Planet")
 		{
-			OnImpact();
+			// add friction
+			moveSpeed = moveSpeed * 0.7f;
+
+			// bounce
+			if (jumpSpeed > 5f)
+			{
+				jumpButtonState = true;
+				jumpSpeed = jumpSpeed * 0.5f;
+			}
+			//OnImpact();
 		}
 		else if (other.tag == "Enemy" || other.tag == "Building")
 		{
@@ -58,14 +80,14 @@ public class PlayerBulletController : MonoBehaviour {
 			OnImpact();
 		}
 	}
-
+	
 	public void OnImpact()
 	{
-		Instantiate(impactEffect, transform.position, Quaternion.identity);
+		//Instantiate(impactEffect, transform.position, Quaternion.identity);
 		Destroy(gameObject);
 	}
-
-	// called by the player when object is created
+	
+	// called by the player when this object is created
 	public void OnInit(bool facingRight, float angle)
 	{
 		// update direction and angle
