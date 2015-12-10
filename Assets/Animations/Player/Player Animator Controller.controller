@@ -32,7 +32,7 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
-  - m_Name: Angle Pointing
+  - m_Name: Facing Angle
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -98,7 +98,7 @@ BlendTree:
     m_CycleOffset: 0
     m_DirectBlendParameter: Blend
     m_Mirror: 0
-  m_BlendParameter: Angle Pointing
+  m_BlendParameter: Facing Angle
   m_BlendParameterY: Y Velocity
   m_MinThreshold: 0
   m_MaxThreshold: 90
@@ -152,7 +152,7 @@ BlendTree:
     m_CycleOffset: 0
     m_DirectBlendParameter: Blend
     m_Mirror: 0
-  m_BlendParameter: Angle Pointing
+  m_BlendParameter: Facing Angle
   m_BlendParameterY: Blend
   m_MinThreshold: 0
   m_MaxThreshold: 90
@@ -206,7 +206,7 @@ BlendTree:
     m_CycleOffset: 0
     m_DirectBlendParameter: Blend
     m_Mirror: 0
-  m_BlendParameter: Angle Pointing
+  m_BlendParameter: Facing Angle
   m_BlendParameterY: Blend
   m_MinThreshold: 0
   m_MaxThreshold: 90
@@ -260,7 +260,7 @@ BlendTree:
     m_CycleOffset: 0
     m_DirectBlendParameter: Blend
     m_Mirror: 0
-  m_BlendParameter: Angle Pointing
+  m_BlendParameter: Facing Angle
   m_BlendParameterY: Y Velocity
   m_MinThreshold: 0
   m_MaxThreshold: 90
