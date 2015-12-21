@@ -20,6 +20,7 @@ public class GravityAttractor : MonoBehaviour {
 		rb2d.AddForce(targetDir * gravity * rb2d.mass * gravityScale);
 		*/
 
+		/*
 		Vector2 targetDir = (body.position - transform.position).normalized;
 		float angle = Mathf.Atan2(targetDir.y, targetDir.x) * Mathf.Rad2Deg - 90;
 		Rigidbody2D rb2d = body.GetComponent<Rigidbody2D>();
@@ -27,5 +28,32 @@ public class GravityAttractor : MonoBehaviour {
 
 		body.rotation = Quaternion.AngleAxis(angle, body.forward);
 		rb2d.AddForce(targetDir * gravity * rb2d.mass * gravityScale);
+		*/
+
+		GravityBody gravityBody = body.GetComponent<GravityBody>();
+		if (gravityBody)
+		{
+			Vector2 targetDir = (body.position - transform.position).normalized;
+			float angle = Mathf.Atan2(targetDir.y, targetDir.x) * Mathf.Rad2Deg - 90;
+
+			// if the object just needs the rotation and gravity applied
+			if (gravityBody.applyForce)
+			{
+				Rigidbody2D rb2d = body.GetComponent<Rigidbody2D>();
+				if (rb2d)
+				{
+					body.rotation = Quaternion.AngleAxis(angle, body.forward);
+					rb2d.AddForce(targetDir * gravity * rb2d.mass * gravityBody.gravityScale);
+				}
+			}
+
+			// else, the object will take care of its own rotation and added gravity
+			else
+			{
+				gravityBody.rotation = Quaternion.AngleAxis(angle, body.forward);
+				gravityBody.gravity = gravity;
+			}
+		}
+
 	}
 }

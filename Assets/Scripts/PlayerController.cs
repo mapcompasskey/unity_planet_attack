@@ -80,7 +80,7 @@ public class PlayerController : MonoBehaviour {
 		IsAttacking();
 		IsAttacking2();
 		IsWalking();
-		
+
 		// update the current velocity
 		rb2d.velocity = horizontalVelocity + verticalVelocity;
 	}

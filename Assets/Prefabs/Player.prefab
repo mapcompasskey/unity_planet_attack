@@ -12,7 +12,7 @@ GameObject:
   - 61: {fileID: 6141122}
   - 50: {fileID: 5006014}
   - 95: {fileID: 9562914}
-  - 114: {fileID: 11433718}
+  - 114: {fileID: 11414702}
   - 114: {fileID: 11425292}
   m_Layer: 9
   m_Name: Player
@@ -150,6 +150,21 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &11414702
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 118248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: beedbeb4ec2802c44aaaecf30ea8b0cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  applyForce: 1
+  gravityScale: 1
+  gravity: 0
+  rotation: {x: 0, y: 0, z: 0, w: 1}
 --- !u!114 &11425292
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -166,18 +181,6 @@ MonoBehaviour:
     m_Bits: 256
   playerBullet: {fileID: 11445150, guid: f2d08a01cfa717b409a81c535d0b9b74, type: 2}
   playerBomb: {fileID: 11470684, guid: afe302a1dd4da264599166fc1059ccc2, type: 2}
---- !u!114 &11433718
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 118248}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: beedbeb4ec2802c44aaaecf30ea8b0cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gravityScale: 1
 --- !u!212 &21210412
 SpriteRenderer:
   m_ObjectHideFlags: 1
