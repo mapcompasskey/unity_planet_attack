@@ -6,6 +6,7 @@ public class GravityAttractor : MonoBehaviour {
 	// floats
 	public float gravity = -10f;
 
+	// called during a GravityBody's FixedUpdate
 	public void Attract(Transform body)
 	{
 		/*
@@ -55,6 +56,7 @@ public class GravityAttractor : MonoBehaviour {
 
 	}
 
+	// used for trajectory simulations
 	public Quaternion GetRotation(Vector3 position)
 	{
 		Vector2 targetDir = (position - transform.position).normalized;

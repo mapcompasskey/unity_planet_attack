@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour {
 	public PlayerBulletController playerBullet;
 	public PlayerBombController playerBomb;
 	public PlayerBombTrajectory playerBombTrajectory;
+	public PlayerBulletTrajectory playerBulletTrajectory;
 	
 	// private references
 	private Rigidbody2D rb2d;
@@ -15,6 +16,7 @@ public class PlayerController : MonoBehaviour {
 	private BoxCollider2D collider2d;
 	private Animator anim;
 	private PlayerBombTrajectory bombTrajectory;
+	private PlayerBulletTrajectory bulletTrajectory;
 
 	// vectors
 	private Vector3 horizontalVelocity = Vector3.zero;
@@ -30,6 +32,8 @@ public class PlayerController : MonoBehaviour {
 	private bool attackButtonState = false;
 	private bool attack2ButtonState = false;
 	private bool hasAttackPowerup = false;
+	private bool showBulletSimulation = true;
+	private bool showBombSimulation = false;
 
 	// boolean states
 	private bool walking = false;
@@ -55,8 +59,13 @@ public class PlayerController : MonoBehaviour {
 		collider2d = GetComponent<BoxCollider2D>();
 		anim = GetComponent<Animator>();
 
+		// add a bullet trajectory object
+		bulletTrajectory = (PlayerBulletTrajectory)Instantiate(playerBulletTrajectory);
+		bulletTrajectory.gameObject.SetActive(showBulletSimulation);
+
 		// add a bomb trajectory object
 		bombTrajectory = (PlayerBombTrajectory)Instantiate(playerBombTrajectory);
+		bombTrajectory.gameObject.SetActive(showBombSimulation);
 	}
 
 	// called every frame
@@ -171,12 +180,27 @@ public class PlayerController : MonoBehaviour {
 
 	void IsAttacking()
 	{
+		// simulate the trajectory the bullet will travel
+		if (bulletTrajectory && showBulletSimulation)
+		{
+			bulletTrajectory.transform.position = transform.position;
+			bulletTrajectory.Simulate(facingRight, facingAngle, transform.rotation);
+		}
+
 		if (canAttack)
 		{
 			// fire a bullet
 			if (attackButtonState)
 			{
 				canAttack = false;
+
+				if ( ! showBulletSimulation)
+				{
+					showBulletSimulation = true;
+					showBombSimulation = false;
+					bulletTrajectory.gameObject.SetActive(showBulletSimulation);
+					bombTrajectory.gameObject.SetActive(showBombSimulation);
+				}
 
 				// create a bullet
 				PlayerBulletController bullet = (PlayerBulletController)Instantiate(playerBullet, transform.position, transform.rotation);
@@ -211,7 +235,7 @@ public class PlayerController : MonoBehaviour {
 	void IsAttacking2()
 	{
 		// simulate the trajectory the bomb will travel
-		if (bombTrajectory)
+		if (bombTrajectory && showBombSimulation)
 		{
 			bombTrajectory.transform.position = transform.position;
 			bombTrajectory.Simulate(facingRight, facingAngle, transform.rotation);
@@ -223,6 +247,14 @@ public class PlayerController : MonoBehaviour {
 			if (attack2ButtonState)
 			{
 				canAttack2 = false;
+
+				if ( ! showBombSimulation)
+				{
+					showBulletSimulation = false;
+					showBombSimulation = true;
+					bulletTrajectory.gameObject.SetActive(showBulletSimulation);
+					bombTrajectory.gameObject.SetActive(showBombSimulation);
+				}
 
 				// create a bomb
 				PlayerBombController bomb = (PlayerBombController)Instantiate(playerBomb, transform.position, Quaternion.identity);
