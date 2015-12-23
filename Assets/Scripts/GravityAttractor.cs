@@ -36,24 +36,30 @@ public class GravityAttractor : MonoBehaviour {
 			Vector2 targetDir = (body.position - transform.position).normalized;
 			float angle = Mathf.Atan2(targetDir.y, targetDir.x) * Mathf.Rad2Deg - 90;
 
+			//gravityBody.rotation = Quaternion.AngleAxis(angle, body.forward);
+			gravityBody.rotation = Quaternion.Euler(0, 0, angle);
+			gravityBody.gravity = gravity;
+
 			// if the object just needs the rotation and gravity applied
 			if (gravityBody.applyForce)
 			{
 				Rigidbody2D rb2d = body.GetComponent<Rigidbody2D>();
 				if (rb2d)
 				{
-					body.rotation = Quaternion.AngleAxis(angle, body.forward);
+					//body.rotation = Quaternion.AngleAxis(angle, body.forward);
+					body.rotation = Quaternion.Euler(0, 0, angle);
 					rb2d.AddForce(targetDir * gravity * rb2d.mass * gravityBody.gravityScale);
 				}
-			}
-
-			// else, the object will take care of its own rotation and added gravity
-			else
-			{
-				gravityBody.rotation = Quaternion.AngleAxis(angle, body.forward);
-				gravityBody.gravity = gravity;
 			}
 		}
 
 	}
+
+	public Quaternion GetRotation(Vector3 position)
+	{
+		Vector2 targetDir = (position - transform.position).normalized;
+		float angle = Mathf.Atan2(targetDir.y, targetDir.x) * Mathf.Rad2Deg - 90;
+		return Quaternion.Euler(0, 0, angle);
+	}
+
 }

@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-//[RequireComponent (typeof (Rigidbody2D))]
 public class GravityBody : MonoBehaviour {
 
 	// public variables
@@ -27,5 +26,10 @@ public class GravityBody : MonoBehaviour {
 	void FixedUpdate()
 	{
 		planet.Attract(transform);
+	}
+
+	public Quaternion GetRotation(Vector3 position)
+	{
+		return planet.GetRotation(position);
 	}
 }

@@ -101,7 +101,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: beedbeb4ec2802c44aaaecf30ea8b0cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  applyForce: 0
   gravityScale: 0
+  gravity: 0
+  rotation: {x: 0, y: 0, z: 0, w: 1}
 --- !u!114 &11445150
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -202,6 +205,10 @@ Prefab:
       propertyPath: impactEffect
       value: 
       objectReference: {fileID: 121684, guid: c3aa0633682773d499755e5f4fc4ae4d, type: 2}
+    - target: {fileID: 0}
+      propertyPath: applyForce
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 151628}

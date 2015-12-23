@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[RequireComponent (typeof (GravityBody))]
 public class PlayerBulletController : MonoBehaviour {
 
 	// public variables
@@ -9,6 +10,7 @@ public class PlayerBulletController : MonoBehaviour {
 
 	// private references
 	private Rigidbody2D rb2d;
+	private GravityBody gravityBody;
 
 	// vectors
 	private Vector3 horizontalVelocity = Vector3.zero;
@@ -20,12 +22,13 @@ public class PlayerBulletController : MonoBehaviour {
 	// float
 	private float angle = 0f;
 	private float moveSpeed = 30f;
-	private float killTime = 0.4f;
+	private float killTime = 4f;//0.4f;
 	private float killTimer = 0f;
 
 	void Start()
 	{
 		rb2d = GetComponent<Rigidbody2D>();
+		gravityBody = GetComponent<GravityBody>();
 	}
 
 	void Update()
@@ -40,6 +43,9 @@ public class PlayerBulletController : MonoBehaviour {
 	
 	void FixedUpdate()
 	{
+		// apply rotation from gravity attractor
+		transform.rotation = gravityBody.rotation;
+
 		// update the directional velocity as the object moves around the planet
 		horizontalVelocity = transform.right * Mathf.Cos(angle * Mathf.Deg2Rad) * (facingRight ? 1 : -1) * moveSpeed;
 		verticalVelocity = transform.up * Mathf.Sin(angle * Mathf.Deg2Rad) * moveSpeed;

@@ -7,12 +7,14 @@ public class PlayerController : MonoBehaviour {
 	public LayerMask groundLayer;
 	public PlayerBulletController playerBullet;
 	public PlayerBombController playerBomb;
+	//public GameObject playerBombTrajectory;
 	
 	// private references
 	private Rigidbody2D rb2d;
 	//private CircleCollider2D collider2d;
 	private BoxCollider2D collider2d;
 	private Animator anim;
+	private PlayerBombTrajectory bombTrajectory;
 
 	// vectors
 	private Vector3 horizontalVelocity = Vector3.zero;
@@ -52,6 +54,16 @@ public class PlayerController : MonoBehaviour {
 		//collider2d = GetComponent<CircleCollider2D>();
 		collider2d = GetComponent<BoxCollider2D>();
 		anim = GetComponent<Animator>();
+
+		/*
+		playerBombTrajectory = new GameObject("Bomb Trajectory");
+		playerBombTrajectory.transform.parent = transform;
+		playerBombTrajectory.transform.localPosition = Vector3.zero;
+		playerBombTrajectory.AddComponent<GravityBody>();
+		playerBombTrajectory.AddComponent<PlayerBombTrajectory>();
+		*/
+		bombTrajectory = GetComponentInChildren<PlayerBombTrajectory>();
+		bombTrajectory.transform.parent = null;
 	}
 
 	// called every frame
@@ -205,6 +217,10 @@ public class PlayerController : MonoBehaviour {
 
 	void IsAttacking2()
 	{
+		// simulate the trajectory the bomb will travel
+		bombTrajectory.transform.position = transform.position;
+		bombTrajectory.Simulate(facingRight, facingAngle, transform.rotation);
+
 		if (canAttack2)
 		{
 			// throw a bomb
@@ -213,8 +229,8 @@ public class PlayerController : MonoBehaviour {
 				canAttack2 = false;
 
 				// create a bomb
-				PlayerBombController bomb = (PlayerBombController)Instantiate(playerBomb, transform.position, transform.rotation);
-				bomb.OnInit(facingRight, facingAngle);
+				PlayerBombController bomb = (PlayerBombController)Instantiate(playerBomb, transform.position, Quaternion.identity);
+				bomb.OnInit(facingRight, facingAngle, transform.rotation);
 			}
 		}
 		else
