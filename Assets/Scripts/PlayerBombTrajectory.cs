@@ -7,14 +7,9 @@ public class PlayerBombTrajectory : MonoBehaviour {
 	// private references
 	private GravityBody gravityBody;
 	private GameObject[] points;
-
-	// booleans
-	private bool facingRight = true;
 	
 	// float
 	private float speed = 20f;
-
-	private Quaternion startRotation;
 
 	void Start()
 	{
@@ -41,22 +36,19 @@ public class PlayerBombTrajectory : MonoBehaviour {
 	public void Simulate(bool facingRight, float angle, Quaternion playerRotation)
 	{
 		float time = 0.02f;
-		//float gravity = -9.81f;
 		float gravity = gravityBody.gravity;
 		float gravityScale = gravityBody.gravityScale;
 		Quaternion rotation = Quaternion.identity;
 		Vector3 position = transform.position;
-		Vector3 horizontalVelocity = Vector3.zero;
-		Vector3 verticalVelocity = Vector3.zero;
 		
 		float timePassed = 0f;
 		float moveSpeed = speed * Mathf.Cos(angle * Mathf.Deg2Rad);
 		float jumpSpeed = speed * Mathf.Sin(angle * Mathf.Deg2Rad);
 
 		// start 1 unit away from the player
-		Vector3 horizontalPosition = transform.right * Mathf.Cos(angle * Mathf.Deg2Rad) * (facingRight ? 1 : -1);
-		Vector3 verticalPosition = transform.up * Mathf.Sin(angle * Mathf.Deg2Rad);
-		position += playerRotation * (horizontalPosition + verticalPosition);
+		Vector3 horizontalVelocity = transform.right * Mathf.Cos(angle * Mathf.Deg2Rad) * (facingRight ? 1 : -1);
+		Vector3 verticalVelocity = transform.up * Mathf.Sin(angle * Mathf.Deg2Rad);
+		position += playerRotation * (horizontalVelocity + verticalVelocity);
 		
 		for (int i = 0; i < points.Length; i++)
 		{

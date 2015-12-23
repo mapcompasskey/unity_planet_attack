@@ -72,7 +72,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 118248}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 14, z: -.5}
+  m_LocalPosition: {x: 0, y: 0, z: -.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 426956}
@@ -181,6 +181,8 @@ MonoBehaviour:
     m_Bits: 256
   playerBullet: {fileID: 11445150, guid: f2d08a01cfa717b409a81c535d0b9b74, type: 2}
   playerBomb: {fileID: 11470684, guid: afe302a1dd4da264599166fc1059ccc2, type: 2}
+  playerBombTrajectory: {fileID: 11420046, guid: d599d0be7c150954c9515211c1a57334,
+    type: 2}
 --- !u!212 &21210412
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -272,6 +274,11 @@ Prefab:
       propertyPath: playerBullet
       value: 
       objectReference: {fileID: 151628, guid: f2d08a01cfa717b409a81c535d0b9b74, type: 2}
+    - target: {fileID: 0}
+      propertyPath: playerBombTrajectory
+      value: 
+      objectReference: {fileID: 11420046, guid: d599d0be7c150954c9515211c1a57334,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 118248}

@@ -15,7 +15,6 @@ public class PlayerBombController : MonoBehaviour {
 	private bool facingRight = true;
 	
 	// float
-	private float angle = 0f;
 	private float speed = 20f;
 	private float moveSpeed = 10f;
 	private float jumpSpeed = 15f;
@@ -97,7 +96,6 @@ public class PlayerBombController : MonoBehaviour {
 	{
 		// update direction and angle
 		this.facingRight = facingRight;
-		this.angle = angle;
 
 		moveSpeed = speed * Mathf.Cos(angle * Mathf.Deg2Rad);
 		jumpSpeed = speed * Mathf.Sin(angle * Mathf.Deg2Rad);
@@ -106,9 +104,6 @@ public class PlayerBombController : MonoBehaviour {
 		Vector3 horizontalPosition = transform.right * Mathf.Cos(angle * Mathf.Deg2Rad) * (facingRight ? 1 : -1);
 		Vector3 verticalPosition = transform.up * Mathf.Sin(angle * Mathf.Deg2Rad);
 		transform.position += playerRotation * (horizontalPosition + verticalPosition);
-
-		// reset rotation
-		//transform.rotation = Quaternion.identity;
 	}
 
 }

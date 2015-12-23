@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour {
 	public LayerMask groundLayer;
 	public PlayerBulletController playerBullet;
 	public PlayerBombController playerBomb;
-	//public GameObject playerBombTrajectory;
+	public PlayerBombTrajectory playerBombTrajectory;
 	
 	// private references
 	private Rigidbody2D rb2d;
@@ -55,15 +55,8 @@ public class PlayerController : MonoBehaviour {
 		collider2d = GetComponent<BoxCollider2D>();
 		anim = GetComponent<Animator>();
 
-		/*
-		playerBombTrajectory = new GameObject("Bomb Trajectory");
-		playerBombTrajectory.transform.parent = transform;
-		playerBombTrajectory.transform.localPosition = Vector3.zero;
-		playerBombTrajectory.AddComponent<GravityBody>();
-		playerBombTrajectory.AddComponent<PlayerBombTrajectory>();
-		*/
-		bombTrajectory = GetComponentInChildren<PlayerBombTrajectory>();
-		bombTrajectory.transform.parent = null;
+		// add a bomb trajectory object
+		bombTrajectory = (PlayerBombTrajectory)Instantiate(playerBombTrajectory);
 	}
 
 	// called every frame
@@ -218,8 +211,11 @@ public class PlayerController : MonoBehaviour {
 	void IsAttacking2()
 	{
 		// simulate the trajectory the bomb will travel
-		bombTrajectory.transform.position = transform.position;
-		bombTrajectory.Simulate(facingRight, facingAngle, transform.rotation);
+		if (bombTrajectory)
+		{
+			bombTrajectory.transform.position = transform.position;
+			bombTrajectory.Simulate(facingRight, facingAngle, transform.rotation);
+		}
 
 		if (canAttack2)
 		{
