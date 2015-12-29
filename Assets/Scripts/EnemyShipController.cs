@@ -4,7 +4,6 @@ using System.Collections;
 public class EnemyShipController : MonoBehaviour {
 
 	// public references
-	public LayerMask groundLayer;
 	public GameObject enemyBullet;
 	public GameObject deathEffect;
 	

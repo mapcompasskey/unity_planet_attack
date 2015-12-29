@@ -17,9 +17,6 @@ public class EnemyBulletController : MonoBehaviour {
 	void Start()
 	{
 		rb2d = GetComponent<Rigidbody2D>();
-
-		// change the color of the particles
-		impactEffect.GetComponent<ParticleSystem>().startColor = new Color(0, 1f, 0, 1f);
 	}
 
 	void Update()
@@ -53,7 +50,7 @@ public class EnemyBulletController : MonoBehaviour {
 		}
 	}
 
-	public void OnImpact()
+	void OnImpact()
 	{
 		Instantiate(impactEffect, transform.position, Quaternion.identity);
 		Destroy(gameObject);
