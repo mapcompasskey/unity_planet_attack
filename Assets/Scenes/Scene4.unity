@@ -85,48 +85,6 @@ NavMeshSettings:
     cellSize: .166666672
     manualCellSize: 0
   m_NavMeshData: {fileID: 0}
---- !u!1001 &121003184
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 438946, guid: 12af2393374d08e4f96e71aa5c364942, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 438946, guid: 12af2393374d08e4f96e71aa5c364942, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 18.6800003
-      objectReference: {fileID: 0}
-    - target: {fileID: 438946, guid: 12af2393374d08e4f96e71aa5c364942, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: -.400000006
-      objectReference: {fileID: 0}
-    - target: {fileID: 438946, guid: 12af2393374d08e4f96e71aa5c364942, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 438946, guid: 12af2393374d08e4f96e71aa5c364942, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 438946, guid: 12af2393374d08e4f96e71aa5c364942, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 438946, guid: 12af2393374d08e4f96e71aa5c364942, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 438946, guid: 12af2393374d08e4f96e71aa5c364942, type: 2}
-      propertyPath: m_RootOrder
-      value: 9
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 12af2393374d08e4f96e71aa5c364942, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1 &136242278
 GameObject:
   m_ObjectHideFlags: 0
@@ -163,7 +121,7 @@ Camera:
   far clip plane: 20
   field of view: 60
   orthographic: 1
-  orthographic size: 18
+  orthographic size: 22
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -595,7 +553,7 @@ Transform:
   m_GameObject: {fileID: 1346285502}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 10}
-  m_LocalScale: {x: 6, y: 6, z: 1}
+  m_LocalScale: {x: 7, y: 7, z: 1}
   m_Children: []
   m_Father: {fileID: 136242280}
   m_RootOrder: 0
@@ -628,17 +586,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnerText: {fileID: 1721397352}
   attackPowerup: {fileID: 126420, guid: 7702e1f7b4547e54ab01d1b559ce1280, type: 2}
-  enemySpawnsPublic: 0
+  bossObject: {fileID: 196948, guid: 12af2393374d08e4f96e71aa5c364942, type: 2}
+  enemySpawnsPublic: 5
+  enemySpawnLimit: 5
   enemyObject: {fileID: 104606, guid: 09754ab23066e48418d6e93fecde03b1, type: 2}
   enemyTriggerLayerMask:
     serializedVersion: 2
     m_Bits: 2048
-  enemyShipSpawnsPublic: 0
+  enemyShipSpawnsPublic: 5
+  enemyShipSpawnLimit: 5
   enemyShipObject: {fileID: 107080, guid: f12acf5e895834b4ab126a80d5ad8283, type: 2}
   enemyShipTriggerLayerMask:
     serializedVersion: 2
     m_Bits: 8192
-  buildingSpawnsPublic: 0
+  buildingSpawnsPublic: 5
+  buildingSpawnLimit: 5
   buildingObject: {fileID: 194554, guid: 0695820ade8acc04dbb66839fe872db3, type: 2}
   buildingTriggerLayerMask:
     serializedVersion: 2

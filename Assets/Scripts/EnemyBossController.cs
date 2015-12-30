@@ -16,16 +16,20 @@ public class EnemyBossController : MonoBehaviour {
 	// vectors
 	private Vector3 horizontalVelocity = Vector3.zero;
 	private Vector3 verticalVelocity = Vector3.zero;
+    private Vector3 startPosition = Vector3.zero;
 
     // booleans
+    private bool starting = true;
     private bool idling = true;
     private bool facingRight = true;
     private bool canAttack1 = false;
+    private bool canTurnAround = true;
 
     // floats
     private float moveSpeed = 3f;
 	private float horizontalAxis = 1f;
     private float turnAroundDistance = 10f;
+    private float ignoreDistance = 20f;
 
     private float idleTime = 2f;
 	private float idleTimer = 0f;
@@ -40,7 +44,11 @@ public class EnemyBossController : MonoBehaviour {
 		rb2d = GetComponent<Rigidbody2D>();
 		healthManager = GetComponent<EnemyHealthManager>();
 		player = GameObject.FindGameObjectWithTag("Player");
-	}
+
+        starting = true;
+        startPosition = transform.position;
+        GetComponent<CircleCollider2D>().enabled = false;
+    }
 	
 	void Update()
 	{
@@ -56,7 +64,8 @@ public class EnemyBossController : MonoBehaviour {
 	
 	void FixedUpdate ()
 	{
-		IsAttacking1();
+        IsStarting();
+        IsAttacking1();
 		IsWalking();
 		
 		// update the current velocity
@@ -65,7 +74,7 @@ public class EnemyBossController : MonoBehaviour {
 
 	void UpdateAction()
 	{
-        if ( ! idling)
+        if (starting || ! idling)
         {
             return;
         }
@@ -92,9 +101,28 @@ public class EnemyBossController : MonoBehaviour {
         
 	}
 
-	void IsAttacking1()
+    void IsStarting()
+    {
+        if ( ! starting)
+        {
+            return;
+        }
+
+        horizontalVelocity = transform.right * 0f;
+        verticalVelocity = transform.up * moveSpeed;
+
+        float distance = Vector3.Distance(startPosition, transform.position);
+        if (distance > 8f)
+        {
+            starting = false;
+            verticalVelocity = transform.up * 0f;
+            GetComponent<CircleCollider2D>().enabled = true;
+        }
+    }
+
+    void IsAttacking1()
 	{
-        if ( ! canAttack1)
+        if (starting || ! canAttack1)
         {
             return;
         }
@@ -105,11 +133,21 @@ public class EnemyBossController : MonoBehaviour {
             attack1Timer = 0f;
 			EnemyBossBulletController bullet;
 
-            float startAngle = -170f;// -180f;
+            /*
+            float startAngle = -170f;
             for (int i = 0; i < 5; i++)
             {
-                float initAngle = startAngle + (i * 40);// + ((attack1Counter % 2) * 20);
-                bullet = (EnemyBossBulletController)Instantiate(enemyBossBullet, transform.position, Quaternion.identity);
+                float initAngle = startAngle + (i * 40);
+                bullet = (EnemyBossBulletController)Instantiate(enemyBossBullet, transform.position, transform.rotation);
+                bullet.OnInit(true, initAngle);
+            }
+            */
+
+            float startAngle = -180f;
+            for (int i = 0; i < 5; i++)
+            {
+                float initAngle = startAngle + (i * 40) + ((attack1Counter % 2) * 20);
+                bullet = (EnemyBossBulletController)Instantiate(enemyBossBullet, transform.position, transform.rotation);
                 bullet.OnInit(true, initAngle);
             }
 
@@ -127,22 +165,39 @@ public class EnemyBossController : MonoBehaviour {
 	
 	void IsWalking()
 	{
+        if (starting)
+        {
+            return;
+        }
+
+        horizontalAxis = 1f;
+        /*
         // move towards the player if they are to far away
         float distance = Vector3.Distance(transform.position, player.transform.position);
-        if (distance > turnAroundDistance)
+        if (distance < ignoreDistance)
         {
-            // if the player is to the left
-            if (player.transform.position.x < transform.position.x)
+            if (canTurnAround && distance > turnAroundDistance)
             {
-                horizontalAxis = -1f;
+                // if the player is to the left
+                if (player.transform.position.x < transform.position.x)
+                {
+                    horizontalAxis = -1f;
+                }
+                // else, if player is to the right
+                else
+                {
+                    horizontalAxis = 1f;
+                }
+                canTurnAround = false;
             }
-            // else, if player is to the right
-            else
+
+            if (distance < (turnAroundDistance / 2))
             {
-                horizontalAxis = 1f;
+                canTurnAround = true;
             }
         }
-        
+        */
+
         // if just moved right
         if (horizontalAxis > 0 && ! facingRight)
 		{

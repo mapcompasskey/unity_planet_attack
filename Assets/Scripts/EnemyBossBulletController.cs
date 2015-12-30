@@ -14,7 +14,7 @@ public class EnemyBossBulletController : MonoBehaviour {
 	
 	// float
 	private float angle = 0f;
-	private float moveSpeed = 5f;
+	private float moveSpeed = 7f;
 	private float killTime = 2f;
 	private float killTimer = 0f;
 	
@@ -72,6 +72,8 @@ public class EnemyBossBulletController : MonoBehaviour {
 		Vector3 horizontalPosition = (transform.right * 1.5f) * Mathf.Cos(angle * Mathf.Deg2Rad) * (facingRight ? 1 : -1);
 		Vector3 verticalPosition = (transform.up * 1.5f) * Mathf.Sin(angle * Mathf.Deg2Rad);
 		transform.position += horizontalPosition + verticalPosition;
+
+        transform.rotation = Quaternion.identity;
 	}
 	
 }

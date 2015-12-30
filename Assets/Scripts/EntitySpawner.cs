@@ -7,17 +7,21 @@ public class EntitySpawner : MonoBehaviour {
 	// public variables
 	public Text spawnerText;
 	public GameObject attackPowerup;
+    public GameObject bossObject;
 
-	public int enemySpawnsPublic = 0;
-	public GameObject enemyObject;
+    public int enemySpawnsPublic = 0;
+    public int enemySpawnLimit = 20;
+    public GameObject enemyObject;
 	public LayerMask enemyTriggerLayerMask;
 
 	public int enemyShipSpawnsPublic = 0;
-	public GameObject enemyShipObject;
+    public int enemyShipSpawnLimit = 20;
+    public GameObject enemyShipObject;
 	public LayerMask enemyShipTriggerLayerMask;
 
 	public int buildingSpawnsPublic = 0;
-	public GameObject buildingObject;
+    public int buildingSpawnLimit = 10;
+    public GameObject buildingObject;
 	public LayerMask buildingTriggerLayerMask;
 
 	// private references
@@ -30,20 +34,26 @@ public class EntitySpawner : MonoBehaviour {
 	private Vector3 groundPosition = Vector3.zero;
 	private Vector3 airPosition = Vector3.zero;
 
+    // bools
+    private bool bossSpawned = false;
+
 	// integers
 	private int enemySpawns = 0;
 	public static int enemyKillCounter = 0;
-	public static int enemySpawnCounter = 0;
+    public static int enemySpawnCounter = 0;
+    private int enemySpawnTotalCounter = 0;
 
 	private int enemyShipSpawns = 0;
 	public static int enemyShipKillCounter = 0;
 	public static int enemyShipSpawnCounter = 0;
+    private int enemyShipSpawnTotalCounter = 0;
 
-	private int buildingSpawns = 0;
+    private int buildingSpawns = 0;
 	public static int buildingKillCounter = 0;
 	public static int buildingSpawnCounter = 0;
+    private int buildingSpawnTotalCounter = 0;
 
-	private int attackPowerupSpawns = 3;
+    private int attackPowerupSpawns = 3;
 	public static int attackPowerupSpawnCounter = 0;
 
 	// floats
@@ -91,14 +101,15 @@ public class EntitySpawner : MonoBehaviour {
 		//Debug.DrawLine(planetPosition, groundPosition, Color.magenta, 0, false);
 
 		strSpawnerText = "";
-		strSpawnerText += " Enemies Destroyed: " + enemyKillCounter.ToString("n0");
-		strSpawnerText += "\n Enemy Ships Destroyed: " + enemyShipKillCounter.ToString("n0");
-		strSpawnerText += "\n Buildings Destroyed: " + buildingKillCounter.ToString("n0");
-		
-		// spawn entities
-		EnemySpawner();
+        strSpawnerText += " Enemies Destroyed: " + enemyKillCounter.ToString("n0") + " / " + enemySpawnLimit.ToString("n0");
+		strSpawnerText += "\n Enemy Ships Destroyed: " + enemyShipKillCounter.ToString("n0") + " / " + enemyShipSpawnLimit.ToString("n0");
+        strSpawnerText += "\n Buildings Destroyed: " + buildingKillCounter.ToString("n0") + " / " + buildingSpawnLimit.ToString("n0");
+
+        // spawn entities
+        EnemySpawner();
 		EnemyShipSpawner();
 		BuildingSpawner();
+        BossSpawner();
 
 		spawnerText.text = strSpawnerText;
 	}
@@ -111,6 +122,11 @@ public class EntitySpawner : MonoBehaviour {
 
 	void EnemySpawner()
 	{
+        if (enemySpawnTotalCounter >= enemySpawnLimit)
+        {
+            return;
+        }
+
 		// test if there is anything from the layer mask inside the area opposite the player
 		if ( ! Physics2D.OverlapCircle(groundPosition, enemySpawnRadius, enemyTriggerLayerMask))
 		{
@@ -121,6 +137,7 @@ public class EntitySpawner : MonoBehaviour {
 
 				Instantiate(enemyObject, newPos, Quaternion.identity);
 				enemySpawnCounter++;
+                enemySpawnTotalCounter++;
 			}
 		}
 
@@ -155,8 +172,13 @@ public class EntitySpawner : MonoBehaviour {
 
 	void EnemyShipSpawner()
 	{
-		// test if there is anything from the layer mask inside the area opposite the player
-		if ( ! Physics2D.OverlapCircle(airPosition, enemyShipSpawnRadius, enemyShipTriggerLayerMask))
+        if (enemyShipSpawnTotalCounter >= enemyShipSpawnLimit)
+        {
+            return;
+        }
+
+        // test if there is anything from the layer mask inside the area opposite the player
+        if ( ! Physics2D.OverlapCircle(airPosition, enemyShipSpawnRadius, enemyShipTriggerLayerMask))
 		{
 			if (enemyShipSpawnCounter < enemyShipSpawns)
 			{
@@ -165,6 +187,7 @@ public class EntitySpawner : MonoBehaviour {
 				
 				Instantiate(enemyShipObject, newPos, Quaternion.identity);
 				enemyShipSpawnCounter++;
+                enemyShipSpawnTotalCounter++;
 			}
 		}
 		
@@ -186,8 +209,13 @@ public class EntitySpawner : MonoBehaviour {
 
 	void BuildingSpawner()
 	{
-		// test if there is anything from the layer mask inside the area opposite the player
-		if ( ! Physics2D.OverlapCircle(groundPosition, buildingSpawnRadius, buildingTriggerLayerMask))
+        if (buildingSpawnTotalCounter >= buildingSpawnLimit)
+        {
+            return;
+        }
+
+        // test if there is anything from the layer mask inside the area opposite the player
+        if ( ! Physics2D.OverlapCircle(groundPosition, buildingSpawnRadius, buildingTriggerLayerMask))
 		{
 			if (buildingSpawnCounter < buildingSpawns)
 			{
@@ -196,6 +224,7 @@ public class EntitySpawner : MonoBehaviour {
 
 				Instantiate(buildingObject, newPos, Quaternion.identity);
 				buildingSpawnCounter++;
+                buildingSpawnTotalCounter++;
 
 				// change spawn radius
 				buildingSpawnRadius = Random.Range(4F, 8F);
@@ -217,7 +246,37 @@ public class EntitySpawner : MonoBehaviour {
 		}
 	}
 
-	void AttackPowerupSpawner()
+    void BossSpawner()
+    {
+        if (bossSpawned)
+        {
+            return;
+        }
+
+        if (enemyKillCounter < enemySpawnLimit)
+        {
+            return;
+        }
+
+        if (enemyShipKillCounter < enemyShipSpawnLimit)
+        {
+            return;
+        }
+
+        if (buildingKillCounter < buildingSpawnLimit)
+        {
+            return;
+        }
+
+        bossSpawned = true;
+
+        Vector3 newPos = new Vector3(player.transform.position.x, player.transform.position.y, 5) - player.transform.up * 2f;
+        newPos = new Vector3(newPos.x, newPos.y, bossObject.transform.position.z);
+
+        Instantiate(bossObject, newPos, Quaternion.identity);
+    }
+
+    void AttackPowerupSpawner()
 	{
 		// spawn an attack powerup
 		if (attackPowerupSpawnCounter < attackPowerupSpawns)
