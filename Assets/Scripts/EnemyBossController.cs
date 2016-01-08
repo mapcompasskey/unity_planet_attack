@@ -57,6 +57,8 @@ public class EnemyBossController : MonoBehaviour {
 		// if the object has been killed
 		if (healthManager.health <= 0)
 		{
+            Debug.Log("boss killed");
+            EntitySpawner.bossKilled = true;
 			Instantiate(deathEffect, transform.position, Quaternion.identity);
 			Destroy(gameObject);
 		}

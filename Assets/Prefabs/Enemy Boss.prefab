@@ -191,8 +191,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 009b3d3be1d10b247843c65f04238e59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 50
-  maxHealth: 50
+  health: 80
+  maxHealth: 80
 --- !u!212 &21211704
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -258,11 +258,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 0}
       propertyPath: health
-      value: 50
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: maxHealth
-      value: 50
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_LocalPosition.y

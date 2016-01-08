@@ -36,6 +36,7 @@ public class EntitySpawner : MonoBehaviour {
 
     // bools
     private bool bossSpawned = false;
+    public static bool bossKilled = false;
 
 	// integers
 	private int enemySpawns = 0;
@@ -110,8 +111,9 @@ public class EntitySpawner : MonoBehaviour {
 		EnemyShipSpawner();
 		BuildingSpawner();
         BossSpawner();
+        Restart();
 
-		spawnerText.text = strSpawnerText;
+        spawnerText.text = strSpawnerText;
 	}
 
 	void FixedUpdate()
@@ -294,5 +296,26 @@ public class EntitySpawner : MonoBehaviour {
 			}
 		}
 	}
+
+    void Restart()
+    {
+        if ( ! bossKilled)
+        {
+            return;
+        }
+        Debug.Log("restart");
+        bossKilled = false;
+
+        enemyKillCounter = 0;
+        enemySpawnTotalCounter = 0;
+
+        enemyShipKillCounter = 0;
+        enemyShipSpawnTotalCounter = 0;
+
+        buildingKillCounter = 0;
+        buildingSpawnTotalCounter = 0;
+
+        bossSpawned = false;
+    }
 
 }
