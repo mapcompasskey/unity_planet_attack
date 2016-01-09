@@ -4,40 +4,71 @@ using System.Collections;
 public class LevelManagerController : MonoBehaviour {
 
     // public references
-    //public GameObject GameOverCanvas;
     public GameObject PauseCanvas;
+    public GameObject GameOverCanvas;
 
     // bool
-    private bool isPaused = false;
+    private bool gamePaused = false;
+    private bool gameOver = false;
 
     void Start()
     {
-        // hide the game over menu at start
-        //GameOverCanvas.SetActive(false);
-
         // hide the pause menu at start
         PauseCanvas.SetActive(false);
+
+        // hide the game over menu at start
+        GameOverCanvas.SetActive(false);
     }
 
     void Update()
     {
+        IsGameOver();
+        IsPaused();
+    }
+
+    void IsGameOver()
+    {
+        if (gameOver)
+        {
+            GameOverCanvas.SetActive(true);
+
+            if (Input.GetButtonDown("Cancel"))
+            {
+                // load the first scene
+                Application.LoadLevel(0);
+            }
+        }
+    }
+
+    void IsPaused()
+    {
+        if (gameOver)
+        {
+            return;
+        }
+
         // listen for pause button
         if (Input.GetButtonDown("Cancel"))
         {
-            isPaused = !isPaused;
-        }
+            gamePaused = !gamePaused;
 
-        // is the game paused
-        if (isPaused)
-        {
-            PauseCanvas.SetActive(true);
-            Time.timeScale = 0;
+            // is the game paused
+            if (gamePaused)
+            {
+                PauseCanvas.SetActive(true);
+                Time.timeScale = 0;
+            }
+            else if (!gamePaused)
+            {
+                PauseCanvas.SetActive(false);
+                Time.timeScale = 1;
+            }
         }
-        else if (!isPaused)
-        {
-            PauseCanvas.SetActive(false);
-            Time.timeScale = 1;
-        }
+    }
+
+    public void SetGameOver()
+    {
+        gameOver = true;
     }
 
 }

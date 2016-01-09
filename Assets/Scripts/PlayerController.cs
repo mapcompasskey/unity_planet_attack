@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour {
 	public PlayerBulletTrajectory playerBulletTrajectory;
     public float health = 10f;
     public float maxHealth = 10;
+    public LevelManagerController levelManager;
 
     // private references
     private Rigidbody2D rb2d;
@@ -18,7 +19,7 @@ public class PlayerController : MonoBehaviour {
 	private BoxCollider2D collider2d;
 	private Animator anim;
 	private PlayerBombTrajectory bombTrajectory;
-	private PlayerBulletTrajectory bulletTrajectory;
+    private PlayerBulletTrajectory bulletTrajectory;
 
 	// vectors
 	private Vector3 horizontalVelocity = Vector3.zero;
@@ -68,7 +69,7 @@ public class PlayerController : MonoBehaviour {
 		// add a bomb trajectory object
 		bombTrajectory = (PlayerBombTrajectory)Instantiate(playerBombTrajectory);
 		bombTrajectory.gameObject.SetActive(showBombSimulation);
-	}
+    }
 
 	// called every frame
 	// used for regular updates such as: moving non-physics objects, simple timers, recieving inputs
@@ -90,6 +91,7 @@ public class PlayerController : MonoBehaviour {
         if (health <= 0)
         {
             //Instantiate(deathEffect, transform.position, Quaternion.identity);
+            levelManager.SetGameOver();
             Destroy(gameObject);
         }
     }

@@ -185,6 +185,9 @@ MonoBehaviour:
     type: 2}
   playerBulletTrajectory: {fileID: 11487502, guid: 3749202e254230b4294dd063adefb53c,
     type: 2}
+  health: 1
+  maxHealth: 10
+  levelManager: {fileID: 0}
 --- !u!212 &21210412
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -286,6 +289,10 @@ Prefab:
       value: 
       objectReference: {fileID: 11487502, guid: 3749202e254230b4294dd063adefb53c,
         type: 2}
+    - target: {fileID: 0}
+      propertyPath: health
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 118248}
