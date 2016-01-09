@@ -5,9 +5,10 @@ public class EnemyBulletController : MonoBehaviour {
 
 	// public variables
 	public GameObject impactEffect;
+    public float damage = 1f;
 
-	// private references
-	private Rigidbody2D rb2d;
+    // private references
+    private Rigidbody2D rb2d;
 	
 	// floats
 	private float moveSpeed = 10f;
@@ -46,7 +47,8 @@ public class EnemyBulletController : MonoBehaviour {
 		}
 		else if (other.tag == "Player")
 		{
-			OnImpact();
+            other.gameObject.GetComponent<PlayerController>().UpdateHealth(-damage);
+            OnImpact();
 		}
 	}
 

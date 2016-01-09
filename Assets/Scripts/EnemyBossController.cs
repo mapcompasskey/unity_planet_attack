@@ -31,7 +31,7 @@ public class EnemyBossController : MonoBehaviour {
     private float turnAroundDistance = 10f;
     private float ignoreDistance = 20f;
 
-    private float idleTime = 2f;
+    private float idleTime = 1f;
 	private float idleTimer = 0f;
     
     private float attack1Count = 5;
@@ -57,7 +57,6 @@ public class EnemyBossController : MonoBehaviour {
 		// if the object has been killed
 		if (healthManager.health <= 0)
 		{
-            Debug.Log("boss killed");
             EntitySpawner.bossKilled = true;
 			Instantiate(deathEffect, transform.position, Quaternion.identity);
 			Destroy(gameObject);

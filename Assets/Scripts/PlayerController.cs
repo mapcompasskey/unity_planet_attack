@@ -9,9 +9,11 @@ public class PlayerController : MonoBehaviour {
 	public PlayerBombController playerBomb;
 	public PlayerBombTrajectory playerBombTrajectory;
 	public PlayerBulletTrajectory playerBulletTrajectory;
-	
-	// private references
-	private Rigidbody2D rb2d;
+    public float health = 10f;
+    public float maxHealth = 10;
+
+    // private references
+    private Rigidbody2D rb2d;
 	//private CircleCollider2D collider2d;
 	private BoxCollider2D collider2d;
 	private Animator anim;
@@ -83,7 +85,14 @@ public class PlayerController : MonoBehaviour {
 		anim.SetBool("Jumping", jumping);
 		anim.SetFloat("Y Velocity", velocityY);
 		anim.SetFloat("Facing Angle", facingAngle);
-	}
+
+        // if the object has been killed
+        if (health <= 0)
+        {
+            //Instantiate(deathEffect, transform.position, Quaternion.identity);
+            Destroy(gameObject);
+        }
+    }
 
 	// called every physics step
 	// fixed update intervals are consistent
@@ -357,5 +366,15 @@ public class PlayerController : MonoBehaviour {
 	{
 		hasAttackPowerup = true;
 	}
+
+    public void UpdateHealth(float amount)
+    {
+        health += amount;
+
+        if (health > maxHealth)
+        {
+            health = maxHealth;
+        }
+    }
 
 }

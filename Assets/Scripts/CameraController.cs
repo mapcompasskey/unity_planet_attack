@@ -120,6 +120,11 @@ public class CameraController : MonoBehaviour {
 	
 	void FixedUpdate()
 	{
+        if ( ! player)
+        {
+            return;
+        }
+
 		// *its recommended to use LateUpdate() for camera following, but I'm getting some stuttering with its Time.deltaTime value
 
 		// move towards the player's position

@@ -28,14 +28,14 @@ public class EnemyShipController : MonoBehaviour {
 	//private bool jumping = false;
 	
 	// floats
-	private float moveSpeed = 4f;
+	private float moveSpeed = 6f;
 	//private float jumpSpeed = 16f;
 	private float horizontalAxis = 0;
 	private float actionTime = 0f;
 	private float actionTimer = 0f;
-	private float attackDelayTime = 0.75f;
+	private float attackDelayTime = 0.5f;
 	private float attackDelayTimer = 0f;
-	private float attackDistance = 7f;
+	private float attackDistance = 10f;
 	
 	void Start()
 	{
@@ -95,6 +95,11 @@ public class EnemyShipController : MonoBehaviour {
 
 	void IsAttacking()
 	{
+        if ( ! player)
+        {
+            return;
+        }
+
 		float distance = Vector3.Distance(transform.position, player.transform.position);
 		if (canAttack && distance < attackDistance)
 		{

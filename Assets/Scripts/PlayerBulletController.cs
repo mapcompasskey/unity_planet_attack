@@ -8,8 +8,8 @@ public class PlayerBulletController : MonoBehaviour {
 	public GameObject impactEffect;
 	public float damage = 1f;
 
-	// private references
-	private Rigidbody2D rb2d;
+    // private references
+    private Rigidbody2D rb2d;
 	private GravityBody gravityBody;
 
 	// vectors
@@ -19,8 +19,8 @@ public class PlayerBulletController : MonoBehaviour {
 	// booleans
 	private bool facingRight = true;
 
-	// float
-	private float angle = 0f;
+    // float
+    private float angle = 0f;
 	private float moveSpeed = 30f;
 	private float killTime = 0.7f;
 	private float killTimer = 0f;

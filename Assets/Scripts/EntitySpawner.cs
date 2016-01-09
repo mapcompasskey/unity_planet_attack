@@ -85,6 +85,11 @@ public class EntitySpawner : MonoBehaviour {
 
 	void Update()
 	{
+        if ( ! player)
+        {
+            return;
+        }
+
 		// planet positions
 		planetPosition = new Vector3(planet.transform.position.x, planet.transform.position.y, -10);
 
@@ -254,7 +259,7 @@ public class EntitySpawner : MonoBehaviour {
         {
             return;
         }
-
+        
         if (enemyKillCounter < enemySpawnLimit)
         {
             return;
@@ -269,7 +274,7 @@ public class EntitySpawner : MonoBehaviour {
         {
             return;
         }
-
+        
         bossSpawned = true;
 
         Vector3 newPos = new Vector3(player.transform.position.x, player.transform.position.y, 5) - player.transform.up * 2f;
