@@ -185,7 +185,7 @@ MonoBehaviour:
     type: 2}
   playerBulletTrajectory: {fileID: 11487502, guid: 3749202e254230b4294dd063adefb53c,
     type: 2}
-  health: 1
+  health: 10
   maxHealth: 10
   levelManager: {fileID: 0}
 --- !u!212 &21210412
@@ -291,7 +291,7 @@ Prefab:
         type: 2}
     - target: {fileID: 0}
       propertyPath: health
-      value: 1
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

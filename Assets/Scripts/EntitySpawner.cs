@@ -117,6 +117,7 @@ public class EntitySpawner : MonoBehaviour {
 		BuildingSpawner();
         BossSpawner();
         Restart();
+        GotoCreditsScreen();
 
         spawnerText.text = strSpawnerText;
 	}
@@ -304,11 +305,12 @@ public class EntitySpawner : MonoBehaviour {
 
     void Restart()
     {
+        /*
         if ( ! bossKilled)
         {
             return;
         }
-        Debug.Log("restart");
+        
         bossKilled = false;
 
         enemyKillCounter = 0;
@@ -321,6 +323,17 @@ public class EntitySpawner : MonoBehaviour {
         buildingSpawnTotalCounter = 0;
 
         bossSpawned = false;
+        */
+    }
+
+    void GotoCreditsScreen()
+    {
+        if ( ! bossKilled)
+        {
+            return;
+        }
+
+        Application.LoadLevel(2);
     }
 
 }

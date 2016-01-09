@@ -5,9 +5,10 @@ public class EnemyBossBulletController : MonoBehaviour {
 	
 	// public variables
 	public GameObject impactEffect;
-	
-	// private references
-	private Rigidbody2D rb2d;
+    public float damage = 1f;
+
+    // private references
+    private Rigidbody2D rb2d;
 
 	// booleans
 	private bool facingRight = true;
@@ -51,7 +52,8 @@ public class EnemyBossBulletController : MonoBehaviour {
 		}
 		else if (other.tag == "Player")
 		{
-			OnImpact();
+            other.gameObject.GetComponent<PlayerController>().UpdateHealth(-damage);
+            OnImpact();
 		}
 	}
 	
