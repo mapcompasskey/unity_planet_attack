@@ -183,8 +183,8 @@ public class PlayerController : MonoBehaviour {
 		// simulate the trajectory the bullet will travel
 		if (bulletTrajectory && showBulletSimulation)
 		{
-			bulletTrajectory.transform.position = transform.position;
-			bulletTrajectory.Simulate(facingRight, facingAngle, transform.rotation);
+            bulletTrajectory.transform.position = transform.position;
+            bulletTrajectory.Simulate(facingRight, facingAngle, transform.rotation);
 		}
 
 		if (canAttack)
@@ -204,8 +204,9 @@ public class PlayerController : MonoBehaviour {
 
 				// create a bullet
 				PlayerBulletController bullet = (PlayerBulletController)Instantiate(playerBullet, transform.position, transform.rotation);
-				bullet.OnInit(facingRight, facingAngle);
-			}
+                bullet.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + 1f);
+                bullet.OnInit(facingRight, facingAngle);
+            }
 		}
 		else
 		{
@@ -258,8 +259,9 @@ public class PlayerController : MonoBehaviour {
 
 				// create a bomb
 				PlayerBombController bomb = (PlayerBombController)Instantiate(playerBomb, transform.position, Quaternion.identity);
-				bomb.OnInit(facingRight, facingAngle, transform.rotation);
-			}
+                bomb.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + 1f);
+                bomb.OnInit(facingRight, facingAngle, transform.rotation);
+            }
 		}
 		else
 		{

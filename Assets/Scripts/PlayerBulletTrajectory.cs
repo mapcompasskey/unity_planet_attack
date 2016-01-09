@@ -22,10 +22,11 @@ public class PlayerBulletTrajectory : MonoBehaviour {
 		{
 			points[i] = new GameObject("dot");
 			points[i].AddComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("dot");
-			points[i].transform.localScale = new Vector3(0.1f, 0.1f, 0f);
+            points[i].GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0.25f);
+            points[i].transform.localScale = new Vector3(0.1f, 0.1f, 0f);
 			points[i].transform.parent = transform;
 			points[i].transform.localPosition = Vector3.zero;
-		}
+        }
 	}
 	
 	public void Simulate(bool facingRight, float angle, Quaternion playerRotation)
